@@ -1,3 +1,8 @@
+@import url(animation.css);
+@import url(variables.css);
+
+@import url(components/loader.css);
+
 html{
     scroll-behavior: smooth;  
 }
@@ -12,7 +17,47 @@ body{
 
     /* Default Configuration */
     font-family: "Poppins", sans-serif;
+
+    pointer-events: none;
     
     color: var(--default-text-color);
     background: var(--default-background-color);
 }
+
+/* SHARED STYLES */
+.hover-btn{
+    transition: 0.2s ease-in-out;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.hover-btn:hover{
+    transform: scale(1.05);
+}
+
+.hover-btn:active{
+    transform: scale(0.95);
+}
+
+/* RESPONSIVE ENDPOINTS */
+/* Tablet */
+/* @media (max-width: 1023px) and (min-width: 768px) {
+    *{
+        outline: solid red 2px
+    }
+} */
+
+/* Mobile */
+/* @media (max-width: 767px) and (min-width: 320px) {
+    *{
+        outline: solid rgb(30, 255, 0) 2px
+    }
+} */
+
+/* Too Small Device */
+/* @media (max-width: 320px){
+    *{
+        display: none;
+        background-color: black;
+    }
+} */
