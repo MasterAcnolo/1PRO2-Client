@@ -1,0 +1,40 @@
+@import url('./styles/variables.css');
+
+header {
+    background: var(--blue-bg-color);
+    color: var(--default-text-color);
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* TITLE */
+header h2{
+    margin-left: 10px;
+    font-weight: 700;
+}
+
+
+/* SIGN IN - LOGIN Button */
+.buttons button{
+    margin: 15px; 
+    height: 45px;
+
+    font-weight: 400;
+    font-size: medium;
+
+    border-radius: 12px;
+}
+
+#login {
+    border: none;
+    background: var(--default-text-color);
+    color: var(--blue-primary-color);
+}
+
+#sign-in {    
+    border: 2px solid var(--default-text-color);
+    background: var(--blue-primary-color);
+    color: var(--default-text-color);
+}
