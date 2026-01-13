@@ -1,16 +1,45 @@
-# React + Vite
+# 1PRO2 - CLIENT
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ceci est la partie Front-End du projet **Task Loader**. Qui consiste à reproduire le service **Trello**.
 
-Currently, two official plugins are available:
+## Stack utilisé
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- HTML
+- CSS
+- JS
 
-## React Compiler
+- React JS (Components)
+- Strapi (CMS Back End)
+- MySQL (Base de Données)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- FIGMA (Maquette)
+- Postman (Requêtes)
+- DrawDB (Maquette SQL)
 
-## Expanding the ESLint configuration
+## Lancer le projet
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Téléchargement du dépôt
+
+Pour lancer le projet cloner le 
+
+```bash
+git clone https://github.com/MasterAcnolo/1PRO2-Client
+```
+
+Puis accéder au dossier associé;
+
+### Installation des dépendances
+
+Le projet nécessite Node JS d'installer sur votre ordinateur. Une fois Node JS installé et configurer installer simplement la commande
+
+```
+npm install
+```
+
+puis 
+
+```
+npm run dev 
+```
+
+Ensuite le projet sera lancer et vous pourrez accéder au projet sur le port associé.
