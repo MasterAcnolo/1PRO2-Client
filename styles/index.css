@@ -18,11 +18,15 @@ body{
     /* Default Configuration */
     font-family: "Poppins", sans-serif;
 
-    pointer-events: none;
+    /* pointer-events: none;  */
     
     color: var(--default-text-color);
     background: var(--default-background-color);
 }
+
+/* *{
+    outline: solid red 2px;
+} */
 
 /* SHARED STYLES */
 .hover-btn{

@@ -9,5 +9,8 @@
     --blue-primary-color: #184AFF;
     --blue-secondary-color: #0E32B5;
     --blue-bg-color: linear-gradient(90deg, #0E32B5 0%, #184AFF 100%);
+
+    /* HAMBURGER MENU */
+    --hamburger-overlay-bg: rgba(28, 28, 28, 0.821);
     
 }

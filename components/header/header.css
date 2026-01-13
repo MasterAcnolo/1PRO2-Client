@@ -1,38 +1,80 @@
 header {
     background: var(--blue-bg-color);
     color: var(--default-text-color);
+
+    position: fixed;
+    width: 100%;
+
+    height: 5em;
     
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
 
 /* TITLE */
-header h2{
+header a {
+    color: white;
+    text-decoration: none;
+    font-size: 2em;
     margin-left: 10px;
     font-weight: 700;
+    z-index: 99;
+    transition: text-shadow 0.3s ease, color 0.3s ease;
 }
 
-
-/* SIGN IN - LOGIN Button */
-.buttons button{
-    margin: 15px; 
-    height: 45px;
-
-    font-weight: 400;
-    font-size: medium;
-
-    border-radius: 12px;
+header a:hover {
+    color: #fff;
+    text-shadow: 
+        0 0 5px #447cff, 
+        0 0 10px #447cff, 
+        0 0 20px #447cff, 
+        0 0 40px #447cff;
 }
 
-#login {
-    border: none;
-    background: var(--default-text-color);
-    color: var(--blue-primary-color);
+.dropDownMenu {
+    margin-right: 20%;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
 }
 
-#sign-in {    
-    border: 2px solid var(--default-text-color);
-    background: var(--blue-primary-color);
-    color: var(--default-text-color);
+.dropDownMenu button {
+    all: unset;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.dropDownMenu button span {
+    transition: transform 0.2s ease;
+}
+
+.dropDownMenu .content {
+    position: absolute;
+    top: 30%;
+    right: 0;
+    color:black;
+    min-width: 180px;
+    border-radius: 8px;
+    padding: 0;
+    pointer-events: auto;
+    transition: all 0.2s ease;
+    z-index: 10;
+    padding-top: 20px;
+}
+
+.dropDownMenu .content li {
+    list-style-type: none;
+    padding: 12px 16px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    transition: background .15s ease;
+}
+
+.dropDownMenu .content li:hover {
+    background: #f3f3f3;
+    font-weight: 600;
 }

@@ -1,0 +1,26 @@
+footer {
+    background-color: var(--blue-primary-color);
+}
+
+footer ::after {
+    color: white;
+}
+
+div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+footer ul {
+    display: flex;
+    flex-direction: column;
+}
+
+ul :first-child {
+    font-weight: bolder;
+}
+
+footer p {
+    justify-content: center;
+}
