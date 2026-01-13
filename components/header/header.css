@@ -1,5 +1,3 @@
-@import url('./styles/variables.css');
-
 header {
     background: var(--blue-bg-color);
     color: var(--default-text-color);
