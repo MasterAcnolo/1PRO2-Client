@@ -27,6 +27,7 @@ function Form({ type }) {
         if (type === "login") {
             data = {
             username,
+            email,
             password,
             rememberMe: remainConnected,
             };
