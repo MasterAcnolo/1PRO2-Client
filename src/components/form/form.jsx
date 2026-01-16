@@ -3,8 +3,9 @@ import { useState } from "react";
 
 import "./form.css";
 
+import registerUser from "../../../script/auth.js";
+
 function Form({ type }) {
-  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,29 +14,16 @@ function Form({ type }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let data;
+    let data  = {
+        username,
+        email,
+        password,
+        rememberMe: remainConnected,
+        };
 
-        if (type === "register") {
-            data = {
-            name,
-            username,
-            email,
-            password,
-            };
-        }
-
-        if (type === "login") {
-            data = {
-            username,
-            email,
-            password,
-            rememberMe: remainConnected,
-            };
-        }
-
-        console.log(type, data);
+    type === "register" ? registerUser(data) : "";
     };
-
+    
   return (
     <>
       <section className="formBackground">
@@ -48,16 +36,6 @@ function Form({ type }) {
           </h2>
 
           <form className="form" onSubmit={handleSubmit}>
-            {type === "register" ? (
-              <input
-                type="text"
-                placeholder="Nom"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            ) : null}
 
             <input
               type="text"
@@ -86,22 +64,20 @@ function Form({ type }) {
               required
             />
 
-            {type === "login" ? (
-              <div id="remainConnected">
-                <label htmlFor="remainConnected">
-                  Rester connecté
-                </label>
-                <input
-                  type="checkbox"
-                  id="remainConnected"
-                  name="remainConnected"
-                  checked={remainConnected}
-                  onChange={(e) =>
-                    setRemainConnected(e.target.checked)
-                  }
-                />
-              </div>
-            ) : null}
+            <div id="remainConnected">
+              <label htmlFor="remainConnected">
+                Rester connecté
+              </label>
+              <input
+                type="checkbox"
+                id="remainConnected"
+                name="remainConnected"
+                checked={remainConnected}
+                onChange={(e) =>
+                  setRemainConnected(e.target.checked)
+                }
+              />
+            </div>
 
             <button className="formBtn hover-btn" type="submit">
               {type === "register" ? "S'inscrire" : "Se Connecter"}
