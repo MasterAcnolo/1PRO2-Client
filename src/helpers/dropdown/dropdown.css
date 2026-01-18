@@ -1,0 +1,31 @@
+.dropDown img:hover{
+    cursor: pointer;
+}
+
+.dropDown-content{
+    display: flex;
+    gap: 0px;
+    flex-direction: column;
+    position: absolute;
+    background-color: #C4C4C4;
+    text-align: end;
+    transform: translate(-60%);
+    border-radius: 12px;
+}
+
+.dropDown-content p{
+    margin: 5px;
+}
+
+.dropDown p:hover{
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#delete{
+    color: #F00000;
+}
+
+#delete:hover{
+    color: #e80000;
+}
