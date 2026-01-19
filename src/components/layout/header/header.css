@@ -12,7 +12,7 @@ header {
     
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 
@@ -21,7 +21,6 @@ header {
     color: white;
     text-decoration: none;
     font-size: 2em;
-    margin-left: 10px;
     font-weight: 700;
     z-index: 99;
     transition: text-shadow 0.3s ease, color 0.3s ease;
@@ -34,4 +33,21 @@ header {
         0 0 10px #447cff, 
         0 0 20px #447cff, 
         0 0 40px #447cff;
+}
+
+/* Nav Elements */
+header nav{
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+}
+
+header nav a{
+    color: var(--default-text-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+header nav a:hover{
+    text-decoration: underline;
 }
