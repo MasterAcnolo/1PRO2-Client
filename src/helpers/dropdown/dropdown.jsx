@@ -2,7 +2,7 @@ import './dropdown.css';
 
 import { useState } from 'react';
 
-export default function DropDown() {
+function DropDownCard() {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -20,3 +20,7 @@ export default function DropDown() {
        </div>
     </>
 );}
+
+export {
+    DropDownCard
+}

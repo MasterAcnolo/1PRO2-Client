@@ -1,6 +1,6 @@
 import './card.css';
 
-import DropDown from '../../../../helpers/dropdown/dropdown';
+import { DropDownCard } from '../../../../helpers/dropdown/dropdown';
 
 export default function TaskCard({titre, description, date}) {
 
@@ -13,7 +13,7 @@ export default function TaskCard({titre, description, date}) {
                 <h3> {titre} </h3>
             
             </div>
-            <DropDown />
+            <DropDownCard />
         </div>
 
         <div className='card-content'>
