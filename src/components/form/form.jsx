@@ -3,16 +3,20 @@ import { useState } from "react";
 
 import "./form.css";
 
-import registerUser from "../../../script/auth.js";
+import {registerUser} from "../../../script/register.js";
 
 function Form({ type }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remainConnected, setRemainConnected] = useState(false);
+  
+  const [isPending, setStatus] = useState(false);
+  const [data, setData] = useState("");
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e){
     e.preventDefault();
+    setStatus(true);
 
     let data  = {
         username,
@@ -21,8 +25,16 @@ function Form({ type }) {
         rememberMe: remainConnected,
         };
 
-    type === "register" ? registerUser(data) : "";
-    };
+    try{
+      setData(type === "register" ? await registerUser(data, "register") : await registerUser(data, "login"));
+
+    } catch(error){
+
+
+    } finally{
+      setStatus(false);
+    }
+    }
     
   return (
     <>
@@ -79,8 +91,8 @@ function Form({ type }) {
               />
             </div>
 
-            <button className="formBtn hover-btn" type="submit">
-              {type === "register" ? "S'inscrire" : "Se Connecter"}
+            <button className="formBtn hover-btn" type="submit" disabled={isPending}>
+              {isPending ? "Envoi en cours..." : `${type === "register" ? "S'inscrire" : "Se Connecter"}`}
             </button>
           </form>
 
