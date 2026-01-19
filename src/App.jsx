@@ -7,12 +7,14 @@ import PageLoader from "./helpers/loader/loader.jsx"
 import Header from './components/layout/header/header.jsx';
 import Footer from './components/layout/footer/footer.jsx';
 
+// Pages
 import Home from "./routes/Home.jsx";
 import Login from './routes/Login.jsx';
 import Register from './routes/Register.jsx';
 
 import Board from "./routes/Board.jsx";
 import BoardList from "./routes/BoardList.jsx";
+
 
 import { isLogged } from '../script/auth.js';
 
