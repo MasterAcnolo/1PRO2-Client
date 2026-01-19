@@ -43,6 +43,7 @@
     border-radius: 12px;
 }
 
+/* Right Side (Texte) */
 .right {
     display: flex;
     flex-direction: column;
@@ -58,6 +59,27 @@
 .right p {
     font-size: 1.2rem;
     margin: 0;
+}
+
+/* Button Discover */
+.discover-btn{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    gap: 10px;
+    background: var(--blue-bg-color);
+    font-weight: 600;
+    color: var(--default-text-color);
+    text-decoration: none;
+    padding: 10px 6px;
+    border-radius: 12px;
+    border: none;
+}
+
+.discover-btn img{
+    filter: invert();
+    width: 25px;
+    height: 25px;
 }
 
 /* Mobile */

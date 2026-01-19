@@ -1,4 +1,5 @@
 import { StrictMode } from 'react';
+import { Link } from 'react-router-dom';
 
 // Styles
 import "../../styles/pages/Home.css";
@@ -16,6 +17,11 @@ export default function Home(){
                             <h2>Bienvenue !</h2>
                             <p>Le Kanban, repensé pour aller à l’essentiel</p>
                             <p>Libérez vous du chaos de la gestion de projet grâce à Task Loader</p>
+
+                            <Link className='discover-btn hover-btn' to="/board">
+                                <p>Commencer à l'utiliser maintenant! </p>
+                                <img src='../../assets/icon/right-arrow.png' />
+                            </Link>
                         </div>
                     </div>
                 </section>
