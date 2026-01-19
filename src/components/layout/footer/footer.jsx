@@ -22,6 +22,7 @@ function Footer() {
                 <nav>
                     <h3>Légal</h3>
                     <Link>Vos Données</Link>
+                    <Link>Plan du Site</Link>
                     <Link>Mentions Légales</Link>
                     <Link>Nous Contacter</Link>
                 </nav>
