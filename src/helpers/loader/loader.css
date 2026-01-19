@@ -1,0 +1,65 @@
+/* Loader overlay */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(8, 8, 8);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* invisible au départ pour éviter le flash */
+  pointer-events: none; /* désactive les clics au départ */
+  transition: opacity 0.8s ease;
+}
+
+/* Loader visible */
+.loader.active {
+  opacity: 1;
+  pointer-events: all; /* activé quand visible */
+}
+
+/* Loader fade out */
+.loader.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Spinner */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #444;
+  border-top: 6px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+/* Animation rotation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Texte sous le spinner */
+.loader-text {
+  color: #ccc;
+  font-size: 1.2rem;
+  font-family: 'Inter', sans-serif;
+  animation: fadeInText 1.5s ease-in-out infinite alternate;
+}
+
+/* Animation texte fade in/out */
+@keyframes fadeInText {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
