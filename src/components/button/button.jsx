@@ -5,18 +5,15 @@ import { useState, useEffect } from 'react';
 
 function Login_Sign_Buttons() {
     const [userData, setUserData] = useState(null);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchUser() {
             const data = await getAuthStatus();
             if (data) setUserData(data);
-            setLoading(false); // fini le chargement
         }
         fetchUser();
     }, []);
 
-    if (loading) return null;
 
     if (!userData) {
         return (

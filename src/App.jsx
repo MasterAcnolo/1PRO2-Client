@@ -23,19 +23,20 @@ function App() {
   const navigate = useNavigate();
 
     useEffect(() => {
+      // Check Login (If user connected)
             async function checkLogin() {
                 const user = await isLogged(); // récupère l'utilisateur si connecté
                 if (user) {
                     navigate("/"); // déjà connecté -> redirection
                 }
             }
-            checkLogin();
+            // checkLogin();
       }, [navigate]);
 
   return (
     <>
 
-      <PageLoader />
+      {/* <PageLoader /> */}
 
       <Header />
 
