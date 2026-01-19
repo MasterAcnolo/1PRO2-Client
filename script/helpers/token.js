@@ -1,18 +1,16 @@
-function getToken(){
-  // Cette structure est juste valable pour le cas où ya juste un cookie.
+function getToken() {
 
-  let TOKEN = "UNDEFINED";
+  if (document.cookie) {
 
-  if(document.cookie){
-    const COOKIE = document.cookie;
-    TOKEN = COOKIE.split("token=")[1]; 
+    const cookie = document.cookie;
+    return cookie.split("=")[1] || null;
+  } 
+  
+  const sessionToken = sessionStorage.getItem("token");
+  if (sessionToken) return sessionToken;
 
-    return TOKEN
-  } else if (sessionStorage.getItem("token")) {
-    TOKEN = sessionStorage.getItem("token");
-  } else {
-    return TOKEN
-  }
+  // Aucun token trouvé
+  return null;
 }
 
 export {

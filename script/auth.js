@@ -1,7 +1,12 @@
 import { getToken } from "./helpers/token";
 
 async function getAuthStatus() {
-    const TOKEN = getToken();
+    const TOKEN = await getToken();
+
+    if (!TOKEN) {
+        console.log("Pas de token trouvé");
+        return false;
+    }
 
     const API_URL = "http://localhost:1337/api";
 
@@ -17,28 +22,19 @@ async function getAuthStatus() {
         }
 
         const userInfo = await res.json();
-
-        return userInfo
+        return userInfo;
 
     } catch (err) {
         console.error(err.message);
-        return false
+        return false;
     }
 }
+
 
 async function isLogged() {
-    const res = await getAuthStatus(); 
-    if (res === false) {
-        console.log(false);
-        return false;
-    } else {
-        console.log(true);
-        return true;
-    }
+    const user = await getAuthStatus();
+    return !!user; // true si user existe, false sinon (transformation extrême)
 }
-
-
-isLogged()
 
 export {
     getAuthStatus,
