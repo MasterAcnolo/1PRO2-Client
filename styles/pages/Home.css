@@ -82,6 +82,11 @@
     height: 25px;
 }
 
+/* Content */
+.homeContent{
+    color: var(--default-dark-text-color);
+}
+
 /* Mobile */
 @media (max-width: 865px){
 
