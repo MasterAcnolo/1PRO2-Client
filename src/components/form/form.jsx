@@ -1,11 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import "./form.css";
 
-import {registerUser} from "../../../script/register.js";
+// FORM Features
+import registerUser from "../../../script/register.js";
+import { isLogged } from "../../../script/auth.js";
 
 function Form({ type }) {
+
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,15 +30,24 @@ function Form({ type }) {
         rememberMe: remainConnected,
         };
 
-    try{
-      setData(type === "register" ? await registerUser(data, "register") : await registerUser(data, "login"));
+    try {
+      const response = type === "register" 
+        ? await registerUser(data, "register") 
+        : await registerUser(data, "login");
 
-    } catch(error){
+      setData(response);
 
+      // Redirection après succès
+      if (isLogged()) {
+        navigate("/board");
+      }
 
-    } finally{
+    } catch(error) {
+      console.error(error);
+    } finally {
       setStatus(false);
     }
+
     }
     
   return (

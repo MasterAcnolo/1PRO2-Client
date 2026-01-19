@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import {Login_Sign_Buttons} from '../../button/button.jsx';
 import HamburgerMenu from './hamburger/hamburger.jsx';
 
-
 function NavHeader() {
     const [isOpen, setIsOpen] = useState(false);
     const [isHover, setIsHover] = useState(false);
@@ -46,7 +45,7 @@ function Header() {
             <Link to="/" className="title">TASKLOADER.</Link>
 
             {window.innerWidth > 1024 ? <NavHeader/> :  "" }
-            {window.innerWidth > 1024 ? <Login_Sign_Buttons/> : <HamburgerMenu /> }
+            {window.innerWidth > 1024 ? <Login_Sign_Buttons/> : <HamburgerMenu /> } 
 
         </header>
         </>

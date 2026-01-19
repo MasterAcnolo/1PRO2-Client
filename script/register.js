@@ -1,54 +1,31 @@
-export function getToken(){
-  // Cette structure est juste valable pour le cas où ya juste un cookie.
-  const COOKIE = document.cookie;
-  const TOKEN = COOKIE.split("token=")[1]; 
-  return TOKEN;
-}
-
-export async function registerUser(data, method) {
+export default async function registerUser(data, method) {
   const API_URL = "http://localhost:1337/api";
-  const ENDPOINT = method === "register" ? "register" : "";
+  const endpoint = method === "register" ? "register" : "login";
 
-  let payload;
+  const payload = method === "register" // Suivant la méthode on construit un payload custom
+    ? { username: data.username, email: data.email, password: data.password }
+    : { identifier: data.email, password: data.password };
 
-  if (method === "register") {
-    payload = {
-      username: data.username,
-      email: data.email,
-      password: data.password,
-    };
-  } else {
-    payload = {
-      identifier: data.email, // peut être email ou username
-      password: data.password,
-    };
-  }
-
-
-  const res = await fetch(`${API_URL}/auth/local/${ENDPOINT}`, {
+  const res = await fetch(`${API_URL}/auth/local/${endpoint}`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 
   const json = await res.json();
 
-  if (!res.ok) {
-    throw new Error(json.error?.message || "Erreur inconnue"); // Si erreur on envoie message
-  }
+  if (!res.ok) throw new Error(json.error?.message || "Erreur inconnue"); // Si jamais ya un error.message on envoie le message, sinon on envoie un message générique
 
-  if (res.ok){ // Inscription Réussies
-    console.log(method === "register" ? "Inscription Réussie" : "Connexion Réussie");
-    
-    if(data.rememberMe){  
-      document.cookie = `token=${json.jwt}; path=/; max-age=604800`; // 1 Semaine
-      console.log("Token mis dans le Cookies");
-    } else{
-      sessionStorage.setItem("token", json.jwt);
-      console.log("Token mis dans le Session Storage");
-    }
+  console.log(method === "register" ? "Inscription Réussie" : "Connexion Réussie");
+
+
+  if (data.rememberMe) {
+    document.cookie = `token=${json.jwt}; path=/; max-age=604800`;
+    console.log("Token mis dans le cookie");
+
+  } else {
+    sessionStorage.setItem("token", json.jwt);
+    console.log("Token mis dans le sessionStorage");
   }
 
   return json;
