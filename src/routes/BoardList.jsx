@@ -7,8 +7,6 @@ export default function BoardList(){
         <>
           <StrictMode>
 
-                <Header/>
-
                 <section className='main'>
                     <h1> Vos Boards </h1>
 
@@ -16,8 +14,6 @@ export default function BoardList(){
                         
                     </section>
                 </section>
-
-                <Footer/> 
                 
             </StrictMode>
         </>
