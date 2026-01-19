@@ -1,6 +1,6 @@
 export default async function registerUser(data, method) {
   const API_URL = "http://localhost:1337/api";
-  const endpoint = method === "register" ? "register" : "login";
+  const endpoint = method === "register" ? "register" : "";
 
   const payload = method === "register" // Suivant la méthode on construit un payload custom
     ? { username: data.username, email: data.email, password: data.password }
