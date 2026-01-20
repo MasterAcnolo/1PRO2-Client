@@ -1,7 +1,7 @@
 import { getToken } from "./helpers/token";
 
 async function getAuthStatus() {
-    const TOKEN = await getToken();
+    const TOKEN = getToken();
 
     if (!TOKEN) {
         console.log("Pas de token trouvé");
@@ -36,7 +36,23 @@ async function isLogged() {
     return !!user; // true si user existe, false sinon (transformation extrême)
 }
 
+function disconnect(){
+    
+    const TOKEN = getToken();
+
+    if(!isLogged){return "User was not connected"} else{
+        if(TOKEN){
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            sessionStorage?.removeItem("token");
+            
+            return true
+        }
+    }
+
+}
+
 export {
     getAuthStatus,
-    isLogged
+    isLogged,
+    disconnect
 }
