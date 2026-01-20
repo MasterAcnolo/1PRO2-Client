@@ -1,57 +1,58 @@
-import { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+  import { Routes, Route, useLocation } from "react-router-dom";
+  import { motion , AnimatePresence} from "framer-motion"
 
-// Components
-import Header from './components/layout/header/header.jsx';
-import Footer from './components/layout/footer/footer.jsx';
+  // Components
+  import Header from './components/layout/header/header.jsx';
+  import Footer from './components/layout/footer/footer.jsx';
 
-// Pages
-import Home from "./routes/Home.jsx";
-import Login from './routes/Login.jsx';
-import Register from './routes/Register.jsx';
+  // Pages
+  import Home from "./routes/Home.jsx";
+  import Login from './routes/Login.jsx';
+  import Register from './routes/Register.jsx';
 
-import Board from "./routes/Board.jsx";
-import BoardList from "./routes/BoardList.jsx";
+  import Board from "./routes/Board.jsx";
+  import BoardList from "./routes/BoardList.jsx";
 
-
-import { isLogged } from '../script/auth.js';
-
-function App() {
-
-  const navigate = useNavigate();
-
-    useEffect(() => {
-      // Check Login (If user connected)
-            async function checkLogin() {
-                const user = await isLogged(); // récupère l'utilisateur si connecté
-                if (user) {
-                    navigate("/"); // déjà connecté -> redirection
-                }
-            }
-            // checkLogin();
-      }, [navigate]);
-
+  function PageWrapper({ children }) {
   return (
-    <>
-
-
-      <Header />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-
-        <Route path="/board/1" element={<Board />} /> {/* Le Chemin ici est temporaire. Il doit être remplacer plus tard par un meilleur chemin */}
-        <Route path="/board" element={<BoardList />} />
-
-      </Routes>
-
-      <Footer />
-
-    </>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
+      style={{ minHeight: "100vh", willChange: "opacity, transform" }}
+    >
+      {children}
+    </motion.div>
   );
 }
 
-export default App;
+  function App() {
+
+    const location = useLocation();
+
+    return (
+      <>
+
+        <Header />
+
+      <AnimatePresence mode="wait">
+
+        <Routes location={location} key={location.pathname}> 
+          <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+          
+          <Route path="/login" element={<PageWrapper><Login /></PageWrapper> } />
+          <Route path="/register" element={<PageWrapper> <Register /> </PageWrapper> } />
+
+          <Route path="/board/1" element={<PageWrapper><Board /></PageWrapper>} /> {/* Le Chemin ici est temporaire. Il doit être remplacer plus tard par un meilleur chemin */}
+          <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />
+
+        </Routes>
+      </AnimatePresence>
+        <Footer />
+
+      </>
+    );
+  }
+
+  export default App;
