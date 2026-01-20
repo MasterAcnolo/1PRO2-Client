@@ -43,9 +43,50 @@
 .userHeader .avatar img{
     width: 55px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .userHeader .username{
     color: white;
     text-decoration: none;
+}
+
+/* Drop Down Avatar */
+.dropDown-content{
+    margin-top: 30px;
+    color: var(--default-dark-text-color);
+    right: -15px;
+    display: flex;
+    gap: 0px;
+    flex-direction: column;
+    position: absolute;
+    background-color: #C4C4C4;
+    text-align: end;
+    border-radius: 12px;
+}
+
+.dropDown-content p, .dropDown-content a{
+    padding: 5px;
+}
+
+.dropDown p:hover{
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.dropDown a{
+    color: var(--default-dark-text-color);
+}
+
+.dropDown a:hover{
+    text-decoration: none !important;
+}
+
+/* Disconnect Button */
+#disconnect{
+    color: #F00000;
+}
+
+#disconnect:hover{
+    color: #e80000;
 }

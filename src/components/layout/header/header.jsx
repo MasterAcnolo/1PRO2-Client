@@ -3,7 +3,7 @@ import './header.css';
 import { Link } from "react-router-dom";
 
 /* Components */
-import {Login_Sign_Buttons} from '../../button/button.jsx';
+import {UserStateHeader} from '../../userStateHeader/userStateHeader.jsx';
 import HamburgerMenu from './hamburger/hamburger.jsx';
 
 function NavHeader() {
@@ -27,7 +27,7 @@ function Header() {
 
             {/* Suivant la taille de l'écran on affiche oui ou non les éléments */}
             {window.innerWidth > 1024 ? <NavHeader/> :  "" }
-            {window.innerWidth > 1024 ? <Login_Sign_Buttons/> : <HamburgerMenu /> }
+            {window.innerWidth > 1024 ? <UserStateHeader/> : <HamburgerMenu /> }
 
         </header>
         </>
