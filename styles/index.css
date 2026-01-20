@@ -29,6 +29,8 @@ body{
 } */
 
 /* SHARED STYLES */
+/* LINK RESET */
+
 .hover-btn{
     transition: 0.2s ease-in-out;
     pointer-events: all;
@@ -41,6 +43,17 @@ body{
 
 .hover-btn:active{
     transform: scale(0.95);
+}
+
+/* LINK RESET */
+.link a{
+    text-decoration: none;
+    color: var(--default-text-color);
+}
+
+.link a:hover{
+    text-decoration: underline;
+    font-weight: 600;
 }
 
 /* RESPONSIVE ENDPOINTS */
