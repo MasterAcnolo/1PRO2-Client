@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-import PageLoader from "./helpers/loader/loader.jsx"
-
 // Components
 import Header from './components/layout/header/header.jsx';
 import Footer from './components/layout/footer/footer.jsx';
@@ -36,7 +34,6 @@ function App() {
   return (
     <>
 
-      {/* <PageLoader /> */}
 
       <Header />
 
