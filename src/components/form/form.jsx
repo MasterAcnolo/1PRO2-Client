@@ -39,7 +39,7 @@ function Form({ type }) {
 
       // Redirection après succès
       if (isLogged()) {
-        navigate("/board");
+        window.location.href = "/board"
       }
 
     } catch(error) {
