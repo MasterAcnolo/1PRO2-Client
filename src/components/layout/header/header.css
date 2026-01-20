@@ -12,7 +12,7 @@ header {
     
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 
@@ -24,6 +24,7 @@ header {
     font-weight: 700;
     z-index: 99;
     transition: text-shadow 0.3s ease, color 0.3s ease;
+    margin-left: 30px;
 }
 
 .title:hover{
