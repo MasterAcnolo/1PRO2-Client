@@ -1,9 +1,70 @@
-.main h1{
-    margin-top: 15vh;
-    color: rgb(42, 42, 42);
+.main {
+    padding: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.main{
+.main h1 {
+    margin-bottom: 30px;
+    color: black;
+
+}
+
+/* Conteneur des boards */
+.board-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* Carte */
+.card-preview {
+    position: relative;
+    background-color: #9c9c9c;
+    border-radius: 16px;
+    height: 100px;
+    padding: 16px;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    cursor: pointer;
+}
+
+/* Zone basse */
+.card-preview .bottom h4 {
+    margin-top: auto;
+    font-size: 1.1rem;
+}
+
+.card-preview .bottom p {
+    margin: 6px 0 0 0;
+    font-size: 0.85rem;
+}
+
+
+/* Ajouter un board Card*/
+.addCard{
+    background: none;
+    color: #9c9c9ced;
+    border: dashed #9c9c9ced 5px;
+    padding: 11px;
+    font-size: 1.5em;
+    gap: 5px;
+    align-items: center;
     justify-content: center;
+}
+
+.addCard p{
+    margin: 0;
+}
+
+.addCard:hover{
+    box-shadow: none;
 }

@@ -1,26 +1,38 @@
+.dropDown img{
+    width: 30px;
+    height: 30px;
+}
+
 .dropDown img:hover{
     cursor: pointer;
 }
 
-.dropDown-content{
-    display: flex;
-    gap: 0px;
-    flex-direction: column;
+.dropDown {
     position: absolute;
-    background-color: #C4C4C4;
-    text-align: end;
-    transform: translate(-60%);
-    border-radius: 12px;
+    top: 12px;
+    right: 12px;
 }
 
-.dropDown-content p{
-    margin: 5px;
+.dropDown-content {
+    margin-top: 6px;
+    right: 0;
+    transform: none;
+    padding: 6px 0;
+    min-width: 120px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10;
 }
 
-.dropDown p:hover{
-    font-weight: 500;
-    cursor: pointer;
+.dropDown-content p {
+    margin: 0;
+    padding: 8px 12px;
+    text-align: left;
 }
+
+.dropDown-content p:hover {
+    background-color: rgba(0,0,0,0.08);
+}
+
 
 #delete{
     color: #F00000;
