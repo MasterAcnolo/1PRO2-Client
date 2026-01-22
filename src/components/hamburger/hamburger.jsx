@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import hamburgerIcon from '../../../../../assets/icon/hamburger.png';
-import crossIcon from '../../../../../assets/icon/cross.png';
+import hamburgerIcon from '../../../assets/icon/hamburger.png';
+import crossIcon from '../../../assets/icon/cross.png';
 
 import './hamburger.css';
 
@@ -24,7 +24,12 @@ function HamburgerMenu() {
         className={isActive ? 'fade' : ''}
       />
 
-      {isActive ? <div className='hamburger-overlay'> </div> : ""}
+      {isActive ? 
+      <div className='hamburger-overlay'> 
+
+
+      </div> : ""
+      }
 
     </>
   );

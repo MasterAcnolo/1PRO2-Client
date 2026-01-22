@@ -3,12 +3,16 @@ import './header.css';
 import { Link } from "react-router-dom";
 
 /* Components */
-import {UserStateHeader} from '../../userStateHeader/userStateHeader.jsx';
-import HamburgerMenu from './hamburger/hamburger.jsx';
+import {UserStateHeader} from '../userStateHeader/userStateHeader.jsx';
+import {useIsLogged} from '../../../script/hooks/hooks.isLogged.js'
+import HamburgerMenu from '../hamburger/hamburger.jsx';
 
 function NavHeader() {
 
-    
+    const logged = useIsLogged();
+
+    if (!logged) return null; 
+
     return (
         <>
         <nav>
@@ -20,6 +24,7 @@ function NavHeader() {
 }
 
 function Header() {
+
     return(
         <>
         <header>
