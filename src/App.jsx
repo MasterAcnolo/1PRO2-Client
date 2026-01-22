@@ -2,8 +2,8 @@
   import { motion , AnimatePresence} from "framer-motion"
 
   // Components
-  import Header from './components/layout/header/header.jsx';
-  import Footer from './components/layout/footer/footer.jsx';
+  import Header from './components/header/header.jsx';
+  import Footer from './components/footer/footer.jsx';
 
   // Pages
   import Home from "./routes/Home.jsx";
@@ -49,6 +49,7 @@
 
         </Routes>
       </AnimatePresence>
+
         <Footer />
 
       </>
