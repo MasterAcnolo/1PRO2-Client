@@ -3,21 +3,26 @@ import { useEffect, useState } from 'react';
 import "../../styles/pages/boardList.css"
 import "../../styles/form/createBoard.css"
 
-import fetchElement from '../../script/utils/fetch';
+import fetchElement from '../../script/fetch';
 
 import { DropDownCard } from '../helpers/dropdown/dropdown';
 import {useIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
-import { getToken } from '../../script/helpers/token';
+import { getToken } from '../../script/helpers/getToken';
+
+import { createElement } from '../../script/services/createElement';
 
 function CardPreview({title, date, data_id}){
+
+    const date_ISO = new Date(date).toLocaleString();
+
     return (
         <>
-        <div className='card-preview' data_id = {d}>
+        <div className='card-preview' data_id = {data_id}>
             <DropDownCard /> 
 
-            <div className='bottom'>
+            <div className='bottom'>    
                 <h4> {title} </h4>
-                <p> Dernière Modification: {date}</p>
+                <p> Dernière Modification: {date_ISO}</p>
             </div>
 
         </div>
@@ -32,74 +37,6 @@ function AddBoard({ onClick }) {
             <p>+</p>
         </div>
     )
-}
-
-async function postBoard(title){
-    const TOKEN = getToken();
-
-    const API_URL = "http://localhost:1337/api";
-
-    const payload = {
-        "data":{
-            "name":title
-        }
-
-    };
-
-    const res = await fetch(`${API_URL}/boards/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json",
-                    "Authorization": `Bearer ${TOKEN}`
-                    },
-        body: JSON.stringify(payload),
-    });
-
-    const json = await res.json();
-
-    console.log(json)
-
-
-    if (!res.ok) throw new Error(json.error?.message || "Erreur inconnue"); // Si jamais ya un error.message on envoie le message, sinon on envoie un message générique
-
-    if(res.ok){
-        window.location.reload(); // Si jamais c'est good on doit amener au board 
-    }
-    console.log(json)
-
-}
-
-async function deleteBoard(documentId){
-    const TOKEN = getToken();
-
-    const API_URL = "http://localhost:1337/api";
-
-    const payload = {
-        "data":{
-            "name":title
-        }
-
-    };
-
-    const res = await fetch(`${API_URL}/boards/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json",
-                    "Authorization": `Bearer ${TOKEN}`
-                    },
-        body: JSON.stringify(payload),
-    });
-
-    const json = await res.json();
-
-    console.log(json)
-
-
-    if (!res.ok) throw new Error(json.error?.message || "Erreur inconnue"); // Si jamais ya un error.message on envoie le message, sinon on envoie un message générique
-
-    if(res.ok){
-        window.location.reload(); // Si jamais c'est good on doit amener au board 
-    }
-    console.log(json)
-
 }
 
 export default function BoardList(){
@@ -121,9 +58,15 @@ export default function BoardList(){
         setIsPanelOpen(prev => !prev);
     }
 
-    useEffect(()=>{
-        
-    })
+    function payload(title){
+        return {
+             data: { "name": title }
+        }
+    }
+
+    function handleDelete(ID){
+            
+    }
 
     return (
         <section className='main'>
@@ -150,7 +93,7 @@ export default function BoardList(){
 
                         <div className="buttons">
                             <button onClick={togglePanel}>Annuler</button>
-                            <button onClick={() => postBoard(title)}>Sauvegarder</button>
+                            <button onClick={() => createElement("BOARD", payload(title))} >Sauvegarder</button>
                         </div>
                     </div>
                 </div>
