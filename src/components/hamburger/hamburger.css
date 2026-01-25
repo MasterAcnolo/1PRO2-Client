@@ -23,3 +23,52 @@
     transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 50;
 }
+
+.hamburger-backgroundContent{
+    background-color: var(--default-text-color);
+    right: 0;
+    position: absolute;
+    width: 320px;
+    height: 200vh;
+    top: 5%;
+}
+
+.hamburger-content{
+    color: black;
+}
+
+.hamburger-avatar{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: blue; /* Voir si on met un fons en couleur ou pas de fond*/
+}
+
+.hamburger-content img{
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+}
+
+.hamburger-contentText{
+    margin-left: 30px;
+}
+
+.horizontal-line{
+    border-bottom: 2px solid black;
+    display: inline-block;
+    align-content: center;
+    width: 280px;
+    margin: 5px 18px;
+}
+
+.hamburger-disconnect{
+    right: 0;
+    position: absolute;
+    margin-right: 15px;
+    color: red;
+}
+.hamburger-contentText p{
+    text-decoration: none;
+    margin: 10px 0;
+}
