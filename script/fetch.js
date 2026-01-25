@@ -1,4 +1,4 @@
-import { getToken } from "../helpers/token";
+import { getToken } from "./helpers/getToken";
 
 export default async function fetchElement(){
     const BASE_URL = "http://localhost:1337/api"

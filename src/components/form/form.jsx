@@ -4,8 +4,7 @@ import { useState } from "react";
 import "./form.css";
 
 // FORM Features
-import registerUser from "../../../script/register.js";
-import { isLogged } from "../../../script/auth.js";
+import {loginRegisterUser, isLogged} from "../../../script/user.js";
 
 function Form({ type }) {
 
@@ -32,8 +31,8 @@ function Form({ type }) {
 
     try {
       const response = type === "register" 
-        ? await registerUser(data, "register") 
-        : await registerUser(data, "login");
+        ? await loginRegisterUser(data, "register") 
+        : await loginRegisterUser(data, "login");
 
       setData(response);
 
