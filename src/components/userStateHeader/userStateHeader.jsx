@@ -1,7 +1,7 @@
 import './userStateHeader.css'
 ;
 import { Link } from "react-router-dom";
-import { getAuthStatus, disconnect } from '../../../script/auth';
+import { getUserInfo, disconnectUser } from '../../../script/user';
 import { useState, useEffect } from 'react';
 
 function UserStateHeader() {
@@ -10,7 +10,7 @@ function UserStateHeader() {
 
     useEffect(() => {
         async function fetchUser() {
-            const data = await getAuthStatus();
+            const data = await getUserInfo();
             if (data) setUserData(data);
         }
         fetchUser();
@@ -40,7 +40,7 @@ function UserStateHeader() {
                         <Link to="/board">Vos Boards</Link>
                         <p id='disconnect' onClick={
                             function(){
-                                const status = disconnect()
+                                const status = disconnectUser()
 
                                 status === true ? window.location.reload() : console.log("Erreur pendant la déconnexion");
                             }
