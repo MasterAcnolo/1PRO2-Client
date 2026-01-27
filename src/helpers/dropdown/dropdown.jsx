@@ -2,7 +2,9 @@ import './dropdown.css';
 
 import { useState } from 'react';
 
-function DropDownCard() {
+import { deleteElement } from '../../../script/services/deleteElement';
+
+function DropDownCard({type, elementId}) {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -13,8 +15,7 @@ function DropDownCard() {
 
             <div className='dropDown-content' style={{display: `${isOpen ? "flex" : "none"}`}}>
                 <p className='edit' id='edit'>Modifier</p>
-                <p className='duplicate' id='duplicate'>Dupliquer</p>
-                <p className='delete' id='delete'>Supprimer</p>
+                <p className='delete' id='delete' onClick={()=>{deleteElement(type, elementId)}}>Supprimer</p>
 
             </div>
        </div>

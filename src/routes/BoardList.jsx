@@ -6,8 +6,7 @@ import "../../styles/form/createBoard.css"
 import fetchElement from '../../script/fetch';
 
 import { DropDownCard } from '../helpers/dropdown/dropdown';
-import {useIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
-import { getToken } from '../../script/helpers/getToken';
+import {userIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
 
 import { createElement } from '../../script/services/createElement';
 
@@ -18,7 +17,7 @@ function CardPreview({title, date, data_id}){
     return (
         <>
         <div className='card-preview' data_id = {data_id}>
-            <DropDownCard /> 
+            <DropDownCard type="BOARD" elementId={data_id}/> 
 
             <div className='bottom'>    
                 <h4> {title} </h4>
@@ -40,7 +39,7 @@ function AddBoard({ onClick }) {
 }
 
 export default function BoardList(){
-    useIsLoggedRedirect();
+    userIsLoggedRedirect();
 
     const [boards, setBoards] = useState([]);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -62,10 +61,6 @@ export default function BoardList(){
         return {
              data: { "name": title }
         }
-    }
-
-    function handleDelete(ID){
-            
     }
 
     return (

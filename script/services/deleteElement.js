@@ -1,6 +1,6 @@
 import { getToken } from "../helpers/getToken";
 
-async function deleteElement(type,payload){
+async function deleteElement(type,ID){
     const BASE_URL = "http://localhost:1337/api"
     const TOKEN = getToken();
 
@@ -20,16 +20,19 @@ async function deleteElement(type,payload){
             console.log("Invalid Type")
     }
     
-    const res = await fetch(`${BASE_URL}${ENDPOINT}`, {
+    const res = await fetch(`${BASE_URL}${ENDPOINT}/${ID}`, {
         method: "DELETE",
         headers: { 
             "Content-Type": "application/json", 
             "Authorization": `Bearer ${TOKEN}` 
         },
-        body: JSON.stringify(payload)
     });
 
-    const json = await res.json(); 
+    let json = null;
+
+    if (res.headers.get("content-type")?.includes("application/json")) {
+        json = await res.json();
+    }
 
     if (!res.ok) throw new Error(json.error?.message || "Erreur inconnue"); // Si jamais ya un error.message on envoie le message, sinon on envoie un message générique
 
