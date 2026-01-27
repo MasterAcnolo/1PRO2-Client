@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { isLogged } from "../user";
 
 // Check si jamais l'utilisateur est connecté. Si non, envoie à la page de login
-function useIsLoggedRedirect() {
+function userIsLoggedRedirect() {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,7 +15,7 @@ function useIsLoggedRedirect() {
     }, [navigate]);
 }
 
-function useIsLogged() {
+function userIsLogged() {
     const [logged, setLogged] = useState(false);
 
     useEffect(() => {
@@ -30,6 +30,6 @@ function useIsLogged() {
 }
 
 export {
-    useIsLoggedRedirect,
-    useIsLogged
+    userIsLoggedRedirect,
+    userIsLogged
 }

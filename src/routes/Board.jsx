@@ -1,10 +1,10 @@
 import TaskCard from '../components/board/column/card/card.jsx';
 
-import {useIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
+import {userIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
 
 export default function Board(){
 
-    useIsLoggedRedirect();
+    userIsLoggedRedirect();
     
     return (
     <>

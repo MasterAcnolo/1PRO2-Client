@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 /* Components */
 import {UserStateHeader} from '../userStateHeader/userStateHeader.jsx';
-import {useIsLogged} from '../../../script/hooks/hooks.isLogged.js'
+import {userIsLogged} from '../../../script/hooks/hooks.isLogged.js'
 import HamburgerMenu from '../hamburger/hamburger.jsx';
 
 function NavHeader() {
 
-    const logged = useIsLogged();
+    const logged = userIsLogged();
 
     if (!logged) return null; 
 
@@ -25,13 +25,18 @@ function NavHeader() {
 
 function Header() {
 
+    const logged = userIsLogged()
+
     return(
         <>
         <header>
             <Link to="/" className="title">TASKLOADER.</Link>
 
             {/* Suivant la taille de l'écran on affiche oui ou non les éléments */}
-            {window.innerWidth > 1024 ? <NavHeader/> :  "" }
+            {window.innerWidth > 1024
+                ? (logged ? <NavHeader /> : null)
+                : null}
+
             {window.innerWidth > 1024 ? <UserStateHeader/> : <HamburgerMenu /> }
 
         </header>

@@ -78,7 +78,7 @@ function disconnectUser(){
 }
 
 async function isLogged() {
-    const user = await getAuthStatus();
+    const user = await getUserInfo();
     return !!user; // true si user existe, false sinon (transformation extrême)
 }
 
