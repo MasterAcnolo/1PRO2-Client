@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import { getUserInfo, disconnectUser } from '../../../script/user';
 
 import hamburgerIcon from '../../../assets/icon/hamburger.png';
 import crossIcon from '../../../assets/icon/cross.png';
@@ -14,6 +15,16 @@ function HamburgerMenu() {
     setIsActive(valeur => !valeur);
     document.body.style.overflow = !isActive ? 'hidden' : 'auto';
   };
+
+  const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        async function fetchUser() {
+            const data = await getUserInfo();
+            if (data) setUserData(data);
+        }
+        fetchUser();
+    }, []);
 
   return (
     <>
@@ -32,7 +43,7 @@ function HamburgerMenu() {
           <div className='hamburger-content'>
 
             <div className='hamburger-avatar'>
-              <h1>{/*username*/}C Moi !</h1>
+              <h1>{userData.username}</h1>
               <img src="../../../assets/default.jpg" alt="Icon d'Avatar" />
             </div>
 
