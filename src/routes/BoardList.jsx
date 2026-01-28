@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import "../../styles/pages/boardList.css"
-import "../../styles/form/createBoard.css"
+import "../../styles/overlay/createBoard.css"
 
 import fetchElement from '../../script/fetch';
 
