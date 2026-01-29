@@ -1,7 +1,6 @@
 .buttons {
     display: flex;
-    gap: 15px;
-    margin-right: 30px;
+    gap: 15px;   
 }
 
 .buttons a {
@@ -29,6 +28,7 @@
     border: 2px solid var(--default-text-color);
     background: var(--blue-primary-color);
     color: var(--default-text-color);
+    margin-right: 30px;
 }
 
 /* Avatar + User Header */
