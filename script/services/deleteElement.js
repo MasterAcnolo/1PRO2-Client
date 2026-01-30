@@ -18,6 +18,7 @@ async function deleteElement(type,ID){
             break;
         default:
             console.log("Invalid Type")
+            return null
     }
     
     const res = await fetch(`${BASE_URL}${ENDPOINT}/${ID}`, {
