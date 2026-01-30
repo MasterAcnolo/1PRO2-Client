@@ -31,6 +31,7 @@
     width: 320px;
     height: 200vh;
     top: 5%;
+    pointer-events: auto;
 }
 
 .hamburger-content{
@@ -41,7 +42,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: blue; /* Voir si on met un fons en couleur ou pas de fond*/
+    background-color: blue; /* Voir si on met un fon en couleur ou pas de fond*/
 }
 
 .hamburger-content img{
@@ -50,8 +51,14 @@
     border-radius: 50%;
 }
 
+.hamburger-content h2{
+    font-size: 100px;
+}
+
 .hamburger-contentText{
     margin-left: 30px;
+    display: flex;
+    flex-direction: column;
 }
 
 .horizontal-line{
@@ -68,7 +75,9 @@
     margin-right: 15px;
     color: red;
 }
-.hamburger-contentText p{
+
+.hamburger-contentText a{
     text-decoration: none;
+    color: black;
     margin: 10px 0;
 }

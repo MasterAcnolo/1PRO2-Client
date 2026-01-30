@@ -42,35 +42,38 @@ function HamburgerMenu() {
         <div className='hamburger-backgroundContent'>
           <div className='hamburger-content'>
 
+          { userData ? 
             <div className='hamburger-avatar'>
-              <h1>{userData.username}</h1>
+              <h2>{ userData ? userData.username : "Utilisateur"}</h2>
               <img src="../../../assets/default.jpg" alt="Icon d'Avatar" />
-            </div>
-
+            </div> : ""
+          }
             <div className='hamburger-contentText'>
               <h4>Boards</h4>
-              <p className='hover-btn'><Link>Vos Board</Link></p>
-              <p className='hover-btn'><Link>Créer un Board</Link></p>
+              <Link>Vos Board</Link>
+              <Link>Créer un Board</Link>
             </div>
             
             <span className='horizontal-line'></span>
 
-            <div className='hamburger-contentText'>
-              <h4>Mon Espace</h4>
-              <p className='hover-btn'><Link>S'inscrire</Link></p>
-              <p className='hover-btn'><Link>Connexion</Link></p>
-            </div>
+            { !userData ? 
+              <div className='hamburger-contentText'>
+                <h4>Mon Espace</h4>
+                <Link>S'inscrire</Link>
+                <Link>Connexion</Link>
+              </div>  : ""
+             
+            } 
+            
+            { !userData ? <span className='horizontal-line'></span> : ""}
 
-              <span className='horizontal-line'></span>
-
-            {/* A voir si on le garde dans le hamburger */}
             <div className='hamburger-contentText'>
               <h4>Légal</h4>
-              <p className='hover-btn'><Link>Vos Données</Link></p>
-              <p className='hover-btn'><Link>Mentions Légales</Link></p>
+              <Link>Vos Données</Link>
+              <Link>Mentions Légales</Link>
             </div>
 
-            <div className='hamburger-disconnect hover-btn'><p><Link>Déconnexion</Link></p></div>
+            { userData ? <div className='hamburger-disconnect'><Link>Déconnexion</Link></div> : ""}
           </div>
         </div>
       </div> : ""
