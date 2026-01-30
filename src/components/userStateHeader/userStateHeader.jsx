@@ -40,7 +40,7 @@ function UserStateHeader() {
                         <Link to="/board">Vos Boards</Link>
                         <p id='disconnect' onClick={
                             function(){
-                                const status = disconnectUser()
+                                const status = disconnectUser();
 
                                 status === true ? window.location.reload() : console.log("Erreur pendant la déconnexion");
                             }
