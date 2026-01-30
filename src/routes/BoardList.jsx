@@ -9,14 +9,16 @@ import { DropDownCard } from '../helpers/dropdown/dropdown';
 import {userIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
 
 import { createElement } from '../../script/services/createElement';
+import { useNavigate } from 'react-router-dom';
 
 function CardPreview({title, date, data_id}){
 
     const date_ISO = new Date(date).toLocaleString();
+    const navigate = useNavigate();
 
     return (
         <>
-        <div className='card-preview' data_id = {data_id}>
+        <div className='card-preview' data_id = {data_id} onClick={() => navigate(`/board/${data_id}`)}>
             <DropDownCard type="BOARD" elementId={data_id}/> 
 
             <div className='bottom'>    

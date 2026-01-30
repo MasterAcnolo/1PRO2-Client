@@ -44,7 +44,7 @@
           <Route path="/login" element={<PageWrapper><Login /></PageWrapper> } />
           <Route path="/register" element={<PageWrapper> <Register /> </PageWrapper> } />
 
-          <Route path="/board/1" element={<PageWrapper><Board /></PageWrapper>} /> {/* Le Chemin ici est temporaire. Il doit être remplacer plus tard par un meilleur chemin */}
+          <Route path="/board/:id" element={<PageWrapper><Board /></PageWrapper>} /> {/* Le Chemin ici est temporaire. Il doit être remplacer plus tard par un meilleur chemin */}
           <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />
 
         </Routes>
