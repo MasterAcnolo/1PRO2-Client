@@ -40,13 +40,14 @@
 
         <Routes location={location} key={location.pathname}> 
           <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-          
+
           <Route path="/login" element={<PageWrapper><Login /></PageWrapper> } />
           <Route path="/register" element={<PageWrapper> <Register /> </PageWrapper> } />
 
-          <Route path="/board/:id" element={<PageWrapper><Board /></PageWrapper>} /> {/* Le Chemin ici est temporaire. Il doit être remplacer plus tard par un meilleur chemin */}
-          <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />
+          <Route path="/account" element={<PageWrapper></PageWrapper>} />
 
+          <Route path="/board/:id" element={<PageWrapper><Board /></PageWrapper>} />
+          <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />
         </Routes>
       </AnimatePresence>
 

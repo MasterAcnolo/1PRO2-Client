@@ -15,7 +15,7 @@ function Footer() {
                 </nav>
                 <nav>
                     <h3>Mon espace</h3>
-                    <Link>Compte</Link>
+                    <Link to="/account">Compte</Link>
                     <Link to="/register">S'inscrire</Link>
                     <Link to="/login">Connexion</Link>
                 </nav>
