@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { deleteElement } from '../../../script/services/deleteElement';
 
-function DropDownCard({type, elementId}) {
+function DropDownCard({type, elementId, onDelete}) {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -15,7 +15,11 @@ function DropDownCard({type, elementId}) {
 
     function handleDelete(e) {
         e.stopPropagation();
-        deleteElement(type, elementId);
+        if (onDelete) {
+            onDelete(e);
+        } else {
+            deleteElement(type, elementId);
+        }
     }
 
 

@@ -33,6 +33,7 @@ async function getElement(type, ID) {
 
     if (res.headers.get("content-type")?.includes("application/json")) {
         json = await res.json();
+        console.log(json)
     }
 
     if (!res.ok) {

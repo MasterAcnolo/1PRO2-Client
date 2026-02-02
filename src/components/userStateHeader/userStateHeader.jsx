@@ -39,10 +39,13 @@ function UserStateHeader() {
                         <Link to="/">Mon Espace</Link>
                         <Link to="/board">Vos Boards</Link>
                         <p id='disconnect' onClick={
-                            function(){
-                                const status = disconnectUser();
-
-                                status === true ? window.location.reload() : console.log("Erreur pendant la déconnexion");
+                            async function(){
+                                const status = await disconnectUser();
+                                if (status === true) {
+                                    setUserData(null);
+                                } else {
+                                    console.log("Erreur pendant la déconnexion");
+                                }
                             }
                         }>Déconnexion</p>
 

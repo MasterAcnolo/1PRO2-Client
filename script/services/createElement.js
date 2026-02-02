@@ -33,7 +33,7 @@ async function createElement(type,payload){
 
     if (!res.ok) throw new Error(json.error?.message || "Erreur inconnue"); // Si jamais ya un error.message on envoie le message, sinon on envoie un message générique
 
-    window.location.reload();
+
 
     return json
 }
