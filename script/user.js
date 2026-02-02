@@ -16,17 +16,14 @@ async function loginRegisterUser(data, method) {
 
   const json = await res.json();
 
-  if (!res.ok) throw new Error(json.error?.message || "Erreur inconnue"); // Si jamais ya un error.message on envoie le message, sinon on envoie un message générique
+  if (!res.ok) throw new Error(json.error?.message || "Erreur inconnue"); // TOAST "Erreur pendant l'inscription / connexion. A faire varier selon la variable "method"
 
-  console.log(method === "register" ? "Inscription Réussie" : "Connexion Réussie"); // TOAST ICI
+  console.log(method === "register" ? "Inscription Réussie" : "Connexion Réussie"); // TOAST
 
   if (data.rememberMe) {
     document.cookie = `token=${json.jwt}; path=/; max-age=604800`; // Cookie de max une semaine
-    console.log("Token mis dans le cookie");
-
   } else {
     sessionStorage.setItem("token", json.jwt);
-    console.log("Token mis dans le sessionStorage");
   }
 
   return json;
