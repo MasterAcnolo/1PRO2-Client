@@ -50,8 +50,8 @@ function HamburgerMenu() {
           }
             <div className='hamburger-contentText'>
               <h4>Boards</h4>
-              <Link>Vos Board</Link>
-              <Link>Créer un Board</Link>
+              <Link to="/board">Vos Boards</Link>
+              <Link to="/board/1">Créer un Board</Link>
             </div>
             
             <span className='horizontal-line'></span>
@@ -59,12 +59,15 @@ function HamburgerMenu() {
             { !userData ? 
               <div className='hamburger-contentText'>
                 <h4>Mon Espace</h4>
-                <Link>S'inscrire</Link>
-                <Link>Connexion</Link>
+                <Link to="/register">S'inscrire</Link>
+                <Link to="/login">Connexion</Link>
               </div>  : ""
-             
             } 
-            
+            { userData ? 
+              <div className='hamburger-contentText'>
+                <h4>Mon Espace</h4>
+                <Link to="/account">Compte</Link>
+              </div> : ""}
             { !userData ? <span className='horizontal-line'></span> : ""}
 
             <div className='hamburger-contentText'>
