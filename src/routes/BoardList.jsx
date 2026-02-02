@@ -9,23 +9,26 @@ import { DropDownCard } from '../helpers/dropdown/dropdown';
 import {userIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
 
 import { createElement } from '../../script/services/createElement';
+import { deleteElement } from '../../script/services/deleteElement';
 import { useNavigate } from 'react-router-dom';
 
-function CardPreview({title, date, data_id}){
-
+function CardPreview({title, date, data_id, onDelete}){
     const date_ISO = new Date(date).toLocaleString();
     const navigate = useNavigate();
+
+    function handleDelete(e) {
+        e.stopPropagation();
+        if (onDelete) onDelete("BOARD", data_id);
+    }
 
     return (
         <>
         <div className='card-preview' data_id = {data_id} onClick={() => navigate(`/board/${data_id}`)}>
-            <DropDownCard type="BOARD" elementId={data_id}/> 
-
+            <DropDownCard type="BOARD" elementId={data_id} onDelete={handleDelete}/> 
             <div className='bottom'>    
                 <h4> {title} </h4>
                 <p> Dernière Modification: {date_ISO}</p>
             </div>
-
         </div>
         </>
     )
@@ -45,14 +48,15 @@ export default function BoardList(){
 
     const [boards, setBoards] = useState([]);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const [title, setTitle] = useState(false);
+    const [title, setTitle] = useState("");
+
+    async function refreshBoards() {
+        const res = await fetchElement();
+        setBoards(res.boards);
+    }
 
     useEffect(() => {
-        async function fetchCard(){
-            const res = await fetchElement();
-            setBoards(res.boards);
-        }
-        fetchCard();
+        refreshBoards();
     }, []);
 
     function togglePanel() {
@@ -63,6 +67,17 @@ export default function BoardList(){
         return {
              data: { "name": title }
         }
+    }
+
+    async function handleCreateBoard() {
+        await createElement("BOARD", payload(title));
+        setIsPanelOpen(false);
+        await refreshBoards();
+    }
+
+    async function handleDeleteBoard(type, id) {
+        await deleteElement(type, id);
+        await refreshBoards();
     }
 
     return (
@@ -76,6 +91,7 @@ export default function BoardList(){
                         data_id={board.documentId}
                         title={board.name}
                         date={board.updatedAt}
+                        onDelete={handleDeleteBoard}
                     />
                 ))}
 
@@ -90,7 +106,7 @@ export default function BoardList(){
 
                         <div className="buttons">
                             <button onClick={togglePanel}>Annuler</button>
-                            <button onClick={() => createElement("BOARD", payload(title))} >Sauvegarder</button>
+                            <button onClick={handleCreateBoard}>Sauvegarder</button>
                         </div>
                     </div>
                 </div>

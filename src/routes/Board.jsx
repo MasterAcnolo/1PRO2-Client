@@ -28,11 +28,15 @@ export default function Board() {
         async function fetchBoard() {
             try {
                 const res = await getElement("BOARD", id);
-                console.log(res.data.name)
-                console.log(res.data)
+                console.log("Réponse: ",res)
                 setBoard(res.data);
             } catch (err) {
-                setError(err.message);
+                // Gestion spécifique du 404
+                if (err.response && err.response.status === 404) {
+                    setError("Board introuvable.");
+                } else {
+                    setError(err.message);
+                }
             } finally {
                 setLoading(false);
             }
@@ -46,9 +50,9 @@ export default function Board() {
     if (!board || !board.columns) return <p>Aucune colonne</p>;
 
     return (
-        <> 
+        <>
             <h1>{board.name}</h1>
-            <p>{board.description}</p>
+            {/* Affichage des colonnes et cartes à ajouter ici */}
         </>
     );
 }
