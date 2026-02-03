@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import TaskCard from "../components/board/column/card/card.jsx";
+import "../../styles/pages/board.css"
+
 import { useUserIsLoggedRedirect } from "../../script/hooks/hooks.isLogged";
 import { getElement } from "../../script/services/getElement";
 
@@ -50,8 +51,10 @@ export default function Board() {
 
     return (
         <>
-            <h1>{board.name}</h1>
-            {/* Affichage des colonnes et cartes à ajouter ici */}
+            <div className="board-container">
+                <h1>{board.name}</h1>
+                {/* Affichage des colonnes et cartes à ajouter ici */}
+            </div>
         </>
     );
 }
