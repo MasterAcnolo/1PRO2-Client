@@ -18,7 +18,6 @@ function NavHeader() {
         <nav>
             <Link to="/board">Vos Boards</Link>
             <Link to="/board/1">Créer un Board</Link>
-            <Link to="/account">Compte</Link>
         </nav>
         </>
     );
