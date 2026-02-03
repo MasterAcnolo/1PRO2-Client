@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import TaskCard from "../components/board/column/card/card.jsx";
-import { userIsLoggedRedirect } from "../../script/hooks/hooks.isLogged";
+import { useUserIsLoggedRedirect } from "../../script/hooks/hooks.isLogged";
 import { getElement } from "../../script/services/getElement";
 
 export default function Board() {
 
-    userIsLoggedRedirect();
+    useUserIsLoggedRedirect('/login');
 
     const { id } = useParams();
     const navigate = useNavigate();

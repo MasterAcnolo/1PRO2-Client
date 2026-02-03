@@ -3,13 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { isLogged } from "../user";
 
 // Check si jamais l'utilisateur est connecté. Si non, envoie à la page de login
-function userIsLoggedRedirect() {
+function useUserIsLoggedRedirect(destination, isLoggedCheck = false) { // Si jamais isLogged est à true. On va agir en disant "Si l'utilisateur est connecté alors on fait ça. Si jamais isLogged === false alors on dira "Si jamais l'utilisateur n'est pas connecté alors on fait ça"
     const navigate = useNavigate();
 
     useEffect(() => {
         async function check() {
             const user = await isLogged();
-            if (!user) navigate("/login");
+
+            if(isLoggedCheck){
+                if (user) navigate(`${destination}`);
+            } else {
+                if (!user) navigate(`${destination}`);
+            }
+
+            
         }
         check();
     }, [navigate]);
@@ -29,7 +36,7 @@ function userIsLogged() {
     return logged;
 }
 
-export {
-    userIsLoggedRedirect,
-    userIsLogged
+export{
+    useUserIsLoggedRedirect,
+    userIsLogged,
 }

@@ -6,7 +6,7 @@ import "../../styles/overlay/createBoard.css"
 import fetchElement from '../../script/fetch';
 
 import { DropDownCard } from '../helpers/dropdown/dropdown';
-import {userIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
+import {useUserIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
 
 import { createElement } from '../../script/services/createElement';
 import { deleteElement } from '../../script/services/deleteElement';
@@ -44,7 +44,7 @@ function AddBoard({ onClick }) {
 }
 
 export default function BoardList(){
-    userIsLoggedRedirect();
+    useUserIsLoggedRedirect("/login");
 
     const [boards, setBoards] = useState([]);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
