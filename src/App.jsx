@@ -36,20 +36,20 @@
 
         <Header />
 
-      <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait">
 
-        <Routes location={location} key={location.pathname}> 
-          <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+          <Routes location={location} key={location.pathname}> 
+            <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
 
-          <Route path="/login" element={<PageWrapper><Login /></PageWrapper> } />
-          <Route path="/register" element={<PageWrapper> <Register /> </PageWrapper> } />
+            <Route path="/login" element={<PageWrapper><Login /></PageWrapper> } />
+            <Route path="/register" element={<PageWrapper> <Register /> </PageWrapper> } />
 
-          <Route path="/account" element={<PageWrapper></PageWrapper>} />
+            <Route path="/account" element={<PageWrapper></PageWrapper>} />
 
-          <Route path="/board/:id" element={<PageWrapper><Board /></PageWrapper>} />
-          <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />
-        </Routes>
-      </AnimatePresence>
+            <Route path="/board/:id" element={<PageWrapper><Board /></PageWrapper>} />
+            <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />
+          </Routes>
+        </AnimatePresence>
 
         <Footer />
 
