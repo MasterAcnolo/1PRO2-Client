@@ -42,12 +42,15 @@ function HamburgerMenu() {
         <div className='hamburger-backgroundContent'>
           <div className='hamburger-content'>
 
-          { userData ? 
-            <div className='hamburger-avatar'>
-              <h2>{ userData ? userData.username : "Utilisateur"}</h2>
-              <img src="../../../assets/default.jpg" alt="Icon d'Avatar" />
-            </div> : ""
-          }
+            { userData && 
+              <>
+                <div className='hamburger-avatar'>
+                  <h2>{userData.username}</h2>
+                  <img src="../../../assets/default.jpg" alt="Icon d'Avatar" />
+                </div>
+              </>
+            }
+            
             <div className='hamburger-contentText'>
               <h4>Boards</h4>
               <Link to="/board">Vos Boards</Link>
@@ -55,19 +58,19 @@ function HamburgerMenu() {
             
             <span className='horizontal-line'></span>
 
-            { !userData ? 
-              <div className='hamburger-contentText'>
-                <h4>Mon Espace</h4>
-                <Link to="/register">S'inscrire</Link>
-                <Link to="/login">Connexion</Link>
-              </div>  : ""
-            } 
-            { userData ? 
-              <div className='hamburger-contentText'>
-                <h4>Mon Espace</h4>
+            <div className='hamburger-contentText'>
+              <h4>Mon Espace</h4>
+              {!userData ? (
+                <>
+                  <Link to="/register">S'inscrire</Link>
+                  <Link to="/login">Connexion</Link>
+                </>
+              ) : (
                 <Link to="/account">Compte</Link>
-              </div> : ""}
-            { !userData ? <span className='horizontal-line'></span> : ""}
+              )}
+            </div>
+
+            <span className='horizontal-line'></span>
 
             <div className='hamburger-contentText'>
               <h4>Légal</h4>
@@ -75,7 +78,7 @@ function HamburgerMenu() {
               <Link>Mentions Légales</Link>
             </div>
 
-            { userData ? <div className='hamburger-disconnect'><Link>Déconnexion</Link></div> : ""}
+            {userData && <div className='hamburger-disconnect'><Link>Déconnexion</Link></div>}
           </div>
         </div>
       </div> : ""
