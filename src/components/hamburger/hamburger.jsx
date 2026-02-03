@@ -51,7 +51,6 @@ function HamburgerMenu() {
             <div className='hamburger-contentText'>
               <h4>Boards</h4>
               <Link to="/board">Vos Boards</Link>
-              <Link to="/board/1">Créer un Board</Link>
             </div>
             
             <span className='horizontal-line'></span>

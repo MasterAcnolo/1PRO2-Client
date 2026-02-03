@@ -11,7 +11,6 @@ function Footer() {
                 <nav>
                     <h3>Boards</h3>
                     <Link to="/board">Vos Boards</Link>
-                    <Link>Créer un Board</Link>
                 </nav>
                 <nav>
                     <h3>Mon espace</h3>
