@@ -33,7 +33,6 @@ async function getUserInfo() {
     const TOKEN = getToken();
 
     if (!TOKEN) {
-        console.log("Pas de token trouvé");
         return false;
     }
 

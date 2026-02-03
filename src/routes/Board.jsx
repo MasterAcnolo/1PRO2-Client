@@ -28,7 +28,6 @@ export default function Board() {
         async function fetchBoard() {
             try {
                 const res = await getElement("BOARD", id);
-                console.log("Réponse: ",res)
                 setBoard(res.data);
             } catch (err) {
                 // Gestion spécifique du 404
