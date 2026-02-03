@@ -31,7 +31,7 @@
     text-align: left;
 }
 
-.dropDown-content p:hover {
+.dropDown-content a:hover, .dropDown-content p:hover {
     background-color: rgba(0,0,0,0.08);
 }
 
