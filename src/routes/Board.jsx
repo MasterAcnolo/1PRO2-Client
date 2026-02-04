@@ -30,6 +30,7 @@ export default function Board() {
             try {
                 const res = await getElement("BOARD", id);
                 setBoard(res.data);
+                document.title = res.data.title ? `${res.data.title} - Task Loader` : "Board - Task Loader";
             } catch (err) {
                 // Gestion spécifique du 404
                 if (err.response && err.response.status === 404) {
@@ -48,6 +49,8 @@ export default function Board() {
     if (loading) return <p>Chargement…</p>;
     if (error) return <p>Erreur : {error}</p>;
     if (!board || !board.columns) return <p>Aucune colonne</p>;
+
+    document.title = `Task Loader | ${board.name}`
 
     return (
         <>

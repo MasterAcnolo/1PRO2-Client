@@ -46,6 +46,10 @@ function AddBoard({ onClick }) {
 export default function BoardList(){
     useUserIsLoggedRedirect("/login");
 
+    useEffect(() => {
+        document.title = "Task Loader | Mes Boards";
+    }, []);
+
     const [boards, setBoards] = useState([]);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [title, setTitle] = useState("");

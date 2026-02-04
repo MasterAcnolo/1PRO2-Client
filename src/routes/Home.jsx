@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 // Styles
 import "../../styles/pages/Home.css";
 
 export default function Home(){
+	useEffect(() => {
+		document.title = "Task Loader";
+	}, []);
+
 	return (
 	<>
 	<section className='hero'>
