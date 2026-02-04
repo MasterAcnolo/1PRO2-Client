@@ -20,10 +20,9 @@ function Footer() {
                 </nav>
                 <nav>
                     <h3>Légal</h3>
-                    <Link>Vos Données</Link>
-                    <Link>Plan du Site</Link>
-                    <Link>Mentions Légales</Link>
-                    <Link>Nous Contacter</Link>
+                    <Link to="/vos-donnees">Vos Données</Link>
+                    <Link to="/plan-du-site">Plan du Site</Link>
+                    <Link to="/mentions-legales">Mentions Légales</Link>
                 </nav>
             </div>
             <p>Tous Droits Réservés © TaskLoader.</p>

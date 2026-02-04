@@ -13,6 +13,10 @@
   import Board from "./routes/Board.jsx";
   import BoardList from "./routes/BoardList.jsx";
 
+  import Legal from './routes/Legal.jsx';
+  import Data from './routes/Data.jsx';
+  import Sitemap from './routes/Sitemap.jsx';
+
   function PageWrapper({ children }) {
   return (
     <motion.div
@@ -49,6 +53,10 @@
 
               <Route path="/board/:id" element={<PageWrapper><Board /></PageWrapper>} />
               <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />
+
+              <Route path="/mentions-legales" element={<PageWrapper><Legal /></PageWrapper>} />
+              <Route path="/vos-donnees" element={<PageWrapper><Data /></PageWrapper>} />
+              <Route path="/plan-du-site" element={<PageWrapper><Sitemap /></PageWrapper>} />
             </Routes>
           </AnimatePresence>
         </main>
