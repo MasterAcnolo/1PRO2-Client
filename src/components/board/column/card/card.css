@@ -1,49 +1,47 @@
-.card{
+.card {
     color: black;
     background-color: #D9D9D9;
     border-radius: 12px;
-
     display: flex;
     flex-direction: column;
-
-    width: 25vw;
-
-    margin-top: 15vh;
-    padding: 5px;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 2rem;
+    padding: 1rem;
 }
 
-.card .card-header img{
+.card .card-header img {
     width: 30px;
     height: 30px;
 }
 
-.card-header{
+.card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.card-header-left{
+.card-header-left {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-.card-content{
+.card-content {
     display: flex;
-    width: 30vw;
+    width: 100%;
     flex-wrap: wrap;
 }
 
-.card-content p{
-    font-size: 0.8em;
-    margin: 10px;
+.card-content p {
+    font-size: 0.875rem;
+    margin: 0.625rem;
     word-wrap: break-word;
     overflow: hidden;
 }
 
 /* Card Footer */
-.card-footer{
+.card-footer {
     display: flex;
     justify-content: space-between;
 }

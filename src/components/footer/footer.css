@@ -1,11 +1,8 @@
 footer {
     background: var(--blue-bg-color);
-    position: relative;
-    bottom: 0;
-    left: 0;
     width: 100%;
     color: white;
-    /* margin-top: 50vh; A Retirer quand on aura du contenu sur toutes les pages */
+    margin-top: auto;
 }
 
 footer .container {

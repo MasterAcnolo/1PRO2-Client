@@ -84,7 +84,7 @@ export default function BoardList(){
         <section className='main'>
             <h1> Vos Boards </h1>
 
-            <section className='board-container'>
+            <section className='board-list-container'>
                 {boards.map(board =>(
                     <CardPreview 
                         key={board.id}

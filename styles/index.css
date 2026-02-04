@@ -1,25 +1,20 @@
 @import url(animation.css);
 @import url(variables.css);
-
 @import url(components/loader.css);
 
-html{
-    scroll-behavior: smooth;  
+html {
+    scroll-behavior: smooth;
 }
 
-body{
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     overflow-x: hidden;
-
-    height: 100vh; /* A Remplacer par 100% quand il y à du contenu */
-
-    /* Default Configuration */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: "Poppins", sans-serif;
-
-    /* pointer-events: none;  */
-    
     color: var(--default-text-color);
     background: var(--default-background-color);
 }
@@ -29,52 +24,37 @@ body{
 } */
 
 /* SHARED STYLES */
-/* LINK RESET */
-
-.hover-btn{
-    transition: 0.2s ease-in-out;
+.hover-btn {
+    transition: transform 0.2s ease-in-out;
     pointer-events: all;
     cursor: pointer;
 }
 
-.hover-btn:hover{
+.hover-btn:hover {
     transform: scale(1.05);
 }
 
-.hover-btn:active{
+.hover-btn:active {
     transform: scale(0.95);
 }
 
-/* LINK RESET */
-.link a{
+.link a {
     text-decoration: none;
     color: var(--default-text-color);
 }
 
-.link a:hover{
+.link a:hover {
     text-decoration: underline;
     font-weight: 600;
 }
 
-/* RESPONSIVE ENDPOINTS */
-/* Tablet */
-/* @media (max-width: 1023px) and (min-width: 768px) {
-    *{
-        outline: solid red 2px
-    }
-} */
+/* Layout Structure */
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-/* Mobile */
-/* @media (max-width: 767px) and (min-width: 320px) {
-    *{
-        outline: solid rgb(30, 255, 0) 2px
-    }
-} */
-
-/* Too Small Device */
-/* @media (max-width: 320px){
-    *{
-        display: none;
-        background-color: black;
-    }
-} */
+main {
+    flex: 1;
+}

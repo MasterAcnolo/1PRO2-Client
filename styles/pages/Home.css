@@ -23,16 +23,13 @@
     align-items: center;
     gap: 40px;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 25vh auto 0;
+    padding: 50px 20px;
     flex-wrap: wrap;
     position: relative;
     z-index: 1;
     color: white;
     text-align: center;
-    padding: 50px 20px;
-    margin: 0 auto;
-    margin-top: 25vh;
-
 }
 
 .hero-content img {
@@ -101,12 +98,13 @@
     margin-bottom: 0;
 }
 
-.homeContentHeader h3{
+.homeContentHeader h3 {
     font-size: 2em;
 }
 
-.homeContentHeader img{
-    margin: 0 50vh;
+.homeContentHeader img {
+    margin: 0 auto;
+    max-width: 100%;
 }
 
 .homePresentationArticle{

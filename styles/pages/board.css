@@ -1,12 +1,13 @@
 .board-container {
-    padding: 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 20px;
+    margin-top: 10vh;
+    background-color: rgba(255, 0, 0, 0.404);
 }
 
 .board-container h1 {
     margin-bottom: 30px;
     color: black;
-
 }

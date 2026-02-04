@@ -1,37 +1,47 @@
 /* Background  */
+.formBackground {
+    position: relative;
+    min-height: 100vh;
+}
+
 .formBackground::before {
     content: "";
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url("../../../assets/pictures/hero.jpg");
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     filter: brightness(0.3);
     z-index: -1;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 
 form input {
     border-radius: 12px;
     border: 3px solid #FFF;
-    background: rgba(217, 217, 217, 0.00);
+    background: rgba(217, 217, 217, 0);
     width: 330px;
     height: 34px;
     padding-left: 10px;
     margin-top: 20px;
     font-weight: 400;
-    font-size: medium;
+    font-size: 1rem;
     color: var(--default-text-color);
 }
 
 .formContent h1 {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 input::placeholder {
@@ -42,7 +52,7 @@ span {
     color: var(--default-text-color);
 }
 
-.formContent{
+.formContent {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,21 +68,21 @@ span {
     width: 175px;
     height: 56px;
     font-weight: 700;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     margin-top: 30px;
 }
 
-.formContent a{
+.formContent a {
     text-decoration: none;
 }
 
-.formContent a:hover{
+.formContent a:hover {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-decoration-color: #504aff;
 }
 
-.formContent a span{
+.formContent a span {
     color: #504aff;
 }
 
@@ -93,7 +103,7 @@ input[type="checkbox"]:checked {
     box-shadow: 0 0 0 1px rgba(153, 150, 255, 0.3);
 }
 
-#remainConnected{
+#remainConnected {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,6 +111,6 @@ input[type="checkbox"]:checked {
     gap: 10px;
 }
 
-#remainConnected input{
+#remainConnected input {
     margin-top: 0;
 }
