@@ -4,6 +4,7 @@
   // Components
   import Header from './components/header/header.jsx';
   import Footer from './components/footer/footer.jsx';
+  import ScrollToTop from './components/ScrollToTop.jsx';
 
   // Pages
   import Home from "./routes/Home.jsx";
@@ -20,10 +21,10 @@
   function PageWrapper({ children }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.2, ease: "easeInOut" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.15, ease: "easeOut" }}
       style={{ minHeight: "100vh"}}
     >
       {children}
@@ -37,6 +38,7 @@
 
     return (
       <>
+        <ScrollToTop />
 
         <Header />
 
