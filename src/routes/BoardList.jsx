@@ -74,6 +74,7 @@ export default function BoardList(){
     }
 
     async function handleCreateBoard() {
+        if(title === "") return;
         await createElement("BOARD", payload(title));
         setIsPanelOpen(false);
         await refreshBoards();
