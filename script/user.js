@@ -67,6 +67,9 @@ function disconnectUser(){
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             sessionStorage?.removeItem("token");
             
+            // Redirection vers la page d'accueil
+            window.location.href = '/';
+            
             return true
         }
     }
