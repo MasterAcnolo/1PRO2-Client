@@ -10,6 +10,7 @@
   import Home from "./routes/Home.jsx";
   import Login from './routes/Login.jsx';
   import Register from './routes/Register.jsx';
+  import Account from './routes/Account.jsx';
 
   import Board from "./routes/Board.jsx";
   import BoardList from "./routes/BoardList.jsx";
@@ -51,7 +52,7 @@
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
 
-              <Route path="/account" element={<PageWrapper></PageWrapper>} />
+              <Route path="/account" element={<PageWrapper><Account /></PageWrapper>} />
 
               <Route path="/board/:id" element={<PageWrapper><Board /></PageWrapper>} />
               <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />

@@ -1,0 +1,308 @@
+/* Background identique à form.css */
+.accountBackground {
+    position: relative;
+    min-height: 100vh;
+}
+
+.accountBackground::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../../assets/pictures/hero.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: brightness(0.3);
+    z-index: -1;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.accountContent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 120px 40px 50px;
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.accountContent h1 {
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.accountForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 30px 35px;
+    width: 100%;
+    max-width: 450px;
+    flex: 1;
+}
+
+.accountForm h2 {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.accountForm input {
+    border-radius: 12px;
+    border: 3px solid #FFF;
+    background: rgba(217, 217, 217, 0);
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    margin-top: 15px;
+    font-weight: 400;
+    font-size: 1rem;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.accountForm input:focus {
+    border-color: var(--blue-primary-color);
+}
+
+.accountForm input.input-success {
+    border-color: #4caf50 !important;
+}
+
+.accountForm input.input-error {
+    border-color: #f44336 !important;
+}
+
+.accountForm input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.emailInput {
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.emailInput input {
+    margin: 0;
+    padding-right: 50px;
+}
+
+.toggleEmail {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: opacity 0.2s;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggleEmail img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+    transition: opacity 0.2s;
+}
+
+.toggleEmail:hover {
+    opacity: 0.7;
+}
+
+.formBtn {
+    background: white;
+    color: var(--blue-primary-color);
+    border: none;
+    border-radius: 30px;
+    width: 175px;
+    height: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 25px;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.formBtn:hover {
+    opacity: 0.9;
+}
+
+.formBtn:active {
+    transform: scale(0.98);
+}
+
+.dangerZone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 82, 82, 0.3);
+    border-radius: 16px;
+    padding: 30px 35px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    flex: 1;
+}
+
+.dangerZone h2 {
+    color: #ff5252;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.dangerZone p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.deleteBtn {
+    background: linear-gradient(90deg, #d32f2f 0%, #f44336 100%);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.deleteBtn:hover {
+    opacity: 0.9;
+}
+
+.deleteBtn:active {
+    transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .accountContent {
+        padding: 100px 20px 40px;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .accountContent h1 {
+        font-size: 1.75rem;
+    }
+
+    .accountForm,
+    .dangerZone {
+        max-width: 100%;
+        padding: 25px 30px;
+    }
+
+    .accountForm input {
+        height: 38px;
+    }
+}
+
+@media (max-width: 480px) {
+    .accountContent {
+        padding: 90px 15px 35px;
+        gap: 20px;
+    }
+
+    .accountContent h1 {
+        font-size: 1.5rem;
+    }
+
+    .accountForm,
+    .dangerZone {
+        padding: 25px 20px;
+        border-radius: 16px;
+    }
+
+    .accountForm h2,
+    .dangerZone h2 {
+        font-size: 1.15rem;
+    }
+
+    .accountForm input {
+        height: 36px;
+        font-size: 0.95rem;
+        margin-top: 12px;
+    }
+
+    .emailInput {
+        margin-top: 12px;
+    }
+
+    .toggleEmail {
+        font-size: 1.2rem;
+    }
+
+    .formBtn {
+        width: 150px;
+        height: 46px;
+        font-size: 1rem;
+        margin-top: 20px;
+    }
+
+    .deleteBtn {
+        padding: 11px 26px;
+        font-size: 0.95rem;
+    }
+
+    .dangerZone p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .accountContent {
+        padding: 85px 10px 30px;
+    }
+
+    .accountForm,
+    .dangerZone {
+        padding: 20px 15px;
+    }
+
+    .accountContent h1 {
+        font-size: 1.35rem;
+    }
+
+    .formBtn {
+        width: 135px;
+        height: 44px;
+        font-size: 0.95rem;
+    }
+
+    .deleteBtn {
+        padding: 10px 22px;
+        font-size: 0.9rem;
+    }
+}

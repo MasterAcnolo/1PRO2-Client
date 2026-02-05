@@ -36,7 +36,7 @@ function UserStateHeader() {
                 <div className='dropDown'>
                     <div className='dropDown-content link' style={{display: `${isOpen ? "flex" : "none"}`, marginTop: "50px", marginRight: "15px"}}>
 
-                        <Link to="/">Mon Espace</Link>
+                        <Link to="/account">Mon Espace</Link>
                         <Link to="/board">Vos Boards</Link>
                         <p id='disconnect' onClick={
                             async function(){
