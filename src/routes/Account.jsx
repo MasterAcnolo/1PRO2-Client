@@ -3,7 +3,6 @@ import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged.js';
 import { getUserInfo } from '../../script/user.js';
 import { getToken } from '../../script/helpers/getToken.js';
 import '../../styles/pages/account.css';
-
 import eyeOpen from '../../assets/icon/eyeOpen.svg';
 import eyeClosed from '../../assets/icon/eyeClosed.png';
 
@@ -13,45 +12,37 @@ export default function Account() {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
         document.title = "Task Loader | Mon Compte";
-    }, []);
-
-    useEffect(() => {
+        
         async function fetchUserData() {
             const userData = await getUserInfo();
             if (userData) {
-                setUsername(userData.username || '');
+                setUsername(userData.username);
+                setUserId(userData.id);
             }
         }
         fetchUserData();
     }, []);
 
-    // Vérification de la correspondance des mots de passe
     const passwordsMatch = newPassword && confirmPassword && newPassword === confirmPassword;
     const passwordsDontMatch = newPassword && confirmPassword && newPassword !== confirmPassword;
 
-    // Gestion de la soumission du formulaire de mot de passe
     async function handlePasswordSubmit(e) {
         e.preventDefault();
 
-        if (newPassword !== confirmPassword) {
-            console.error('Les mots de passe ne correspondent pas');
-            // TODO: Afficher un toast d'erreur
-            return;
-        }
+        if (newPassword !== confirmPassword) return;
 
         const TOKEN = getToken();
-        const API_URL = "http://localhost:1337/api";
 
         try {
-            const res = await fetch(`${API_URL}/auth/change-password`, {
+            const res = await fetch('http://localhost:1337/api/auth/change-password', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -66,21 +57,43 @@ export default function Account() {
 
             const json = await res.json();
 
-            if (!res.ok) throw new Error(json.error?.message || "Erreur lors du changement de mot de passe");
+            if (!res.ok) throw new Error(json.error?.message || "Erreur");
 
-            console.log('Mot de passe changé avec succès');
-            // Réinitialiser les champs
             setCurrentPassword('');
             setNewPassword('');
             setConfirmPassword('');
-            // TODO: Afficher un toast de succès
         } catch (error) {
-            console.error('Erreur:', error.message);
-            // TODO: Afficher un toast d'erreur
+            alert(error.message);
         }
     }
 
+    async function handleDeleteAccount() {
+        if (!userId) return;
 
+        if (!window.confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')) return;
+
+        const TOKEN = getToken();
+
+        try {
+            const res = await fetch(`http://localhost:1337/api/users/${userId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${TOKEN}`
+                }
+            });
+
+            const json = await res.json();
+
+            if (!res.ok) throw new Error(json.error?.message || "Erreur");
+
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            sessionStorage?.removeItem("token");
+            window.location.href = '/';
+        } catch (error) {
+            alert(error.message);
+        }
+    }
 
     return (
         <section className="accountBackground">
@@ -146,7 +159,7 @@ export default function Account() {
                 <div className="dangerZone">
                     <h2>Zone de Danger</h2>
                     <p>La suppression de votre compte est irréversible</p>
-                    <button type="button" className="deleteBtn">Supprimer mon compte</button>
+                    <button type="button" className="deleteBtn" onClick={handleDeleteAccount}>Supprimer mon compte</button>
                 </div>
             </div>
         </section>
