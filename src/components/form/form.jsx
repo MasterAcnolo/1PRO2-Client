@@ -62,14 +62,16 @@ function Form({ type }) {
 
           <form className="form" onSubmit={handleSubmit}>
 
-            <input
-              type="text"
-              placeholder="Nom d'Utilisateur"
-              name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
+            {type === "register" && (
+              <input
+                type="text"
+                placeholder="Nom d'Utilisateur"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            )}
 
             <input
               type="email"
