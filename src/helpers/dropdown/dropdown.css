@@ -41,9 +41,9 @@
 }
 
 #delete {
-    color: #F00000;
+    color: var(--error-color);
 }
 
 #delete:hover {
-    color: #e80000;
+    filter: brightness(0.9);
 }

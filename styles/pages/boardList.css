@@ -22,7 +22,7 @@
 /* Carte */
 .card-preview {
     position: relative;
-    background-color: #9c9c9c;
+    background-color: var(--card-bg-color);
     border-radius: 12px;
     min-height: 95px;
     padding: 12px;
@@ -91,8 +91,8 @@
     justify-content: center;
     gap: 5px;
     background: none;
-    color: #9c9c9ced;
-    border: dashed 5px #9c9c9ced;
+    color: var(--card-bg-color);
+    border: dashed 5px var(--card-bg-color);
     box-shadow: none;
     padding: 11px;
     font-size: 1.5rem;
