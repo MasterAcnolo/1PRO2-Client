@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import "./form.css";
+import eyeOpen from '../../../assets/icon/eyeOpen.svg';
+import eyeClosed from '../../../assets/icon/eyeClosed.png';
 
 // FORM Features
 import {loginRegisterUser, isLogged} from "../../../script/user.js";
@@ -14,6 +16,7 @@ function Form({ type }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remainConnected, setRemainConnected] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   
   const [isPending, setStatus] = useState(false);
   const [data, setData] = useState("");
@@ -82,14 +85,23 @@ function Form({ type }) {
               required
             />
 
-            <input
-              type="password"
-              placeholder="Mot de passe"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="passwordInput">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Mot de passe"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className="togglePassword"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <img src={showPassword ? eyeOpen : eyeClosed} alt="Toggle password visibility" />
+              </button>
+            </div>
 
             <div id="remainConnected">
               <label htmlFor="remainConnected">
