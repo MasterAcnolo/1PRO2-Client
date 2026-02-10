@@ -12,10 +12,23 @@ function RenameModal({ isOpen, onClose, onRename, currentName, type }) {
         onClose();
     }
 
+    function getTitle() {
+        switch(type) {
+            case 'BOARD':
+                return 'le Board';
+            case 'COLUMN':
+                return 'la Colonne';
+            case 'CARD':
+                return 'la Carte';
+            default:
+                return 'l\'élément';
+        }
+    }
+
     return (
         <div className="renameModal-overlay" onClick={onClose}>
             <div className="renameModal" onClick={(e) => e.stopPropagation()}>
-                <h3>Renommer {type === 'BOARD' ? 'le Board' : 'la Carte'}</h3>
+                <h3>Renommer {getTitle()}</h3>
                 <input 
                     type="text" 
                     placeholder="Nouveau nom" 

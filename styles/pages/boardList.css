@@ -40,6 +40,7 @@
 
 /* Zone haute - titre + dropdown */
 .card-preview .card-top {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -57,6 +58,14 @@
     white-space: nowrap;
     flex: 1;
     min-width: 0;
+    padding-right: 10px;
+}
+
+/* Style spécifique pour le dropdown dans les card-preview */
+.card-preview .dropDown img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
 }
 
 /* Zone basse - date */

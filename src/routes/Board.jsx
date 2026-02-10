@@ -5,6 +5,10 @@ import "../../styles/pages/board.css"
 
 import { useUserIsLoggedRedirect } from "../../script/hooks/hooks.isLogged";
 import { getElement } from "../../script/services/getElement";
+import { deleteElement } from "../../script/services/deleteElement";
+import { updateElement } from "../../script/services/updateElement";
+import Column from "../components/board/column/column";
+import RenameModal from "../components/modal/RenameModal";
 
 export default function Board() {
 
@@ -14,11 +18,13 @@ export default function Board() {
     const navigate = useNavigate();
 
     const [board, setBoard] = useState(null);
-    const [column, setColumn] = useState(null);
-    const [card, setCard] = useState(null);
-
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    
+    const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
+    const [renameType, setRenameType] = useState(null);
+    const [renamingId, setRenamingId] = useState(null);
+    const [renamingName, setRenamingName] = useState("");
 
     useEffect(() => {
         if (!id) {
@@ -46,9 +52,75 @@ export default function Board() {
         fetchBoard();
     }, [id, navigate]);
 
+    async function refreshBoard() {
+        try {
+            const res = await getElement("BOARD", id);
+            setBoard(res.data);
+        } catch (err) {
+            console.error("Erreur lors du rafraîchissement:", err);
+        }
+    }
+
+    // Gestion des colonnes
+    async function handleDeleteColumn(columnId) {
+        try {
+            await deleteElement("COLUMN", columnId);
+            await refreshBoard();
+        } catch (error) {
+            console.error("Erreur lors de la suppression:", error);
+        }
+    }
+
+    function openRenameColumnModal(columnId, currentName) {
+        setRenameType("COLUMN");
+        setRenamingId(columnId);
+        setRenamingName(currentName);
+        setIsRenameModalOpen(true);
+    }
+
+    // Gestion des cards
+    async function handleDeleteCard(cardId) {
+        try {
+            await deleteElement("CARD", cardId);
+            await refreshBoard();
+        } catch (error) {
+            console.error("Erreur lors de la suppression:", error);
+        }
+    }
+
+    function openRenameCardModal(cardId, currentName) {
+        setRenameType("CARD");
+        setRenamingId(cardId);
+        setRenamingName(currentName);
+        setIsRenameModalOpen(true);
+    }
+
+    function closeRenameModal() {
+        setIsRenameModalOpen(false);
+        setRenameType(null);
+        setRenamingId(null);
+        setRenamingName("");
+    }
+
+    async function handleRename(newName) {
+        if (!renamingId || newName.trim() === "") return;
+        
+        try {
+            const payload = renameType === "CARD" 
+                ? { data: { title: newName } }
+                : { data: { name: newName } };
+                
+            await updateElement(renameType, renamingId, payload);
+            await refreshBoard();
+            closeRenameModal();
+        } catch (error) {
+            console.error("Erreur lors du renommage:", error);
+        }
+    }
+
     if (loading) return <p>Chargement…</p>;
     if (error) return <p>Erreur : {error}</p>;
-    if (!board || !board.columns) return <p>Aucune colonne</p>;
+    if (!board) return <p>Board introuvable</p>;
 
     document.title = `Task Loader | ${board.name}`
 
@@ -56,7 +128,37 @@ export default function Board() {
         <>
             <div className="board-container">
                 <h1>{board.name}</h1>
-                {/* Affichage des colonnes et cartes à ajouter ici */}
+                
+                <div className="columns-container">
+                    {/* Colonnes existantes */}
+                    {board.columns && board.columns.length > 0 ? (
+                        board.columns.map(column => (
+                            <Column 
+                                key={column.id} 
+                                columnData={column}
+                                onDelete={handleDeleteColumn}
+                                onRename={openRenameColumnModal}
+                                onCardDelete={handleDeleteCard}
+                                onCardRename={openRenameCardModal}
+                            />
+                        ))
+                    ) : (
+                        <Column />
+                    )}
+                    
+                    {/* Bouton Add Column */}
+                    <div className='newColumn'>
+                        <h3>+ Nouvelle Colonne</h3>
+                    </div>
+                </div>
+
+                <RenameModal 
+                    isOpen={isRenameModalOpen}
+                    onClose={closeRenameModal}
+                    onRename={handleRename}
+                    currentName={renamingName}
+                    type={renameType}
+                />
             </div>
         </>
     );

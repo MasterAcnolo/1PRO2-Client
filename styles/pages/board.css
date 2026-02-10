@@ -1,12 +1,25 @@
 .board-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 0px 20px;
+    padding: 20px;
     margin-top: 10vh;
+    height: calc(100vh - 10vh - 40px);
+    overflow: hidden;
 }
 
 .board-container h1 {
-    margin-bottom: 30px;
+    margin: 0 0 20px 0;
     color: black;
+    font-size: 2rem;
+}
+
+/* Conteneur horizontal des colonnes */
+.columns-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 20px;
+    flex: 1;
 }
