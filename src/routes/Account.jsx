@@ -37,7 +37,15 @@ export default function Account() {
     async function handlePasswordSubmit(e) {
         e.preventDefault();
 
-        if (newPassword !== confirmPassword) return;
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            console.log('Tous les champs sont requis');
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            console.log('Les mots de passe ne correspondent pas');
+            return;
+        }
 
         const TOKEN = getToken();
 
@@ -57,13 +65,18 @@ export default function Account() {
 
             const json = await res.json();
 
-            if (!res.ok) throw new Error(json.error?.message || "Erreur");
+            if (!res.ok) {
+                console.log('Erreur API:', json.error?.message || "Erreur inconnue");
+                throw new Error(json.error?.message || "Erreur");
+            }
 
+            console.log('Mot de passe modifié avec succès');
+            
             setCurrentPassword('');
             setNewPassword('');
             setConfirmPassword('');
         } catch (error) {
-            alert(error.message);
+            console.error('Erreur lors du changement de mot de passe:', error.message);
         }
     }
 
@@ -85,13 +98,17 @@ export default function Account() {
 
             const json = await res.json();
 
-            if (!res.ok) throw new Error(json.error?.message || "Erreur");
+            if (!res.ok) {
+                console.log('Erreur suppression compte:', json.error?.message || "Erreur");
+                throw new Error(json.error?.message || "Erreur");
+            }
 
+            console.log('Compte supprimé avec succès');
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             sessionStorage?.removeItem("token");
             window.location.href = '/';
         } catch (error) {
-            alert(error.message);
+            console.error('❌ Erreur lors de la suppression du compte:', error.message);
         }
     }
 
