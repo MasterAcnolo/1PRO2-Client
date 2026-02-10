@@ -84,6 +84,7 @@
     background: none;
     color: #9c9c9ced;
     border: dashed 5px #9c9c9ced;
+    box-shadow: none;
     padding: 11px;
     font-size: 1.5rem;
 }
