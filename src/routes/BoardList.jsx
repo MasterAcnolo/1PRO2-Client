@@ -30,10 +30,12 @@ function CardPreview({title, date, data_id, onDelete, onRename}){
     return (
         <>
         <div className='card-preview' data_id = {data_id} onClick={() => navigate(`/board/${data_id}`)}>
-            <DropDownCard type="BOARD" elementId={data_id} onDelete={handleDelete} onRename={handleRename}/> 
-            <div className='bottom'>    
-                <h4> {title} </h4>
-                <p> Dernière Modification: {date_ISO}</p>
+            <div className='card-top'>
+                <h4>{title}</h4>
+                <DropDownCard type="BOARD" elementId={data_id} onDelete={handleDelete} onRename={handleRename}/>
+            </div>
+            <div className='card-bottom'>    
+                <p>{date_ISO}</p>
             </div>
         </div>
         </>

@@ -24,27 +24,54 @@
     position: relative;
     background-color: #9c9c9c;
     border-radius: 16px;
-    height: 100px;
+    min-height: 120px;
     padding: 16px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-preview:hover {
     cursor: pointer;
+    transform: scale(1.01);
 }
 
-/* Zone basse */
-.card-preview .bottom h4 {
+/* Zone haute - titre + dropdown */
+.card-preview .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: auto;
+}
+
+.card-preview .card-top h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Zone basse - date */
+.card-preview .card-bottom {
     margin-top: auto;
-    font-size: 1.1rem;
+    padding-top: 12px;
 }
 
-.card-preview .bottom p {
-    margin: 6px 0 0 0;
-    font-size: 0.85rem;
+.card-preview .card-bottom p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
@@ -65,6 +92,6 @@
     margin: 0;
 }
 
-.addCard:hover {
-    box-shadow: none;
+.addCard:hover{
+    transform: scale(1);
 }

@@ -27,17 +27,29 @@
     align-items: center;
 }
 
+.card-header-left h3 {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+}
+
 .card-content {
     display: flex;
     width: 100%;
     flex-wrap: wrap;
+    overflow-y: auto;
+    max-height: 200px;
 }
 
 .card-content p {
     font-size: 0.875rem;
     margin: 0.625rem;
     word-wrap: break-word;
-    overflow: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 /* Card Footer */
