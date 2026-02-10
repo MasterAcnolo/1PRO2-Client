@@ -26,7 +26,7 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
-    padding: 120px 40px 50px;
+    padding: 100px 50px 40px;
     gap: 40px;
     max-width: 1400px;
     margin: 0 auto;
@@ -49,10 +49,9 @@
     background: rgba(255, 255, 255, 0.08);
     border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 16px;
-    padding: 30px 35px;
+    padding: 24px 28px;
     width: 100%;
     max-width: 450px;
-    flex: 1;
 }
 
 .accountForm h2 {
@@ -164,11 +163,10 @@
     background: rgba(255, 255, 255, 0.08);
     border: 2px solid rgba(255, 82, 82, 0.3);
     border-radius: 16px;
-    padding: 30px 35px;
+    padding: 24px 28px;
     width: 100%;
     max-width: 450px;
     text-align: center;
-    flex: 1;
 }
 
 .dangerZone h2 {
@@ -208,101 +206,118 @@
 /* Responsive */
 @media (max-width: 768px) {
     .accountContent {
-        padding: 100px 20px 40px;
         flex-direction: column;
         align-items: center;
         gap: 25px;
+        flex-wrap: nowrap;
     }
 
     .accountContent h1 {
         font-size: 1.75rem;
+        margin-bottom: 10px;
     }
 
     .accountForm,
     .dangerZone {
         max-width: 100%;
-        padding: 25px 30px;
+        padding: 22px 20px;
     }
 
     .accountForm input {
         height: 38px;
+        font-size: 0.95rem;
+    }
+
+    .formBtn,
+    .deleteBtn {
+        width: 100%;
+        max-width: 250px;
     }
 }
 
 @media (max-width: 480px) {
-    .accountContent {
-        padding: 90px 15px 35px;
-        gap: 20px;
-    }
 
     .accountContent h1 {
         font-size: 1.5rem;
+        margin-bottom: 15px;
     }
 
     .accountForm,
     .dangerZone {
-        padding: 25px 20px;
-        border-radius: 16px;
+        padding: 18px 15px;
+        border-radius: 12px;
     }
 
     .accountForm h2,
     .dangerZone h2 {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
     }
 
     .accountForm input {
         height: 36px;
-        font-size: 0.95rem;
-        margin-top: 12px;
+        font-size: 0.9rem;
+        margin-top: 10px;
+        padding: 0 10px;
     }
 
     .emailInput {
-        margin-top: 12px;
+        margin-top: 10px;
     }
 
-    .toggleEmail {
-        font-size: 1.2rem;
+    .emailInput input {
+        padding-right: 45px;
+    }
+
+    .toggleEmail img {
+        width: 18px;
+        height: 18px;
     }
 
     .formBtn {
-        width: 150px;
-        height: 46px;
-        font-size: 1rem;
+        width: 100%;
+        max-width: 200px;
+        height: 44px;
+        font-size: 0.95rem;
         margin-top: 20px;
     }
 
     .deleteBtn {
-        padding: 11px 26px;
-        font-size: 0.95rem;
+        width: 100%;
+        max-width: 200px;
+        padding: 10px 24px;
+        font-size: 0.9rem;
     }
 
     .dangerZone p {
         font-size: 0.85rem;
+        margin-bottom: 15px;
     }
 }
 
 @media (max-width: 360px) {
-    .accountContent {
-        padding: 85px 10px 30px;
-    }
 
     .accountForm,
     .dangerZone {
-        padding: 20px 15px;
+        padding: 16px 12px;
     }
 
     .accountContent h1 {
         font-size: 1.35rem;
     }
 
-    .formBtn {
-        width: 135px;
-        height: 44px;
-        font-size: 0.95rem;
+    .accountForm h2,
+    .dangerZone h2 {
+        font-size: 1rem;
     }
 
+    .accountForm input {
+        font-size: 0.85rem;
+    }
+
+    .formBtn,
     .deleteBtn {
-        padding: 10px 22px;
-        font-size: 0.9rem;
+        height: 42px;
+        font-size: 0.85rem;
     }
 }
