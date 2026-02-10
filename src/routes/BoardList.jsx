@@ -7,12 +7,14 @@ import fetchElement from '../../script/fetch';
 
 import { DropDownCard } from '../helpers/dropdown/dropdown';
 import {useUserIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
+import RenameModal from '../components/modal/RenameModal';
 
 import { createElement } from '../../script/services/createElement';
 import { deleteElement } from '../../script/services/deleteElement';
+import { updateElement } from '../../script/services/updateElement';
 import { useNavigate } from 'react-router-dom';
 
-function CardPreview({title, date, data_id, onDelete}){
+function CardPreview({title, date, data_id, onDelete, onRename}){
     const date_ISO = new Date(date).toLocaleString();
     const navigate = useNavigate();
 
@@ -21,10 +23,14 @@ function CardPreview({title, date, data_id, onDelete}){
         if (onDelete) onDelete("BOARD", data_id);
     }
 
+    function handleRename(boardId) {
+        if (onRename) onRename(boardId, title);
+    }
+
     return (
         <>
         <div className='card-preview' data_id = {data_id} onClick={() => navigate(`/board/${data_id}`)}>
-            <DropDownCard type="BOARD" elementId={data_id} onDelete={handleDelete}/> 
+            <DropDownCard type="BOARD" elementId={data_id} onDelete={handleDelete} onRename={handleRename}/> 
             <div className='bottom'>    
                 <h4> {title} </h4>
                 <p> Dernière Modification: {date_ISO}</p>
@@ -53,6 +59,10 @@ export default function BoardList(){
     const [boards, setBoards] = useState([]);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [title, setTitle] = useState("");
+    
+    const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
+    const [renamingBoardId, setRenamingBoardId] = useState(null);
+    const [renamingBoardName, setRenamingBoardName] = useState("");
 
     async function refreshBoards() {
         const res = await fetchElement();
@@ -85,6 +95,33 @@ export default function BoardList(){
         await refreshBoards();
     }
 
+    function openRenameModal(boardId, currentName) {
+        setRenamingBoardId(boardId);
+        setRenamingBoardName(currentName);
+        setIsRenameModalOpen(true);
+    }
+
+    function closeRenameModal() {
+        setIsRenameModalOpen(false);
+        setRenamingBoardId(null);
+        setRenamingBoardName("");
+    }
+
+    async function handleRenameBoard(newName) {
+        if (!renamingBoardId || newName.trim() === "") return;
+        
+        try {
+            const payload = { data: { name: newName } };
+            await updateElement("BOARD", renamingBoardId, payload);
+            
+            await refreshBoards();
+            closeRenameModal();
+        } catch (error) {
+            console.error("Erreur lors du renommage:", error);
+            // TODO: Afficher un message d'erreur à l'utilisateur (toast/notification)
+        }
+    }
+
     return (
         <section className='main'>
             <h1> Vos Boards </h1>
@@ -97,6 +134,7 @@ export default function BoardList(){
                         title={board.name}
                         date={board.updatedAt}
                         onDelete={handleDeleteBoard}
+                        onRename={openRenameModal}
                     />
                 ))}
 
@@ -116,6 +154,14 @@ export default function BoardList(){
                     </div>
                 </div>
             )}
+
+            <RenameModal 
+                isOpen={isRenameModalOpen}
+                onClose={closeRenameModal}
+                onRename={handleRenameBoard}
+                currentName={renamingBoardName}
+                type="BOARD"
+            />
         </section>
     )
 }

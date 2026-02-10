@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { deleteElement } from '../../../script/services/deleteElement';
 
-function DropDownCard({type, elementId, onDelete}) {
+function DropDownCard({type, elementId, onDelete, onRename}) {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -22,6 +22,13 @@ function DropDownCard({type, elementId, onDelete}) {
         }
     }
 
+    function handleRename(e) {
+        e.stopPropagation();
+        setIsOpen(false);
+        if (onRename) {
+            onRename(elementId);
+        }
+    }
 
     return(
     <>
@@ -29,7 +36,7 @@ function DropDownCard({type, elementId, onDelete}) {
             <img onClick={toggle} id="card-option" src='../../../assets/icon/3DotsIcon.png'></img>
 
             <div className='dropDown-content' style={{display: `${isOpen ? "flex" : "none"}`}}>
-                <p className='edit' id='edit'>Modifier</p>
+                <p className='edit' id='edit' onClick={handleRename}>Renommer</p>
                 <p className='delete' id='delete' onClick={handleDelete}>Supprimer</p>
 
             </div>
