@@ -14,18 +14,18 @@
 /* Conteneur des boards */
 .board-list-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     padding: 20px;
-    gap: 30px;
+    gap: 20px;
 }
 
 /* Carte */
 .card-preview {
     position: relative;
     background-color: #9c9c9c;
-    border-radius: 16px;
-    min-height: 120px;
-    padding: 16px;
+    border-radius: 12px;
+    min-height: 95px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -49,7 +49,7 @@
 
 .card-preview .card-top h4 {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: white;
     overflow: hidden;
@@ -62,7 +62,7 @@
 /* Zone basse - date */
 .card-preview .card-bottom {
     margin-top: auto;
-    padding-top: 12px;
+    padding-top: 8px;
 }
 
 .card-preview .card-bottom p {
