@@ -12,6 +12,7 @@ import RenameModal from '../components/modal/RenameModal';
 import { createElement } from '../../script/services/createElement';
 import { deleteElement } from '../../script/services/deleteElement';
 import { updateElement } from '../../script/services/updateElement';
+import { showToast } from '../components/toast/toast';
 import { useNavigate } from 'react-router-dom';
 
 function CardPreview({title, date, data_id, onDelete, onRename}){
@@ -87,14 +88,27 @@ export default function BoardList(){
 
     async function handleCreateBoard() {
         if(title === "") return;
-        await createElement("BOARD", payload(title));
-        setIsPanelOpen(false);
-        await refreshBoards();
+        try {
+            await createElement("BOARD", payload(title));
+            setIsPanelOpen(false);
+            setTitle("");
+            await refreshBoards();
+            showToast("Board créé avec succès", "success");
+        } catch (error) {
+            console.error("Erreur lors de la création:", error);
+            showToast("Erreur lors de la création du board", "error");
+        }
     }
 
     async function handleDeleteBoard(type, id) {
-        await deleteElement(type, id);
-        await refreshBoards();
+        try {
+            await deleteElement(type, id);
+            await refreshBoards();
+            showToast("Board supprimé", "success");
+        } catch (error) {
+            console.error("Erreur lors de la suppression:", error);
+            showToast("Erreur lors de la suppression du board", "error");
+        }
     }
 
     function openRenameModal(boardId, currentName) {
@@ -118,9 +132,10 @@ export default function BoardList(){
             
             await refreshBoards();
             closeRenameModal();
+            showToast("Board renommé avec succès", "success");
         } catch (error) {
             console.error("Erreur lors du renommage:", error);
-            // TODO: Afficher un message d'erreur à l'utilisateur (toast/notification)
+            showToast("Erreur lors du renommage du board", "error");
         }
     }
 

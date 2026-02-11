@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged.js';
 import { getUserInfo } from '../../script/user.js';
 import { getToken } from '../../script/helpers/getToken.js';
+import { showToast } from '../components/toast/toast.jsx';
 import '../../styles/pages/account.css';
 import eyeOpen from '../../assets/icon/eyeOpen.svg';
 import eyeClosed from '../../assets/icon/eyeClosed.png';
@@ -37,13 +38,8 @@ export default function Account() {
     async function handlePasswordSubmit(e) {
         e.preventDefault();
 
-        if (!currentPassword || !newPassword || !confirmPassword) {
-            console.log('Tous les champs sont requis');
-            return;
-        }
-
         if (newPassword !== confirmPassword) {
-            console.log('Les mots de passe ne correspondent pas');
+            showToast('Les mots de passe ne correspondent pas', 'error');
             return;
         }
 
@@ -66,11 +62,11 @@ export default function Account() {
             const json = await res.json();
 
             if (!res.ok) {
-                console.log('Erreur API:', json.error?.message || "Erreur inconnue");
+                showToast(json.error?.message || "Erreur lors du changement de mot de passe", 'error');
                 throw new Error(json.error?.message || "Erreur");
             }
 
-            console.log('Mot de passe modifié avec succès');
+            showToast('Mot de passe modifié avec succès', 'success');
             
             setCurrentPassword('');
             setNewPassword('');
@@ -99,11 +95,11 @@ export default function Account() {
             const json = await res.json();
 
             if (!res.ok) {
-                console.log('Erreur suppression compte:', json.error?.message || "Erreur");
+                showToast(json.error?.message || "Erreur lors de la suppression", 'error');
                 throw new Error(json.error?.message || "Erreur");
             }
 
-            console.log('Compte supprimé avec succès');
+            showToast('Compte supprimé avec succès', 'info', true);
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             sessionStorage?.removeItem("token");
             window.location.href = '/';
@@ -126,6 +122,7 @@ export default function Account() {
                             placeholder="Mot de passe actuel"
                             value={currentPassword}
                             onChange={(e) => setCurrentPassword(e.target.value)}
+                            required
                         />
                         <button 
                             type="button" 
@@ -143,6 +140,7 @@ export default function Account() {
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             className={passwordsMatch ? 'input-success' : passwordsDontMatch ? 'input-error' : ''}
+                            required
                         />
                         <button 
                             type="button" 
@@ -160,6 +158,7 @@ export default function Account() {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className={passwordsMatch ? 'input-success' : passwordsDontMatch ? 'input-error' : ''}
+                            required
                         />
                         <button 
                             type="button" 

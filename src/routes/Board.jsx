@@ -7,6 +7,7 @@ import { useUserIsLoggedRedirect } from "../../script/hooks/hooks.isLogged";
 import { getElement } from "../../script/services/getElement";
 import { deleteElement } from "../../script/services/deleteElement";
 import { updateElement } from "../../script/services/updateElement";
+import { showToast } from "../components/toast/toast";
 import Column from "../components/board/column/column";
 import RenameModal from "../components/modal/RenameModal";
 
@@ -41,8 +42,10 @@ export default function Board() {
                 // Gestion spécifique du 404
                 if (err.response && err.response.status === 404) {
                     setError("Board introuvable.");
+                    showToast("Board introuvable", "error");
                 } else {
                     setError(err.message);
+                    showToast("Erreur lors du chargement du board", "error");
                 }
             } finally {
                 setLoading(false);
@@ -66,8 +69,10 @@ export default function Board() {
         try {
             await deleteElement("COLUMN", columnId);
             await refreshBoard();
+            showToast("Colonne supprimée", "success");
         } catch (error) {
             console.error("Erreur lors de la suppression:", error);
+            showToast("Erreur lors de la suppression de la colonne", "error");
         }
     }
 
@@ -83,8 +88,10 @@ export default function Board() {
         try {
             await deleteElement("CARD", cardId);
             await refreshBoard();
+            showToast("Carte supprimée", "success");
         } catch (error) {
             console.error("Erreur lors de la suppression:", error);
+            showToast("Erreur lors de la suppression de la carte", "error");
         }
     }
 
@@ -111,8 +118,11 @@ export default function Board() {
             await updateElement(renameType, renamingId, payload);
             await refreshBoard();
             closeRenameModal();
+            const itemType = renameType === "COLUMN" ? "Colonne" : "Carte";
+            showToast(`${itemType} renommée avec succès`, "success");
         } catch (error) {
             console.error("Erreur lors du renommage:", error);
+            showToast("Erreur lors du renommage", "error");
         }
     }
 
