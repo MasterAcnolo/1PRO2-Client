@@ -16,6 +16,7 @@ export const showToast = (message, type = "info", persist = false) => {
   if (persist) {
     // Sauvegarder dans sessionStorage pour survivre aux redirections
     sessionStorage.setItem('pendingToast', JSON.stringify({ message, type }));
+    return; // Ne pas afficher immédiatement si persistance
   }
   
   if (toastListener) {
