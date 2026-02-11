@@ -9,7 +9,7 @@ export default function Column_Card({ cardData, onDelete, onRename }){
     }
 
     function handleRename(cardId) {
-        if (onRename) onRename(cardId, cardData?.title);
+        if (onRename) onRename(cardId, cardData?.name);
     }
 
 	return(
@@ -19,7 +19,7 @@ export default function Column_Card({ cardData, onDelete, onRename }){
 			<div className='column_card-header'>
 				<div className='column_card-header-left'>
                     <img id='column_card-grab' src='/assets/icon/6DotsIcon.png' alt='drag'></img>
-                   <h3>{cardData?.title || 'Nouvelle carte'}</h3>
+                   <h3>{cardData?.name || 'Nouvelle carte'}</h3>
                 </div>
 				<DropDownCard 
                     type="CARD" 
