@@ -106,9 +106,7 @@ export default function Board() {
         if (!renamingId || newName.trim() === "") return;
         
         try {
-            const payload = renameType === "CARD" 
-                ? { data: { title: newName } }
-                : { data: { name: newName } };
+            const payload = { data: { name: newName } };
                 
             await updateElement(renameType, renamingId, payload);
             await refreshBoard();
