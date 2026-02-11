@@ -30,15 +30,11 @@ export default function Data() {
 					</p>
 					<p>
 						<strong>Données de compte :</strong> Nom d'utilisateur, adresse email, 
-						mot de passe (hashé et crypté avec bcrypt)
+						mot de passe (hashé et encodé)
 					</p>
 					<p>
 						<strong>Données de contenu :</strong> Boards, colonnes, cartes et tâches 
 						que vous créez
-					</p>
-					<p>
-						<strong>Données techniques :</strong> Adresse IP, type de navigateur, 
-						système d'exploitation (pour la sécurité et les statistiques internes)
 					</p>
 				</section>
 
@@ -46,8 +42,6 @@ export default function Data() {
 					<h2>Finalités du traitement</h2>
 					<p>Vos données sont traitées exclusivement pour :</p>
 					<p>La création et la gestion de votre compte utilisateur</p>
-					<p>La fourniture et l'amélioration de nos services</p>
-					<p>La sécurisation de la plateforme et la prévention de la fraude</p>
 					<p>Le respect de nos obligations légales</p>
 					<p>
 						<strong>Nous ne vendons, ne louons et ne partageons jamais vos données avec des tiers à 
@@ -75,10 +69,6 @@ export default function Data() {
 						systèmes dans un délai maximum de 30 jours, sauf obligation légale de 
 						conservation.
 					</p>
-					<p>
-						Les données techniques peuvent être conservées jusqu'à 12 mois pour des 
-						raisons de sécurité.
-					</p>
 				</section>
 
 				<section>
@@ -87,8 +77,8 @@ export default function Data() {
 						Nous mettons en œuvre toutes les mesures techniques et organisationnelles 
 						appropriées pour garantir la sécurité de vos données :
 					</p>
-					<p>Cryptage des mots de passe avec algorithme bcrypt</p>
-					<p>Connexions sécurisées HTTPS/TLS</p>
+					<p>Encodagedes mots de passe</p>
+					<p>Connexions sécurisées HTTPS</p>
 					<p>Authentification par tokens JWT</p>
 					<p>Sauvegardes régulières et chiffrées</p>
 					<p>Accès restreint aux données sur base du besoin d'en connaître</p>
@@ -140,7 +130,6 @@ export default function Data() {
 						fonctionnement du service :
 					</p>
 					<p>Token d'authentification : Pour maintenir votre session sécurisée</p>
-					<p>Préférences utilisateur : Pour mémoriser vos paramètres</p>
 					<p>
 						<strong>Aucun cookie publicitaire, de mesure d'audience tierce ou de traçage 
 						comportemental n'est utilisé.</strong>
