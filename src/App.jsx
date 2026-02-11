@@ -5,6 +5,7 @@
   import Header from './components/header/header.jsx';
   import Footer from './components/footer/footer.jsx';
   import ScrollToTop from './components/ScrollToTop.jsx';
+  import Toast from './components/toast/toast.jsx';
 
   // Pages
   import Home from "./routes/Home.jsx";
@@ -42,6 +43,8 @@
         <ScrollToTop />
 
         <Header />
+
+        <Toast />
 
         <main>
           <AnimatePresence mode="wait">

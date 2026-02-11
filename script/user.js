@@ -1,4 +1,5 @@
 import { getToken } from "./helpers/getToken";
+import { showToast } from '../src/components/toast/toast.jsx';
 
 async function loginRegisterUser(data, method) {
   const API_URL = "http://localhost:1337/api";
@@ -16,9 +17,12 @@ async function loginRegisterUser(data, method) {
 
   const json = await res.json();
 
-  if (!res.ok) throw new Error(json.error?.message || "Erreur inconnue"); // TOAST "Erreur pendant l'inscription / connexion. A faire varier selon la variable "method"
+  if (!res.ok) {
+    showToast((json.error?.message || "Erreur inconnue"), "error");
+    throw new Error(json.error?.message || "Erreur inconnue");
+  }
 
-  console.log(method === "register" ? "Inscription Réussie" : "Connexion Réussie"); // TOAST
+  showToast((method === "register" ? "Inscription Réussie" : "Connexion Réussie"), "success", true); // TOAST avec persist=true
 
   if (data.rememberMe) {
     document.cookie = `token=${json.jwt}; path=/; max-age=604800`; // Cookie de max une semaine
@@ -69,7 +73,8 @@ function disconnectUser(){
             
             // Redirection vers la page d'accueil
             window.location.href = '/';
-            
+            showToast("Déconnexion Réussie", "info", true)
+
             return true
         }
     }
