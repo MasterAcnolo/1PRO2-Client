@@ -1,35 +1,42 @@
+import { DropDownCard } from '../../../../helpers/dropdown/dropdown';
 import './card.css';
 
-import { DropDownCard } from '../../../../helpers/dropdown/dropdown';
+export default function TaskCard({ cardData, onDelete, onRename }){
 
+    function handleDelete(e) {
+        e.stopPropagation();
+        if (onDelete) onDelete(cardData?.documentId || cardData?.id);
+    }
 
-export default function TaskCard({title, description, date}) {
+    function handleRename(cardId) {
+        if (onRename) onRename(cardId, cardData?.name);
+    }
 
-    return(
-    <>
-       <div className='card'>
-        <div className='card-header'>
-            <div className='card-header-left'>
-                <img id='card-grab' src='../../../assets/icon/6DotsIcon.png'></img>
-                <h3> {title} </h3>
-            
-            </div>
-            <DropDownCard />
-        </div>
+	return(
+		<>
+		<div className='column_card'>
 
-        <div className='card-content'>
-            <p>
-                {description}
-            </p>
-        </div>
+			<div className='column_card-header'>
+				<div className='column_card-header-left'>
+                    <img id='column_card-grab' src='/assets/icon/6DotsIcon.png' alt='drag'></img>
+                   <h3>{cardData?.name || 'Nouvelle carte'}</h3>
+                </div>
+				<DropDownCard 
+                    type="CARD" 
+                    elementId={cardData?.documentId || cardData?.id}
+                    onDelete={handleDelete}
+                    onRename={handleRename}
+                />
+			</div>
 
-        <div className='card-footer'>
-            <div className='card-labels'>
-                {/* LABELS GOES HERE */}
-            </div>
-            <p className='card-date' id='card-date'>{date}</p>
-        </div>
-
-        </div> 
-    </>
-);}
+			<div className='column_card-content'>
+				<div>{cardData?.description || 'Description'}</div>
+				<div className='column_card-content-footer'>
+                    <div>{cardData?.label || 'Label'}</div>
+                    <div>{cardData?.dueDate ? new Date(cardData.dueDate).toLocaleDateString() : 'Date'}</div>
+                </div>
+			</div>
+		</div>
+		</>
+	);
+}

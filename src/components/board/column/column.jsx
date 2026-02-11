@@ -1,4 +1,4 @@
-import Column_Card from './card/column_card';
+import TaskCard from './card/card';
 import { DropDownCard } from '../../../helpers/dropdown/dropdown';
 import './column.css';
 
@@ -33,7 +33,7 @@ export default function Column({ columnData, onDelete, onRename, onCardDelete, o
                 {/* Cards existantes */}
                 {columnData?.cards && columnData.cards.length > 0 ? (
                     columnData.cards.map(card => (
-                        <Column_Card 
+                        <TaskCard 
                             key={card.id} 
                             cardData={card}
                             onDelete={onCardDelete}
