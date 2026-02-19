@@ -198,9 +198,7 @@ export default function Board() {
                                     onRefresh={refreshBoard}
                                 />
                             ))
-                    ) : (
-                        <Column />
-                    )}
+                    ) : null}
                     
                     {/* Bouton Add Column */}
                     <div className='newColumn' onClick={openCreateColumnModal}>
