@@ -5,10 +5,12 @@ import "../../styles/pages/board.css"
 import "../../styles/overlay/createBoard.css"
 
 import { useUserIsLoggedRedirect } from "../../script/hooks/hooks.isLogged";
-import { getElement } from "../../script/services/getElement";
-import { deleteElement } from "../../script/services/deleteElement";
-import { updateElement } from "../../script/services/updateElement";
-import { createElement } from "../../script/services/createElement";
+
+import { getElement } from "../../script/services/services.getElement";
+import { deleteElement } from "../../script/services/services.deleteElement";
+import { updateElement } from "../../script/services/services.updateElement";
+import { createElement } from "../../script/services/services.createElement";
+
 import { showToast } from "../components/toast/toast";
 import Column from "../components/board/column/column";
 import RenameModal from "../components/modal/RenameModal";

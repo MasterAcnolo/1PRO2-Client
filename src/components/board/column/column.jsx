@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import TaskCard from './card/card';
+import TaskCard from '../card/card';
 import { DropDownCard } from '../../../helpers/dropdown/dropdown';
-import { createElement } from '../../../../script/services/createElement';
+import { createElement } from '../../../../script/services/services.createElement';
 import { showToast } from '../../toast/toast';
 import './column.css';
 import '../../../../styles/overlay/createBoard.css';

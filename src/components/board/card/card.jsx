@@ -1,4 +1,4 @@
-import { DropDownCard } from '../../../../helpers/dropdown/dropdown';
+import { DropDownCard } from '../../../helpers/dropdown/dropdown';
 import './card.css';
 
 export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDuplicate }){

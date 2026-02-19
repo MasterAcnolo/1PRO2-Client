@@ -1,7 +1,7 @@
-import { getToken } from "../helpers/getToken";
+import { getToken } from "../helpers/helpers.getToken";
 import { API_BASE_URL } from "../variables";
 
-async function createElement(type,payload){
+async function deleteElement(type,ID){
     const TOKEN = getToken();
 
     let ENDPOINT = "";
@@ -18,18 +18,22 @@ async function createElement(type,payload){
             break;
         default:
             console.log("Invalid Type")
+            return null
     }
     
-    const res = await fetch(`${API_BASE_URL}${ENDPOINT}`, {
-        method: "POST",
+    const res = await fetch(`${API_BASE_URL}${ENDPOINT}/${ID}`, {
+        method: "DELETE",
         headers: { 
             "Content-Type": "application/json", 
             "Authorization": `Bearer ${TOKEN}` 
         },
-        body: JSON.stringify(payload)
     });
 
-    const json = await res.json(); 
+    let json = null;
+
+    if (res.headers.get("content-type")?.includes("application/json")) {
+        json = await res.json();
+    }
 
     if (!res.ok) throw new Error(json.error?.message || "Erreur inconnue"); // Si jamais ya un error.message on envoie le message, sinon on envoie un message générique
 
@@ -39,5 +43,5 @@ async function createElement(type,payload){
 }
 
 export {
-    createElement
+    deleteElement
 }

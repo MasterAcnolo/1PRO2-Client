@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import "../../styles/pages/boardList.css"
 import "../../styles/overlay/createBoard.css"
@@ -7,13 +8,14 @@ import fetchElement from '../../script/fetch';
 
 import { DropDownCard } from '../helpers/dropdown/dropdown';
 import {useUserIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
+
 import RenameModal from '../components/modal/RenameModal';
 
-import { createElement } from '../../script/services/createElement';
-import { deleteElement } from '../../script/services/deleteElement';
-import { updateElement } from '../../script/services/updateElement';
+import { createElement } from '../../script/services/services.createElement';
+import { deleteElement } from '../../script/services/services.deleteElement';
+import { updateElement } from '../../script/services/services.updateElement';
+
 import { showToast } from '../components/toast/toast';
-import { useNavigate } from 'react-router-dom';
 
 function CardPreview({title, date, data_id, onDelete, onRename}){
     const date_ISO = new Date(date).toLocaleString();
