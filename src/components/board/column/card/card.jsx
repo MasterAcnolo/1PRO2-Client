@@ -1,7 +1,7 @@
 import { DropDownCard } from '../../../../helpers/dropdown/dropdown';
 import './card.css';
 
-export default function TaskCard({ cardData, onDelete, onRename }){
+export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDuplicate }){
 
     function handleDelete(e) {
         e.stopPropagation();
@@ -12,9 +12,19 @@ export default function TaskCard({ cardData, onDelete, onRename }){
         if (onRename) onRename(cardId, cardData?.name);
     }
 
+    function handleEdit(cardId) {
+        if (onEdit) onEdit(cardId);
+    }
+
+    function handleDuplicate(cardId) {
+        if (onDuplicate) onDuplicate(cardId);
+    }
+
 	return(
 		<>
-		<div className='column_card'>
+		<div className='column_card' style={{
+			boxShadow: cardData?.color ? `inset 0 0 0 4px #${cardData.color}` : 'none'
+		}}>
 
 			<div className='column_card-header'>
 				<div className='column_card-header-left'>
@@ -26,16 +36,32 @@ export default function TaskCard({ cardData, onDelete, onRename }){
                     elementId={cardData?.documentId || cardData?.id}
                     onDelete={handleDelete}
                     onRename={handleRename}
+                    onEdit={handleEdit}
+                    onDuplicate={handleDuplicate}
                 />
 			</div>
 
 			<div className='column_card-content'>
-				<div>{cardData?.description || 'Description'}</div>
-				<div className='column_card-content-footer'>
-                    <div>{cardData?.label || 'Label'}</div>
-                    <div>{cardData?.dueDate ? new Date(cardData.dueDate).toLocaleDateString() : 'Date'}</div>
-                </div>
+			{cardData?.description && <div className='column_card-description'>{cardData.description}</div>}
+		</div>
+		
+		{cardData?.deadline && (
+			<div className='column_card-content-footer'>
+				<div className='deadline' style={{
+					backgroundColor: cardData?.color ? `#${cardData.color}20` : '#e3f2fd',
+					color: cardData?.color ? `#${cardData.color}` : '#1976d2'
+				}}>
+					<img src='/assets/icon/calendar.svg' alt='calendrier' style={{ width: '14px', height: '14px', marginRight: '4px', verticalAlign: 'middle' }} />
+					{new Date(cardData.deadline).toLocaleDateString('fr-FR', {
+						day: '2-digit',
+						month: '2-digit',
+						year: 'numeric',
+						hour: '2-digit',
+						minute: '2-digit'
+					})}
+				</div>
 			</div>
+		)}
 		</div>
 		</>
 	);

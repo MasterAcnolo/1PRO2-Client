@@ -62,7 +62,7 @@
     margin-top: 8px;
 }
 
-.column_card-content > div:first-child {
+.column_card-description {
     font-size: 0.85rem;
     color: #555;
     line-height: 1.4;
@@ -71,17 +71,18 @@
 }
 
 .column_card-content-footer{
-    margin-top: 12px;
+    margin-top: 8px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    font-size: 0.75rem;
-    color: #888;
 }
 
-.column_card-content-footer > div {
+.column_card-content-footer .deadline {
     padding: 4px 8px;
-    background: #e9e9e9;
+    background: #e3f2fd;
     border-radius: 4px;
+    color: #1976d2;
+    font-weight: 500;
+    font-size: 0.75rem;
 }

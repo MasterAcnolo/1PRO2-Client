@@ -12,6 +12,7 @@ import { createElement } from "../../script/services/createElement";
 import { showToast } from "../components/toast/toast";
 import Column from "../components/board/column/column";
 import RenameModal from "../components/modal/RenameModal";
+import EditCardModal from "../components/modal/EditCardModal";
 
 export default function Board() {
 
@@ -31,6 +32,10 @@ export default function Board() {
     
     const [isCreateColumnModalOpen, setIsCreateColumnModalOpen] = useState(false);
     const [newColumnName, setNewColumnName] = useState("");
+    
+    const [isEditCardModalOpen, setIsEditCardModalOpen] = useState(false);
+    const [editingCardId, setEditingCardId] = useState(null);
+    const [editingCardData, setEditingCardData] = useState(null);
 
     useEffect(() => {
         if (!id) {
@@ -105,6 +110,97 @@ export default function Board() {
         setRenamingId(cardId);
         setRenamingName(currentName);
         setIsRenameModalOpen(true);
+    }
+
+    // Gestion de l'édition complète des cartes
+    function openEditCardModal(cardId) {
+        // Trouver les données de la carte dans le board
+        let cardData = null;
+        if (board.columns) {
+            for (const column of board.columns) {
+                if (column.cards) {
+                    cardData = column.cards.find(card => 
+                        (card.documentId || card.id) === cardId
+                    );
+                    if (cardData) break;
+                }
+            }
+        }
+        
+        if (cardData) {
+            setEditingCardId(cardId);
+            setEditingCardData(cardData);
+            setIsEditCardModalOpen(true);
+        }
+    }
+
+    function closeEditCardModal() {
+        setIsEditCardModalOpen(false);
+        setEditingCardId(null);
+        setEditingCardData(null);
+    }
+
+    async function handleEditCard(updatedData) {
+        if (!editingCardId) return;
+        
+        try {
+            const payload = { data: updatedData };
+            await updateElement("CARD", editingCardId, payload);
+            await refreshBoard();
+            showToast("Carte modifiée avec succès", "success");
+        } catch (error) {
+            console.error("Erreur lors de la modification:", error);
+            showToast("Erreur lors de la modification de la carte", "error");
+        }
+    }
+
+    // Gestion de la duplication de cartes
+    async function handleDuplicateCard(cardId) {
+        try {
+            // Trouver la carte et sa colonne
+            let cardData = null;
+            let columnId = null;
+            
+            if (board.columns) {
+                for (const column of board.columns) {
+                    if (column.cards) {
+                        cardData = column.cards.find(card => 
+                            (card.documentId || card.id) === cardId
+                        );
+                        if (cardData) {
+                            columnId = column.documentId || column.id;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            if (cardData && columnId) {
+                // Calculer le nouvel ordre
+                const columnCards = board.columns
+                    .find(col => (col.documentId || col.id) === columnId)
+                    ?.cards || [];
+                const order = columnCards.length;
+                
+                const payload = {
+                    data: {
+                        name: cardData.name,
+                        description: cardData.description || null,
+                        deadline: cardData.deadline || null,
+                        color: cardData.color || null,
+                        order: order,
+                        column: columnId
+                    }
+                };
+                
+                await createElement("CARD", payload);
+                await refreshBoard();
+                showToast("Carte dupliquée avec succès", "success");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la duplication:", error);
+            showToast("Erreur lors de la duplication de la carte", "error");
+        }
     }
 
     function closeRenameModal() {
@@ -195,6 +291,8 @@ export default function Board() {
                                     onRename={openRenameColumnModal}
                                     onCardDelete={handleDeleteCard}
                                     onCardRename={openRenameCardModal}
+                                    onCardEdit={openEditCardModal}
+                                    onCardDuplicate={handleDuplicateCard}
                                     onRefresh={refreshBoard}
                                 />
                             ))
@@ -232,6 +330,13 @@ export default function Board() {
                     onRename={handleRename}
                     currentName={renamingName}
                     type={renameType}
+                />
+
+                <EditCardModal 
+                    isOpen={isEditCardModalOpen}
+                    onClose={closeEditCardModal}
+                    onSave={handleEditCard}
+                    cardData={editingCardData}
                 />
             </div>
         </>
