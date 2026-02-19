@@ -1,10 +1,21 @@
+// React
 import { useEffect, useState } from 'react';
-import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged.js';
-import { getUserInfo } from '../../script/user.js';
-import { getToken } from '../../script/helpers/helpers.getToken.js';
-import { showToast } from '../components/toast/toast.jsx';
-import { API_BASE_URL } from '../../script/variables.js';
+
+// CSS
 import '../../styles/pages/account.css';
+
+// Script
+import { API_BASE_URL } from '../../script/variables.js';
+import { getUserInfo } from '../../script/user.js';
+
+// Helpers
+import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged.js';
+import { getToken } from '../../script/helpers/helpers.getToken.js';
+
+// Components
+import { showToast } from '../components/toast/toast.jsx';
+
+// Assets
 import eyeOpen from '../../assets/icon/eyeOpen.svg';
 import eyeClosed from '../../assets/icon/eyeClosed.png';
 

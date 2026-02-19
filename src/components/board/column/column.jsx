@@ -1,8 +1,15 @@
+// React
 import { useState } from 'react';
+
+// Components
 import TaskCard from '../card/card';
 import { DropDownCard } from '../../../helpers/dropdown/dropdown';
-import { createElement } from '../../../../script/services/services.createElement';
 import { showToast } from '../../toast/toast';
+
+// Services
+import { createElement } from '../../../../script/services/services.createElement';
+
+// CSS
 import './column.css';
 import '../../../../styles/overlay/createBoard.css';
 

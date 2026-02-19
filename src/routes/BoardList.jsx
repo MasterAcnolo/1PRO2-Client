@@ -1,21 +1,26 @@
+// React
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import "../../styles/pages/boardList.css"
-import "../../styles/overlay/createBoard.css"
+// CSS
+import "../../styles/pages/boardList.css";
+import "../../styles/overlay/createBoard.css";
 
+// Script
 import fetchElement from '../../script/fetch';
 
+// Helpers
 import { DropDownCard } from '../helpers/dropdown/dropdown';
-import {useUserIsLoggedRedirect} from '../../script/hooks/hooks.isLogged';
+import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged';
 
+// Components
 import RenameModal from '../components/modal/RenameModal';
+import { showToast } from '../components/toast/toast';
 
+// Services
 import { createElement } from '../../script/services/services.createElement';
 import { deleteElement } from '../../script/services/services.deleteElement';
 import { updateElement } from '../../script/services/services.updateElement';
-
-import { showToast } from '../components/toast/toast';
 
 function CardPreview({title, date, data_id, onDelete, onRename}){
     const date_ISO = new Date(date).toLocaleString();

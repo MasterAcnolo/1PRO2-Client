@@ -1,20 +1,25 @@
+// React
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import "../../styles/pages/board.css"
-import "../../styles/overlay/createBoard.css"
+// CSS
+import "../../styles/pages/board.css";
+import "../../styles/overlay/createBoard.css";
 
+// Helpers
 import { useUserIsLoggedRedirect } from "../../script/hooks/hooks.isLogged";
 
-import { getElement } from "../../script/services/services.getElement";
-import { deleteElement } from "../../script/services/services.deleteElement";
-import { updateElement } from "../../script/services/services.updateElement";
-import { createElement } from "../../script/services/services.createElement";
-
+// Components
 import { showToast } from "../components/toast/toast";
 import Column from "../components/board/column/column";
 import RenameModal from "../components/modal/RenameModal";
 import EditCardModal from "../components/modal/EditCardModal";
+
+// Services
+import { getElement } from "../../script/services/services.getElement";
+import { deleteElement } from "../../script/services/services.deleteElement";
+import { updateElement } from "../../script/services/services.updateElement";
+import { createElement } from "../../script/services/services.createElement";
 
 export default function Board() {
 

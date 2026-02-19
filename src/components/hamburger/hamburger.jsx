@@ -1,11 +1,15 @@
+// React
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getUserInfo, disconnectUser } from '../../../script/user';
+// Script
+import { getUserInfo } from '../../../script/user';
 
+// Assets
 import hamburgerIcon from '../../../assets/icon/hamburger.png';
 import crossIcon from '../../../assets/icon/cross.png';
 
+// CSS
 import './hamburger.css';
 
 function HamburgerMenu() {

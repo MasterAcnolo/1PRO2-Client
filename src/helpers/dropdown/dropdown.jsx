@@ -1,8 +1,13 @@
+// CSS
 import './dropdown.css';
+
+// React
 import { useState, useRef } from 'react';
 
+// Services
 import { deleteElement } from '../../../script/services/services.deleteElement';
 
+// Helpers
 import { useClickOutside } from '../../../script/hooks/hooks.clickOutside';
 
 function DropDownCard({type, elementId, onDelete, onRename, onEdit, onDuplicate}) {

@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
+// React
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-// Styles
+// CSS
 import "../../styles/pages/Home.css";
 
 export default function Home(){

@@ -1,8 +1,11 @@
-// Components
-import Form from '../components/form/form.jsx';
+// React
 import { useEffect } from 'react';
 
-import {useUserIsLoggedRedirect} from '../../script/hooks/hooks.isLogged.js'
+// Helpers
+import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged.js';
+
+// Components
+import Form from '../components/form/form.jsx';
 
 export default function Login(){
 

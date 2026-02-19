@@ -1,4 +1,7 @@
+// Components
 import { DropDownCard } from '../../../helpers/dropdown/dropdown';
+
+// CSS
 import './card.css';
 
 export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDuplicate }){

@@ -1,9 +1,11 @@
+// CSS
 import './header.css';
 
+// React
 import { Link } from "react-router-dom";
 
-/* Components */
-import {UserStateHeader} from '../userStateHeader/userStateHeader.jsx';
+// Components
+import { UserStateHeader } from '../userStateHeader/userStateHeader.jsx';
 import HamburgerMenu from '../hamburger/hamburger.jsx';
 
 function Header() {

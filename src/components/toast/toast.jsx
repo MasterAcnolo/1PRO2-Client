@@ -1,4 +1,7 @@
+// React
 import { useState, useEffect } from 'react';
+
+// CSS
 import './toast.css';
 
 // Configuration des icônes par type

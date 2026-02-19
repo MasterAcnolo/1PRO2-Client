@@ -1,12 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+// React
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
+// CSS
 import "./form.css";
+
+// Assets
 import eyeOpen from '../../../assets/icon/eyeOpen.svg';
 import eyeClosed from '../../../assets/icon/eyeClosed.png';
 
-// FORM Features
-import {loginRegisterUser, isLogged} from "../../../script/user.js";
+// Script
+import { loginRegisterUser, isLogged } from "../../../script/user.js";
 
 function Form({ type }) {
 

@@ -1,6 +1,7 @@
+// React
 import { useEffect } from 'react';
 
-// Styles
+// CSS
 import "../../styles/pages/Legal.css";
 
 export default function Data() {

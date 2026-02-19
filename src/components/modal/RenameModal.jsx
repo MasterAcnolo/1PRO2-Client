@@ -1,4 +1,7 @@
+// React
 import { useState } from 'react';
+
+// CSS
 import './renameModal.css';
 
 function RenameModal({ isOpen, onClose, onRename, currentName, type }) {

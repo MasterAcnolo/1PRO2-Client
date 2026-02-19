@@ -1,4 +1,7 @@
+// React
 import { useState } from 'react';
+
+// CSS
 import './renameModal.css';
 
 const CARD_COLORS = [

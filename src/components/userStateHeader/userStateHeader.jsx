@@ -1,7 +1,14 @@
+// CSS
 import './userStateHeader.css';
-import { Link } from "react-router-dom";
-import { getUserInfo, disconnectUser } from '../../../script/user';
+
+// React
 import { useState, useEffect, useRef } from 'react';
+import { Link } from "react-router-dom";
+
+// Script
+import { getUserInfo, disconnectUser } from '../../../script/user';
+
+// Helpers
 import { useClickOutside } from '../../../script/hooks/hooks.clickOutside';
 
 function UserStateHeader() {
