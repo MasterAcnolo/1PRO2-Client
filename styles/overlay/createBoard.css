@@ -52,6 +52,26 @@
     border-color: #007bff;
 }
 
+/* Textarea */
+.createBoard textarea {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.createBoard textarea::placeholder {
+    color: rgb(143, 143, 143);
+}
+
+.createBoard textarea:focus {
+    border-color: #007bff;
+}
+
 /* Boutons */
 .createBoard .buttons {
     display: flex;
