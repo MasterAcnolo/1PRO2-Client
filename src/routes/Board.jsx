@@ -152,7 +152,7 @@ export default function Board() {
                 data: { 
                     name: newColumnName,
                     order: order,
-                    board: id  // Association au board parent
+                    board_id: id  // Association au board parent
                 } 
             };
             
