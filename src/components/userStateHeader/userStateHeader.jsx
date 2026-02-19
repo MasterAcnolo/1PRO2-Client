@@ -1,12 +1,13 @@
-import './userStateHeader.css'
-;
+import './userStateHeader.css';
 import { Link } from "react-router-dom";
 import { getUserInfo, disconnectUser } from '../../../script/user';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useClickOutside } from '../../../script/hooks/hooks.clickOutside';
 
 function UserStateHeader() {
     const [userData, setUserData] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         async function fetchUser() {
@@ -15,6 +16,8 @@ function UserStateHeader() {
         }
         fetchUser();
     }, []);
+
+    useClickOutside(dropdownRef, () => setIsOpen(false), isOpen);
 
 
     if (!userData) {
@@ -31,25 +34,25 @@ function UserStateHeader() {
                     <p>{userData.username}</p>
                 </Link>
                 
-                <div className='avatar' onClick={() => setIsOpen(valeurInitiale => !valeurInitiale)}><img src='../../../assets/default.jpg'/></div>
+                <div ref={dropdownRef} className='avatar-container'>
+                    <div className='avatar' onClick={() => setIsOpen(prev => !prev)}>
+                        <img src='../../../assets/default.jpg' alt="avatar" />
+                    </div>
 
-                <div className='dropDown'>
-                    <div className='dropDown-content link' style={{display: `${isOpen ? "flex" : "none"}`, marginTop: "50px", marginRight: "15px"}}>
-
-                        <Link to="/account">Mon Espace</Link>
-                        <Link to="/board">Vos Boards</Link>
-                        <p id='disconnect' onClick={
-                            async function(){
+                    {isOpen && (
+                        <div className='dropDown-content'>
+                            <Link to="/account">Mon Espace</Link>
+                            <Link to="/board">Vos Boards</Link>
+                            <p className='delete' onClick={async () => {
                                 const status = await disconnectUser();
-                                if (status === true) {
+                                if (status) {
                                     setUserData(null);
                                 } else {
                                     console.log("Erreur pendant la déconnexion");
                                 }
-                            }
-                        }>Déconnexion</p>
-
-                    </div>
+                            }}>Déconnexion</p>
+                        </div>
+                    )}
                 </div>
             </div>
         );

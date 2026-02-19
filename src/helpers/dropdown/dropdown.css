@@ -25,6 +25,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 9;
+    color: black;
 }
 
 .dropDown-content p {
@@ -40,10 +41,10 @@
     background-color: rgba(0, 0, 0, 0.08);
 }
 
-#delete {
+.delete {
     color: var(--error-color);
 }
 
-#delete:hover {
+.delete:hover {
     filter: brightness(0.9);
 }

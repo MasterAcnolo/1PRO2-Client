@@ -36,6 +36,14 @@
     margin-right: 30px;
 }
 
+
+.userHeader .avatar-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 .userHeader .avatar img {
     width: 55px;
     border-radius: 50%;
@@ -48,42 +56,45 @@
 }
 
 /* Drop Down Avatar */
-.dropDown-content {
+.userHeader .dropDown-content {
     position: absolute;
-    right: -15px;
-    margin-top: 30px;
+    top: 60px;
+    right: 0;
+    background: #C4C4C4;
+    color: var(--default-dark-text-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
     display: flex;
     flex-direction: column;
-    gap: 0;
-    background-color: #C4C4C4;
-    color: var(--default-dark-text-color);
-    text-align: end;
-    border-radius: 12px;
+    z-index: 100;
+    padding: 8px 0;
 }
 
-.dropDown-content p,
-.dropDown-content a {
-    padding: 5px;
+
+.userHeader .dropDown-content p,
+.userHeader .dropDown-content a {
+    padding: 8px 18px;
+    font-size: 1rem;
+    transition: background 0.15s;
+    text-align: right;
 }
 
-.dropDown p:hover {
+
+.userHeader .dropDown-content p:hover,
+.userHeader .dropDown-content a:hover {
+    background: #e6e6e6;
     font-weight: 500;
     cursor: pointer;
+    border-radius: 8px;
 }
 
-.dropDown a {
+
+.userHeader .dropDown-content a {
     color: var(--default-dark-text-color);
+    text-decoration: none;
 }
 
-.dropDown a:hover {
+
+.userHeader .dropDown-content a:hover {
     text-decoration: none !important;
-}
-
-/* Disconnect Button */
-#disconnect {
-    color: #F00000;
-}
-
-#disconnect:hover {
-    color: #e80000;
 }
