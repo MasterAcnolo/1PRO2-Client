@@ -1,14 +1,14 @@
 import { getToken } from "./helpers/getToken";
+import { API_BASE_URL } from "./variables";
 
 export default async function fetchElement(){
-    const BASE_URL = "http://localhost:1337/api"
     const TOKEN = getToken();
     if (!TOKEN) throw new Error('No token available');
 
     const headers = { "Content-Type": "application/json" };
     if (TOKEN) headers["Authorization"] = `Bearer ${TOKEN}`;
 
-    const res = await fetch(`${BASE_URL}/users/me?populate=boards`, {
+    const res = await fetch(`${API_BASE_URL}/users/me?populate=boards`, {
         method: "GET",
         headers,
     });

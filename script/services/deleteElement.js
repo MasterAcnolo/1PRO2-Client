@@ -1,7 +1,7 @@
 import { getToken } from "../helpers/getToken";
+import { API_BASE_URL } from "../variables";
 
 async function deleteElement(type,ID){
-    const BASE_URL = "http://localhost:1337/api"
     const TOKEN = getToken();
 
     let ENDPOINT = "";
@@ -21,7 +21,7 @@ async function deleteElement(type,ID){
             return null
     }
     
-    const res = await fetch(`${BASE_URL}${ENDPOINT}/${ID}`, {
+    const res = await fetch(`${API_BASE_URL}${ENDPOINT}/${ID}`, {
         method: "DELETE",
         headers: { 
             "Content-Type": "application/json", 

@@ -1,7 +1,7 @@
 import { getToken } from "../helpers/getToken";
+import { API_BASE_URL } from "../variables";
 
 async function getElement(type, ID) {
-    const BASE_URL = "http://localhost:1337/api";
     const TOKEN = getToken();
 
     let ENDPOINT = "";
@@ -21,7 +21,7 @@ async function getElement(type, ID) {
             return null;
     }
 
-    const res = await fetch(`${BASE_URL}${ENDPOINT}`, {
+    const res = await fetch(`${API_BASE_URL}${ENDPOINT}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

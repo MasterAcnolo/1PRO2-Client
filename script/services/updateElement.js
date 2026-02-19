@@ -1,7 +1,7 @@
 import { getToken } from "../helpers/getToken";
+import { API_BASE_URL } from "../variables";
 
 async function updateElement(type, elementId, payload){
-    const BASE_URL = "http://localhost:1337/api"
     const TOKEN = getToken();
 
     let ENDPOINT = "";
@@ -20,7 +20,7 @@ async function updateElement(type, elementId, payload){
             console.log("Invalid Type")
     }
     
-    const res = await fetch(`${BASE_URL}${ENDPOINT}/${elementId}`, {
+    const res = await fetch(`${API_BASE_URL}${ENDPOINT}/${elementId}`, {
         method: "PUT",
         headers: { 
             "Content-Type": "application/json", 

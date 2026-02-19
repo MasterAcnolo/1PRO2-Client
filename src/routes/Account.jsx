@@ -3,6 +3,7 @@ import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged.js';
 import { getUserInfo } from '../../script/user.js';
 import { getToken } from '../../script/helpers/getToken.js';
 import { showToast } from '../components/toast/toast.jsx';
+import { API_BASE_URL } from '../../script/variables.js';
 import '../../styles/pages/account.css';
 import eyeOpen from '../../assets/icon/eyeOpen.svg';
 import eyeClosed from '../../assets/icon/eyeClosed.png';
@@ -46,7 +47,7 @@ export default function Account() {
         const TOKEN = getToken();
 
         try {
-            const res = await fetch('http://localhost:1337/api/auth/change-password', {
+            const res = await fetch(`${API_BASE_URL}/auth/change-password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -84,7 +85,7 @@ export default function Account() {
         const TOKEN = getToken();
 
         try {
-            const res = await fetch(`http://localhost:1337/api/users/${userId}`, {
+            const res = await fetch(`${API_BASE_URL}/users/${userId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

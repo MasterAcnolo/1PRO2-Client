@@ -1,7 +1,7 @@
 import { getToken } from "../helpers/getToken";
+import { API_BASE_URL } from "../variables";
 
 async function createElement(type,payload){
-    const BASE_URL = "http://localhost:1337/api"
     const TOKEN = getToken();
 
     let ENDPOINT = "";
@@ -20,7 +20,7 @@ async function createElement(type,payload){
             console.log("Invalid Type")
     }
     
-    const res = await fetch(`${BASE_URL}${ENDPOINT}`, {
+    const res = await fetch(`${API_BASE_URL}${ENDPOINT}`, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json", 

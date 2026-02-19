@@ -1,15 +1,15 @@
 import { getToken } from "./helpers/getToken";
 import { showToast } from '../src/components/toast/toast.jsx';
+import { API_BASE_URL } from "./variables";
 
 async function loginRegisterUser(data, method) {
-  const API_URL = "http://localhost:1337/api";
   const endpoint = method === "register" ? "register" : "";
 
   const payload = method === "register" // Suivant la méthode on construit un payload custom
     ? { username: data.username, email: data.email, password: data.password }
     : { identifier: data.email, password: data.password };
 
-  const res = await fetch(`${API_URL}/auth/local/${endpoint}`, {
+  const res = await fetch(`${API_BASE_URL}/auth/local/${endpoint}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -40,10 +40,8 @@ async function getUserInfo() {
         return false;
     }
 
-    const API_URL = "http://localhost:1337/api";
-
     try {
-        const res = await fetch(`${API_URL}/users/me`, {
+        const res = await fetch(`${API_BASE_URL}/users/me`, {
             headers: {
                 "Authorization": `Bearer ${TOKEN}`
             }
