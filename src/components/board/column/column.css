@@ -49,7 +49,7 @@
 }
 
 /* Style spécifique pour l'icône du dropdown dans les colonnes */
-.column .dropDown img {
+.column-header .dropDown img {
     width: 20px;
     height: 20px;
     filter: invert();
