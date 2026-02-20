@@ -1,4 +1,4 @@
-import { getToken } from "./helpers/helpers.getToken";
+import { getToken } from "./helpers/getToken.helpers.js";
 import { showToast } from '../src/components/toast/toast.jsx';
 import { API_BASE_URL } from "./variables";
 

@@ -1,4 +1,4 @@
-import { getToken } from "../helpers/helpers.getToken";
+import { getToken } from "../helpers/getToken.helpers";
 import { API_BASE_URL } from "../variables";
 
 async function getElement(type, ID) {

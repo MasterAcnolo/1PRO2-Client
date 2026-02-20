@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 
 // Helpers
-import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged.js';
+import { useUserIsLoggedRedirect } from '../../script/hooks/isLogged.hooks.js';
 
 // Components
 import Form from '../components/form/form.jsx';

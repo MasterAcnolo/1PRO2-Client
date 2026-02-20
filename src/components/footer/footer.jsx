@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import './footer.css';
 
 // Helpers
-import { userIsLogged } from "../../../script/hooks/hooks.isLogged";
+import { userIsLogged } from "../../../script/hooks/isLogged.hooks";
 
 
 function Footer() {

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { getUserInfo, disconnectUser } from '../../../script/user';
 
 // Helpers
-import { useClickOutside } from '../../../script/hooks/hooks.clickOutside';
+import { useClickOutside } from '../../../script/hooks/clickOutside.hooks';
 
 function UserStateHeader() {
     const [userData, setUserData] = useState(null);

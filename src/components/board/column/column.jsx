@@ -7,7 +7,7 @@ import { DropDownCard } from '../../../helpers/dropdown/dropdown';
 import { showToast } from '../../toast/toast';
 
 // Services
-import { createElement } from '../../../../script/services/services.createElement';
+import { createElement } from '../../../../script/services/createElement.services';
 
 // CSS
 import './column.css';

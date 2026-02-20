@@ -11,16 +11,16 @@ import fetchElement from '../../script/fetch';
 
 // Helpers
 import { DropDownCard } from '../helpers/dropdown/dropdown';
-import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged';
+import { useUserIsLoggedRedirect } from '../../script/hooks/isLogged.hooks.js';
 
 // Components
 import RenameModal from '../components/modal/RenameModal';
 import { showToast } from '../components/toast/toast';
 
 // Services
-import { createElement } from '../../script/services/services.createElement';
-import { deleteElement } from '../../script/services/services.deleteElement';
-import { updateElement } from '../../script/services/services.updateElement';
+import { createElement } from '../../script/services/createElement.services.js';
+import { deleteElement } from '../../script/services/deleteElement.services.js';
+import { updateElement } from '../../script/services/updateElement.services.js';
 
 function CardPreview({title, date, data_id, onDelete, onRename}){
     const date_ISO = new Date(date).toLocaleString();

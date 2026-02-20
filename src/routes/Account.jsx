@@ -9,8 +9,8 @@ import { API_BASE_URL } from '../../script/variables.js';
 import { getUserInfo } from '../../script/user.js';
 
 // Helpers
-import { useUserIsLoggedRedirect } from '../../script/hooks/hooks.isLogged.js';
-import { getToken } from '../../script/helpers/helpers.getToken.js';
+import { useUserIsLoggedRedirect } from '../../script/hooks/isLogged.hooks.js';
+import { getToken } from '../../script/helpers/getToken.helpers.js';
 
 // Components
 import { showToast } from '../components/toast/toast.jsx';

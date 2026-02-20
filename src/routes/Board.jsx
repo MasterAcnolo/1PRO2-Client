@@ -7,7 +7,7 @@ import "../../styles/pages/board.css";
 import "../../styles/overlay/createBoard.css";
 
 // Helpers
-import { useUserIsLoggedRedirect } from "../../script/hooks/hooks.isLogged";
+import { useUserIsLoggedRedirect } from "../../script/hooks/isLogged.hooks.js";
 
 // Components
 import { showToast } from "../components/toast/toast";
@@ -16,10 +16,10 @@ import RenameModal from "../components/modal/RenameModal";
 import EditCardModal from "../components/modal/EditCardModal";
 
 // Services
-import { getElement } from "../../script/services/services.getElement";
-import { deleteElement } from "../../script/services/services.deleteElement";
-import { updateElement } from "../../script/services/services.updateElement";
-import { createElement } from "../../script/services/services.createElement";
+import { getElement } from "../../script/services/getElement.services";
+import { deleteElement } from "../../script/services/deleteElement.services";
+import { updateElement } from "../../script/services/updateElement.services";
+import { createElement } from "../../script/services/createElement.services";
 
 export default function Board() {
 

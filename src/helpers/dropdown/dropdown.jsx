@@ -5,10 +5,10 @@ import './dropdown.css';
 import { useState, useRef } from 'react';
 
 // Services
-import { deleteElement } from '../../../script/services/services.deleteElement';
+import { deleteElement } from '../../../script/services/deleteElement.services';
 
 // Helpers
-import { useClickOutside } from '../../../script/hooks/hooks.clickOutside';
+import { useClickOutside } from '../../../script/hooks/clickOutside.hooks';
 
 function DropDownCard({type, elementId, onDelete, onRename, onEdit, onDuplicate}) {
     const [isOpen, setIsOpen] = useState(false);
