@@ -30,9 +30,9 @@
 .hamburger-backgroundContent {
     position: absolute;
     right: 0;
-    top: 5%;
+    top: 70px;
     width: 320px;
-    height: 200vh;
+    height: 100vh;
     background-color: var(--default-text-color);
     pointer-events: auto;
     box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
@@ -86,9 +86,9 @@
 }
 
 .hamburger-disconnect {
-    position: absolute;
-    right: 0;
-    margin-right: 15px;
+    position: fixed;
+    right: 15px;
+    bottom: 20px;
     color: #dc3545;
     font-weight: 500;
 }
