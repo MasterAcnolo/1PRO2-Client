@@ -192,7 +192,7 @@ export default function Column({ columnData, onDelete, onRename, onCardDelete, o
                                     onClick={() => setNewCardColor(colorOption.value)}
                                     title={colorOption.name}
                                 >
-                                    {!colorOption.value && '×'}
+                                    {!colorOption.value && 'x'}
                                 </button>
                             ))}
                         </div>
