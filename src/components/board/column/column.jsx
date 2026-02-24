@@ -1,6 +1,10 @@
 // React
 import { useState } from 'react';
 
+// DND KIT
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
 // Components
 import TaskCard from '../card/card';
 import { DropDownCard } from '../../../helpers/dropdown/dropdown';
@@ -13,7 +17,22 @@ import { createElement } from '../../../../script/services/createElement.service
 import './column.css';
 import '../../../../styles/overlay/createBoard.css';
 
-export default function Column({ columnData, onDelete, onRename, onCardDelete, onCardRename, onCardEdit, onCardDuplicate, onRefresh }) {
+export default function Column({ 
+            columnData, 
+            onDelete, 
+            onRename, 
+            onCardDelete, 
+            onCardRename, 
+            onCardEdit, 
+            onCardDuplicate, 
+            onRefresh }) 
+    {    
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: columnData.documentId });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
     
     const [isCreateCardModalOpen, setIsCreateCardModalOpen] = useState(false);
     const [newCardName, setNewCardName] = useState("");
@@ -94,17 +113,17 @@ export default function Column({ columnData, onDelete, onRename, onCardDelete, o
 
     return(
         <>
-        <div className='column'>
+        <div ref={setNodeRef} style={style} className="column">
             <div className='column-header'>
                 <div className='column-header-left'>
-                    <img id='column-grab' src='/assets/icon/6DotsIcon.png' alt='drag'></img>
+                    <img id='column-grab' src='/assets/icon/6DotsIcon.png' alt='drag' {...attributes} {...listeners} ></img> {/* Mettre les listeners ici permet que juste l'icone permette de drag*/}
                     <h3>{columnData?.name || 'Nouvelle colonne'}</h3>
                 </div>
                 <DropDownCard 
                     type="COLUMN" 
                     elementId={columnData?.documentId || columnData?.id} 
-                    onDelete={handleDelete}
-                    onRename={handleRename}
+                    onDelete={onDelete}
+                    onRename={() => onRename(columnData.documentId, columnData.name)}
                 />
             </div>
 
