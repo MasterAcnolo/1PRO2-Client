@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // Script
-import { getUserInfo } from '../../../script/user';
+import { getUserInfo, disconnectUser} from '../../../script/user';
 
 // Assets
 import hamburgerIcon from '../../../assets/icon/hamburger.png';
@@ -82,7 +82,16 @@ function HamburgerMenu() {
               <Link>Mentions Légales</Link>
             </div>
 
-            {userData && <div className='hamburger-disconnect'><Link>Déconnexion</Link></div>}
+            {userData && 
+            <div className='hamburger-disconnect'><Link onClick={async ()=>{
+              const status = await disconnectUser();
+                if (status) {
+                  setUserData(null);
+                  setIsActive(false);
+                }
+            }}>Déconnexion</Link></div>
+            }
+
           </div>
         </div>
       </div> : ""
