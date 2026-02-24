@@ -122,7 +122,7 @@ export default function Column({
                 <DropDownCard 
                     type="COLUMN" 
                     elementId={columnData?.documentId || columnData?.id} 
-                    onDelete={onDelete}
+                    onDelete={handleDelete}
                     onRename={() => onRename(columnData.documentId, columnData.name)}
                 />
             </div>
