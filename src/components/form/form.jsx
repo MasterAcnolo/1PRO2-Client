@@ -74,6 +74,7 @@ function Form({ type }) {
                 type="text"
                 placeholder="Nom d'Utilisateur"
                 name="username"
+                maxLength="23"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
