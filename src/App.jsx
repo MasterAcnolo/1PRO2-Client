@@ -19,6 +19,7 @@ import Legal from './routes/Legal.jsx';
 import Data from './routes/Data.jsx';
 import Sitemap from './routes/Sitemap.jsx';
 
+// Wrapper qui va permettre de nous faire avoir l'animation, on envoie la page en props
 function PageWrapper({ children }) {
   return (
     <motion.div
