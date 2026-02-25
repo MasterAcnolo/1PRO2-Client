@@ -15,7 +15,7 @@ function Header() {
         <header>
             <Link to="/" className="title">TASKLOADER.</Link>
 
-            {window.innerWidth > 1024 ? <UserStateHeader/> : <HamburgerMenu /> }
+            {window.innerWidth > 1024 ? <UserStateHeader/> : <HamburgerMenu /> } {/* Si on est en mobile, on affiche le menu hamburger*/}
 
         </header>
         </>

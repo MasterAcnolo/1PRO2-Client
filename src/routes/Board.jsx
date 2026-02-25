@@ -2,6 +2,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+// DND Kit
+import { DndContext } from '@dnd-kit/core';
+import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
+
 // CSS
 import "../../styles/pages/board.css";
 import "../../styles/overlay/createBoard.css";
@@ -269,6 +273,31 @@ export default function Board() {
         }
     }
 
+    function handleColumnsDragEnd(event) {
+        const { active, over } = event;
+
+        if (!over || active.id === over.id) return;
+
+        // Trouver les indices des colonnes déplacée et cible
+        const oldIndex = board.columns.findIndex(c => c.documentId === active.id);
+        const newIndex = board.columns.findIndex(c => c.documentId === over.id);
+
+        // Copier le tableau et déplacer la colonne
+        const newColumns = [...board.columns];
+        const [moved] = newColumns.splice(oldIndex, 1); // retire
+        newColumns.splice(newIndex, 0, moved); //insère
+
+        // Recalculer l'ordre pour le backend
+        const updatedColumns = newColumns.map((col, i) => ({ ...col, order: i }));
+
+        // Mettre à jour le state
+        setBoard({ ...board, columns: updatedColumns });
+
+        updatedColumns.forEach(col =>
+            updateElement("COLUMN", col.documentId, { data: { order: col.order } })
+        );
+    }
+
     if (loading) return <p>Chargement…</p>;
     if (error) return <p>Erreur : {error}</p>;
     if (!board) return <p>Board introuvable</p>;
@@ -280,36 +309,35 @@ export default function Board() {
             <div className="board-container">
                 <h1>{board.name}</h1>
                 
-                <div className="columns-container">
-                    {/* Colonnes existantes */}
-                    {board.columns && board.columns.length > 0 ? (
-                        board.columns
-                            .slice()  // Copie du tableau pour ne pas modifier l'original
-                            .sort((a, b) => {
-                                const orderA = a.order || 0;
-                                const orderB = b.order || 0;
-                                return orderA - orderB;  // Tri croissant par ordre
-                            })
+                <DndContext onDragEnd={handleColumnsDragEnd}>
+                    <SortableContext
+                        items={board.columns.map(c => c.documentId)}
+                        strategy={horizontalListSortingStrategy}
+                        >
+                        <div className="columns-container">
+                            {board.columns
+                            .slice()
+                            .sort((a, b) => (a.order || 0) - (b.order || 0))
                             .map(column => (
-                                <Column 
-                                    key={column.id} 
-                                    columnData={column}
-                                    onDelete={handleDeleteColumn}
-                                    onRename={openRenameColumnModal}
-                                    onCardDelete={handleDeleteCard}
-                                    onCardRename={openRenameCardModal}
-                                    onCardEdit={openEditCardModal}
-                                    onCardDuplicate={handleDuplicateCard}
-                                    onRefresh={refreshBoard}
+                                <Column
+                                key={column.documentId}
+                                columnData={column}
+                                onDelete={handleDeleteColumn}
+                                onRename={openRenameColumnModal}
+                                onCardDelete={handleDeleteCard}
+                                onCardRename={openRenameCardModal}
+                                onCardEdit={openEditCardModal}
+                                onCardDuplicate={handleDuplicateCard}
+                                onRefresh={refreshBoard}
                                 />
-                            ))
-                    ) : null}
-                    
-                    {/* Bouton Add Column */}
-                    <div className='newColumn' onClick={openCreateColumnModal}>
-                        <h3>+ Nouvelle Colonne</h3>
-                    </div>
-                </div>
+                            ))}
+                            {/* Le bouton "Nouvelle Colonne" reste hors du SortableContext */}
+                            <div className="newColumn" onClick={openCreateColumnModal}>
+                            <h3>+ Nouvelle Colonne</h3>
+                            </div>
+                        </div>
+                    </SortableContext>
+                </DndContext>
 
                 {/* Modale de création de colonne */}
                 {isCreateColumnModalOpen && (
