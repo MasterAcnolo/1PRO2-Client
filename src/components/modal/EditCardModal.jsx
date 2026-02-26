@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { CARD_COLORS, CARD_LABELS } from '../../../script/variables';
 
 // CSS
-import './renameModal.css';
+import './Modal.css';
 
 function EditCardModal({ isOpen, onClose, onSave, cardData }) {
     const [name, setName] = useState('');
@@ -137,7 +137,7 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
                                 className={`color-option ${color === colorOption.value ? 'selected' : ''}`}
                                 style={{
                                     backgroundColor: colorOption.value || '#e5e5e5',
-                                    border: color === colorOption.value ? '3px solid #000' : '2px solid #ccc'
+                                    border: color === colorOption.value ? '2px solid #696969' : '2px solid #cccccc'
                                 }}
                                 onClick={() => setColor(colorOption.value)}
                                 title={colorOption.name}

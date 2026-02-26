@@ -97,6 +97,10 @@
     margin-top: 6px;
 }
 
+.labels-section{
+    margin-top: 10px;
+}
+
 .labels-section select {
     padding: 8px 12px;
     border-radius: 8px;
