@@ -18,7 +18,7 @@ export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDupli
         if (onRename) onRename(cardId, cardData?.name);
     }
 
-    function handleEdit(cardId) {
+    function handleEdit(cardId = cardData?.documentId || cardData?.id) {
         if (onEdit) onEdit(cardId);
     }
 
@@ -50,7 +50,7 @@ export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDupli
 		<>
 		<div className='column_card' style={{
 			boxShadow: cardData?.color ? `inset 0 0 0 4px #${cardData.color}` : 'none'
-		}}>
+		}} onDoubleClick={() => handleEdit(cardData?.documentId || cardData?.id)}>
 
 			<div className='column_card-header'>
 				<div className='column_card-header-left'>
