@@ -7,7 +7,7 @@ import { CSS } from '@dnd-kit/utilities';
 
 // Components
 import TaskCard from '../card/card';
-import CreateCardModal from "../../modal/CreateCardModal"
+import CardModal from "../../modal/CardModal";
 import { DropDownCard } from '../../../helpers/dropdown/dropdown';
 import { showToast } from '../../toast/toast';
 
@@ -121,10 +121,11 @@ export default function Column({
         </div>
 
         {/* Modale de création de carte */}
-        <CreateCardModal
+        <CardModal
             isOpen={isCreateCardModalOpen}
             onClose={closeCreateCardModal}
-            onCreate={handleCreateCard}
+            onSubmit={handleCreateCard}
+            mode="create"
         />
         </>
     );

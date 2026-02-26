@@ -20,7 +20,7 @@ import exportBoardAsImage from "../../script/utils/export.utils.js";
 import { showToast } from "../components/toast/toast";
 import Column from "../components/board/column/column";
 import RenameModal from "../components/modal/RenameModal";
-import EditCardModal from "../components/modal/EditCardModal";
+import CardModal from "../components/modal/CardModal.jsx";
 
 // Services
 import { getElement } from "../../script/services/getElement.services";
@@ -381,11 +381,12 @@ export default function Board() {
                     type={renameType}
                 />
 
-                <EditCardModal 
+                <CardModal 
                     isOpen={isEditCardModalOpen}
                     onClose={closeEditCardModal}
-                    onSave={handleEditCard}
+                    onSubmit={handleEditCard}
                     cardData={editingCardData}
+                    mode="edit"
                 />
             </div>
         </>

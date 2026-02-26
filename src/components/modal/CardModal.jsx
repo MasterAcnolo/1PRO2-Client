@@ -7,7 +7,7 @@ import { CARD_COLORS, CARD_LABELS } from '../../../script/variables';
 // CSS
 import './Modal.css';
 
-function EditCardModal({ isOpen, onClose, onSave, cardData }) {
+export default function CardModal({ isOpen, onClose, onSubmit, cardData = null, mode = 'create' }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [deadlineDate, setDeadlineDate] = useState('');
@@ -15,8 +15,11 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
     const [color, setColor] = useState(null);
     const [selectedLabels, setSelectedLabels] = useState([]);
 
+    const isEditMode = mode === 'edit';
+
+    // Chargement des données pour le mode édition
     useEffect(() => {
-        if (cardData) {
+        if (cardData && isEditMode) {
             setName(cardData.name || '');
             setDescription(cardData.description || '');
             
@@ -49,20 +52,34 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
             // Ajouter '#' si la couleur existe (backend stocke sans '#')
             setColor(cardData.color ? `#${cardData.color}` : null);
         }
-    }, [cardData]);
+    }, [cardData, isEditMode]);
 
-    if (!isOpen) return null;
+    // Reset du formulaire à la fermeture (mode création seulement)
+    useEffect(() => {
+        if (!isOpen && !isEditMode) {
+            resetForm();
+        }
+    }, [isOpen, isEditMode]);
 
-    function handleAddLabel(labelId) {
+    const resetForm = () => {
+        setName('');
+        setDescription('');
+        setDeadlineDate('');
+        setDeadlineTime('');
+        setColor(null);
+        setSelectedLabels([]);
+    };
+
+    const handleAddLabel = (labelId) => {
         if (!labelId || selectedLabels.includes(labelId)) return;
         setSelectedLabels(prev => [...prev, labelId]);
-    }
+    };
 
-    function handleRemoveLabel(labelId) {
+    const handleRemoveLabel = (labelId) => {
         setSelectedLabels(prev => prev.filter(id => id !== labelId));
-    }
+    };
 
-    function handleSubmit() {
+    const handleSubmit = () => {
         if (name.trim() === '') return;
         
         // Construire la deadline complète
@@ -74,22 +91,30 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
             finalDeadline = `${dateToUse}T${timeToUse}:00.000Z`;
         }
         
-        const updatedData = {
-            name: name,
+        const formData = {
+            name,
             description: description || null,
             deadline: finalDeadline,
             color: color ? color.replace('#', '') : null,
             labels: selectedLabels.length ? JSON.stringify(selectedLabels) : ""
         };
         
-        onSave(updatedData);
+        onSubmit(formData);
+        
+        // Reset uniquement en mode création
+        if (!isEditMode) {
+            resetForm();
+        }
+        
         onClose();
-    }
+    };
+
+    if (!isOpen) return null;
 
     return (
         <div className="createBoard-overlay" onClick={onClose}>
-            <div className="createBoard editCardModal" onClick={(e) => e.stopPropagation()}>
-                <h3>Modifier la Carte</h3>
+            <div className={`createBoard ${isEditMode ? 'editCardModal' : ''}`} onClick={(e) => e.stopPropagation()}>
+                <h3>{isEditMode ? 'Modifier la Carte' : 'Création de Carte'}</h3>
                 
                 <input 
                     type="text" 
@@ -108,7 +133,11 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
                 
                 <div className="form-group">
                     <label>
-                        <img src="/assets/icon/calendar.svg" alt="calendrier" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
+                        <img 
+                            src="/assets/icon/calendar.svg" 
+                            alt="calendrier" 
+                            style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} 
+                        />
                         Date et heure limite (optionnel)
                     </label>
                     <div style={{ display: 'flex', gap: '10px' }}>
@@ -149,54 +178,52 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
                 </div>
 
                 <div className="form-group labels-section">
-                        <label>Labels</label>
+                    <label>Labels</label>
 
-                        <select 
-                            value="" 
-                            onChange={(e) => handleAddLabel(e.target.value)}
-                        >
-                            <option value="">Ajouter un label</option>
-                            {Object.values(CARD_LABELS)
-                                .filter(label => !selectedLabels.includes(label.id))
-                                .map(label => (
-                                    <option key={label.id} value={label.id}>
-                                        {label.name}
-                                    </option>
-                                ))
-                            }
-                        </select>
+                    <select 
+                        value="" 
+                        onChange={(e) => handleAddLabel(e.target.value)}
+                    >
+                        <option value="">Ajouter un label</option>
+                        {Object.values(CARD_LABELS)
+                            .filter(label => !selectedLabels.includes(label.id))
+                            .map(label => (
+                                <option key={label.id} value={label.id}>
+                                    {label.name}
+                                </option>
+                            ))
+                        }
+                    </select>
 
-                        <div className="selected-labels">
+                    <div className="selected-labels">
                         {selectedLabels.map(id => {
                             const label = CARD_LABELS[id];
                             return (
-                            <span
-                                key={id}
-                                className="label-badge"
-                                style={{ backgroundColor: label.color }}
-                            >
-                                {label.name} 
-                                <span 
-                                style={{ marginLeft: '6px', cursor: 'pointer', fontWeight: '700' }}
-                                onClick={() => handleRemoveLabel(id)}
+                                <span
+                                    key={id}
+                                    className="label-badge"
+                                    style={{ backgroundColor: label.color }}
                                 >
-                                x
+                                    {label.name} 
+                                    <span 
+                                        style={{ marginLeft: '6px', cursor: 'pointer', fontWeight: '700' }}
+                                        onClick={() => handleRemoveLabel(id)}
+                                    >
+                                        x
+                                    </span>
                                 </span>
-                            </span>
                             );
                         })}
-                        </div>
                     </div>
-                    
-            <div className="buttons">
-                <button onClick={onClose}>Annuler</button>
-                <button onClick={handleSubmit}>Enregistrer</button>
-            </div>
+                </div>
 
+                <div className="buttons">
+                    <button onClick={onClose}>Annuler</button>
+                    <button onClick={handleSubmit}>
+                        {isEditMode ? 'Enregistrer' : 'Créer'}
+                    </button>
+                </div>
             </div>
-
         </div>
     );
 }
-
-export default EditCardModal;
