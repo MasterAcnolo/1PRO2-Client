@@ -114,7 +114,7 @@ export default function Column({
                 ) : null}
 
                 {/* Bouton Add Card */}
-                <div className='newCard' onClick={openCreateCardModal}>
+                <div className='newCard no-export' onClick={openCreateCardModal}>
                     <h3>+ Nouvelle carte</h3>
                 </div>
             </div>

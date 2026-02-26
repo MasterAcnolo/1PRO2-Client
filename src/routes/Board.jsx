@@ -13,6 +13,9 @@ import "../../styles/overlay/createBoard.css";
 // Helpers
 import { useUserIsLoggedRedirect } from "../../script/hooks/isLogged.hooks.js";
 
+// Utils
+import exportBoardAsImage from "../../script/utils/export.utils.js";
+
 // Components
 import { showToast } from "../components/toast/toast";
 import Column from "../components/board/column/column";
@@ -67,6 +70,7 @@ export default function Board() {
                 } else {
                     setError(err.message);
                     showToast("Erreur lors du chargement du board", "error");
+                    //TODO: Naviguer vers la page 404 et/ou 503
                 }
             } finally {
                 setLoading(false);
@@ -298,6 +302,11 @@ export default function Board() {
         );
     }
 
+    // Gestion de l'export du board
+    function handleExportBoard() {
+        exportBoardAsImage(board?.name || "board");
+    }
+
     if (loading) return <p>Chargement…</p>;
     if (error) return <p>Erreur : {error}</p>;
     if (!board) return <p>Board introuvable</p>;
@@ -306,15 +315,20 @@ export default function Board() {
 
     return (
         <>
-            <div className="board-container">
+            <div className="board-header">
                 <h1>{board.name}</h1>
+
+                <button onClick={handleExportBoard} id="export-board">Exporter</button>
+            </div>
+
+            <div className="board-container">
                 
                 <DndContext onDragEnd={handleColumnsDragEnd}>
                     <SortableContext
                         items={board.columns.map(c => c.documentId)}
                         strategy={horizontalListSortingStrategy}
                         >
-                        <div className="columns-container">
+                        <div className="columns-container" id="columns-container">
                             {board.columns
                             .slice()
                             .sort((a, b) => (a.order || 0) - (b.order || 0))

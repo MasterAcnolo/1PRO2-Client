@@ -2,18 +2,40 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
-    margin-top: 10vh;
     height: calc(100vh - 10vh - 40px);
     overflow: hidden;
 }
 
-.board-container h1 {
-    margin: 0 0 20px 0;
+.board-header{
+    background-color: #e9dacb;
+    display: flex;
+    align-items: center;
+    margin-top: 70px;
+    padding: 0px 20px;
+    justify-content: space-between;
+}
+
+.board-header h1 {
     color: black;
     font-size: 2rem;
 }
 
-/* Conteneur horizontal des colonnes */
+.board-header button#export-board {
+    background-color: white;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.15s ease;  
+}
+
+.board-header button#export-board:hover {
+    background-color: #f5f5f5;
+    border-color: #999;
+}
+
 .columns-container {
     display: flex;
     flex-direction: row;
