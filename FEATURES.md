@@ -30,7 +30,7 @@
     - Description
     - Date et/ou Heure (Falcultative)
     - Couleur (Selon une palette définie)
-    - Labels (TODO)
+    - Labels
 - Modification de Cartes
 - Duplication de cartes
 - Suppression de cartes
