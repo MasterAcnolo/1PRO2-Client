@@ -1,19 +1,11 @@
 // React
 import { useState, useEffect } from 'react';
 
+// Variables
+import { CARD_COLORS } from '../../../script/variables';
+
 // CSS
 import './renameModal.css';
-
-const CARD_COLORS = [
-    { name: 'Aucune', value: null },
-    { name: 'Rouge', value: '#ef4444' },
-    { name: 'Orange', value: '#f97316' },
-    { name: 'Jaune', value: '#eab308' },
-    { name: 'Vert', value: '#22c55e' },
-    { name: 'Bleu', value: '#3b82f6' },
-    { name: 'Violet', value: '#a855f7' },
-    { name: 'Rose', value: '#ec4899' },
-];
 
 function EditCardModal({ isOpen, onClose, onSave, cardData }) {
     const [name, setName] = useState('');
