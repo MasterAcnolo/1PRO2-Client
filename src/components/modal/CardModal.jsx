@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 // Variables
 import { CARD_COLORS, CARD_LABELS } from '../../../script/variables';
 
+// Components
+import { showToast} from "../toast/toast"
+
 // CSS
 import './Modal.css';
 
@@ -80,7 +83,10 @@ export default function CardModal({ isOpen, onClose, onSubmit, cardData = null, 
     };
 
     const handleSubmit = () => {
-        if (name.trim() === '') return;
+        if (name.trim() === ''){
+            showToast("Veuillez rentrer un nom de cartes", "info")    
+            return
+        };
         
         // Construire la deadline complète
         let finalDeadline = null;
