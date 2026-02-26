@@ -1,8 +1,8 @@
 // React
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Variables
-import { CARD_COLORS } from '../../../script/variables';
+import { CARD_COLORS, CARD_LABELS } from '../../../script/variables';
 
 // CSS
 import './renameModal.css';
@@ -13,8 +13,32 @@ export default function CreateCardModal({ isOpen, onClose, onCreate }) {
     const [deadlineDate, setDeadlineDate] = useState('');
     const [deadlineTime, setDeadlineTime] = useState('');
     const [color, setColor] = useState(null);
+    const [selectedLabels, setSelectedLabels] = useState([]);
+
+
+    useEffect(() => {
+        // Purge à la fermeture
+        if (!isOpen) {
+            setName('');
+            setDescription('');
+            setDeadlineDate('');
+            setDeadlineTime('');
+            setColor(null);
+            setSelectedLabels([]);
+        }
+    }, [isOpen]);
 
     if (!isOpen) return null;
+
+    function handleAddLabel(labelId) {
+        if (!labelId) return;
+        if (selectedLabels.includes(labelId)) return;
+        setSelectedLabels(prev => [...prev, labelId]);
+    }
+
+    function handleRemoveLabel(labelId) {
+        setSelectedLabels(prev => prev.filter(id => id !== labelId));
+    }
 
     function handleSubmit() {
         if (name.trim() === '') return;
@@ -32,14 +56,16 @@ export default function CreateCardModal({ isOpen, onClose, onCreate }) {
             description: description || null,
             deadline: finalDeadline,
             color: color ? color.replace('#', '') : null,
+            labels: selectedLabels.length ? JSON.stringify(selectedLabels) : ""
         });
         
-        // Reset form
+        // Reset form à l'envoi
         setName('');
         setDescription('');
         setDeadlineDate('');
         setDeadlineTime('');
         setColor(null);
+        setSelectedLabels([]);
         onClose();
     }
 
@@ -102,6 +128,46 @@ export default function CreateCardModal({ isOpen, onClose, onCreate }) {
                                 {!colorOption.value && '×'}
                             </button>
                         ))}
+                    </div>
+                    
+                    <div className="form-group labels-section">
+                        <label>Labels</label>
+
+                        <select 
+                            value="" 
+                            onChange={(e) => handleAddLabel(e.target.value)}
+                        >
+                            <option value="">Ajouter un label</option>
+                            {Object.values(CARD_LABELS)
+                                .filter(label => !selectedLabels.includes(label.id))
+                                .map(label => (
+                                    <option key={label.id} value={label.id}>
+                                        {label.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
+
+                        <div className="selected-labels">
+                        {selectedLabels.map(id => {
+                            const label = CARD_LABELS[id];
+                            return (
+                            <span
+                                key={id}
+                                className="label-badge"
+                                style={{ backgroundColor: label.color }}
+                            >
+                                {label.name} 
+                                <span 
+                                style={{ marginLeft: '6px', cursor: 'pointer', fontWeight: '700' }}
+                                onClick={() => handleRemoveLabel(id)}
+                                >
+                                x
+                                </span>
+                            </span>
+                            );
+                        })}
+                        </div>
                     </div>
                 </div>
 

@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 // Variables
-import { CARD_COLORS } from '../../../script/variables';
+import { CARD_COLORS, CARD_LABELS } from '../../../script/variables';
 
 // CSS
 import './renameModal.css';
@@ -13,6 +13,7 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
     const [deadlineDate, setDeadlineDate] = useState('');
     const [deadlineTime, setDeadlineTime] = useState('');
     const [color, setColor] = useState(null);
+    const [selectedLabels, setSelectedLabels] = useState([]);
 
     useEffect(() => {
         if (cardData) {
@@ -30,6 +31,20 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
                 setDeadlineDate('');
                 setDeadlineTime('');
             }
+
+            // Gestion des labels
+            if (cardData.labels) {
+                try {
+                    const labels = typeof cardData.labels === 'string' 
+                        ? JSON.parse(cardData.labels) 
+                        : cardData.labels;
+                    setSelectedLabels(Array.isArray(labels) ? labels : []);
+                } catch {
+                    setSelectedLabels([]);
+                }
+            } else {
+                setSelectedLabels([]);
+            }
             
             // Ajouter '#' si la couleur existe (backend stocke sans '#')
             setColor(cardData.color ? `#${cardData.color}` : null);
@@ -37,6 +52,15 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
     }, [cardData]);
 
     if (!isOpen) return null;
+
+    function handleAddLabel(labelId) {
+        if (!labelId || selectedLabels.includes(labelId)) return;
+        setSelectedLabels(prev => [...prev, labelId]);
+    }
+
+    function handleRemoveLabel(labelId) {
+        setSelectedLabels(prev => prev.filter(id => id !== labelId));
+    }
 
     function handleSubmit() {
         if (name.trim() === '') return;
@@ -54,7 +78,8 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
             name: name,
             description: description || null,
             deadline: finalDeadline,
-            color: color ? color.replace('#', '') : null
+            color: color ? color.replace('#', '') : null,
+            labels: selectedLabels.length ? JSON.stringify(selectedLabels) : []
         };
         
         onSave(updatedData);
@@ -117,17 +142,59 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
                                 onClick={() => setColor(colorOption.value)}
                                 title={colorOption.name}
                             >
-                                {!colorOption.value && '×'}
+                                {!colorOption.value && 'x'}
                             </button>
                         ))}
                     </div>
                 </div>
 
-                <div className="buttons">
-                    <button onClick={onClose}>Annuler</button>
-                    <button onClick={handleSubmit}>Enregistrer</button>
-                </div>
+                <div className="form-group labels-section">
+                        <label>Labels</label>
+
+                        <select 
+                            value="" 
+                            onChange={(e) => handleAddLabel(e.target.value)}
+                        >
+                            <option value="">Ajouter un label</option>
+                            {Object.values(CARD_LABELS)
+                                .filter(label => !selectedLabels.includes(label.id))
+                                .map(label => (
+                                    <option key={label.id} value={label.id}>
+                                        {label.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
+
+                        <div className="selected-labels">
+                        {selectedLabels.map(id => {
+                            const label = CARD_LABELS[id];
+                            return (
+                            <span
+                                key={id}
+                                className="label-badge"
+                                style={{ backgroundColor: label.color }}
+                            >
+                                {label.name} 
+                                <span 
+                                style={{ marginLeft: '6px', cursor: 'pointer', fontWeight: '700' }}
+                                onClick={() => handleRemoveLabel(id)}
+                                >
+                                x
+                                </span>
+                            </span>
+                            );
+                        })}
+                        </div>
+                    </div>
+                    
+            <div className="buttons">
+                <button onClick={onClose}>Annuler</button>
+                <button onClick={handleSubmit}>Enregistrer</button>
             </div>
+
+            </div>
+
         </div>
     );
 }

@@ -88,3 +88,58 @@
 .renameModal .buttons button:last-child:hover {
     background-color: #0063d1;
 }
+
+/* Conteneur des labels sélectionnés */
+.selected-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.labels-section select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    outline: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    transition: all 0.15s ease;
+}
+
+.labels-section select:hover {
+    border-color: #007bff;
+}
+
+.labels-section select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+}
+
+/* Badge pour chaque label */
+.label-badge {
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #fff;
+    cursor: default;
+    transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+/* Texte + croix à l'intérieur */
+.selected-labels .label-badge span {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+/* Hover léger */
+.renameModal .selected-labels .label-badge:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
