@@ -8,7 +8,7 @@ import { CSS } from '@dnd-kit/utilities';
 // Components
 import TaskCard from '../card/card';
 import CardModal from "../../modal/CardModal";
-import { DropDownCard } from '../../../helpers/dropdown/dropdown';
+import { DropDownCard } from "../../dropdown/dropdown";
 import { showToast } from '../../toast/toast';
 
 // Services

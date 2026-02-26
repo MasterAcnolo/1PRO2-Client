@@ -10,7 +10,7 @@ import "../../styles/overlay/createBoard.css";
 import fetchElement from '../../script/fetch';
 
 // Helpers
-import { DropDownCard } from '../helpers/dropdown/dropdown';
+import { DropDownCard } from '../components/dropdown/dropdown';
 import { useUserIsLoggedRedirect } from '../../script/hooks/isLogged.hooks.js';
 
 // Components

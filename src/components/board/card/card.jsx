@@ -1,5 +1,5 @@
 // Components
-import { DropDownCard } from '../../../helpers/dropdown/dropdown';
+import { DropDownCard } from '../../dropdown/dropdown';
 
 // Variables
 import { CARD_LABELS } from '../../../../script/variables';
