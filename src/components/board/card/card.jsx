@@ -1,6 +1,9 @@
 // Components
 import { DropDownCard } from '../../../helpers/dropdown/dropdown';
 
+// Variables
+import { CARD_LABELS } from '../../../../script/variables';
+
 // CSS
 import './card.css';
 
@@ -22,6 +25,26 @@ export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDupli
     function handleDuplicate(cardId) {
         if (onDuplicate) onDuplicate(cardId);
     }
+
+	const getLabels = () => {
+        if (!cardData?.labels) {
+            return "";
+        }
+        
+        let labels = cardData.labels;
+        if (typeof labels === 'string') {
+            try {
+                labels = JSON.parse(labels);
+            } catch (e) {
+                console.error('Error parsing labels:', e);
+                return [];
+            }
+        }
+        
+        return labels.map(labelId => CARD_LABELS[labelId])
+    };
+
+	const labels = getLabels();
 
 	return(
 		<>
@@ -46,6 +69,25 @@ export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDupli
 
 			<div className='column_card-content'>
 			{cardData?.description && <div className='column_card-description'>{cardData.description}</div>}
+
+			{/* Affichage des labels */}
+                {labels.length > 0 && (
+                    <div className='column_card-labels'>
+                        {labels.map(label => (
+                            <span 
+                                key={label.id}
+                                className='card-label'
+                                style={{
+                                    backgroundColor: `${label.color}20`,
+                                    color: label.color,
+                                    border: `1px solid ${label.color}40`
+                                }}
+                            >
+                                {label.name}
+                            </span>
+                        ))}
+                    </div>
+                )}
 		</div>
 		
 		{cardData?.deadline && (
