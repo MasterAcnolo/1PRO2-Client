@@ -79,7 +79,7 @@ function EditCardModal({ isOpen, onClose, onSave, cardData }) {
             description: description || null,
             deadline: finalDeadline,
             color: color ? color.replace('#', '') : null,
-            labels: selectedLabels.length ? JSON.stringify(selectedLabels) : []
+            labels: selectedLabels.length ? JSON.stringify(selectedLabels) : ""
         };
         
         onSave(updatedData);
