@@ -7,35 +7,56 @@
 
 .main h1 {
     margin-bottom: 30px;
-    margin-left: 20px;
+    margin-left: 50px;
     color: black;
 }
 
 /* Conteneur des boards */
 .board-list-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    padding: 20px;
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    padding: 20px 50px;
+    gap: 24px;
 }
 
 /* Carte */
 .card-preview {
     position: relative;
-    background-color: var(--card-bg-color);
-    border-radius: 12px;
-    min-height: 95px;
-    padding: 12px;
+    background: linear-gradient(135deg, #184AFF 0%, #1e40af 100%);
+    border-radius: 16px;
+    min-height: 120px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.35), 0 2px 4px rgba(30, 64, 175, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.card-preview::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 .card-preview:hover {
     cursor: pointer;
-    transform: scale(1.01);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(30, 58, 138, 0.45), 0 4px 8px rgba(30, 64, 175, 0.3);
+}
+
+.card-preview:hover::before {
+    opacity: 1;
 }
 
 /* Zone haute - titre + dropdown */
@@ -44,21 +65,24 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: auto;
 }
 
 .card-preview .card-top h4 {
     margin: 0;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: white;
+    line-height: 1.4;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: normal;
     flex: 1;
     min-width: 0;
-    padding-right: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Style spécifique pour le dropdown dans les card-preview */
@@ -70,38 +94,43 @@
 
 /* Zone basse - date */
 .card-preview .card-bottom {
-    margin-top: auto;
-    padding-top: 8px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .card-preview .card-bottom p {
     margin: 0;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.8);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    letter-spacing: 0.3px;
 }
-
 
 /* Ajouter un board Card */
 .addCard {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    background: none;
-    color: var(--card-bg-color);
-    border: dashed 5px var(--card-bg-color);
+    gap: 8px;
+    background: rgba(24, 74, 255, 0.05);
+    color: #184AFF;
+    border: 2px dashed rgba(24, 74, 255, 0.4);
+    border-radius: 16px;
     box-shadow: none;
-    padding: 11px;
+    padding: 20px;
     font-size: 1.5rem;
+    transition: all 0.2s ease;
 }
 
 .addCard p {
     margin: 0;
+    font-weight: 600;
 }
 
-.addCard:hover{
+.addCard:hover {
     transform: scale(1);
+    background: rgba(24, 74, 255, 0.1);
+    border-color: #184AFF;
+    box-shadow: 0 4px 12px rgba(24, 74, 255, 0.25);
 }
