@@ -18,8 +18,7 @@ async function loginRegisterUser(data, method) {
   const json = await res.json();
 
   if (!res.ok) {
-    showToast((json.error?.message || "Erreur inconnue"), "error");
-    throw new Error(json.error?.message || "Erreur inconnue");
+    showToast("Service Temporairement Indisponible (Serveur Down)", "error", true)    
   }
 
   showToast((method === "register" ? "Inscription Réussie" : "Connexion Réussie"), "success", true); // TOAST avec persist=true
@@ -55,7 +54,7 @@ async function getUserInfo() {
         return userInfo;
 
     } catch (err) {
-        console.error(err.message);
+        showToast("Service Temporairement Indisponible (Serveur Down)", "error", true)
         return false;
     }
 }
@@ -64,7 +63,10 @@ function disconnectUser(){
     
     const TOKEN = getToken();
 
-    if(!isLogged){return "User was not connected"} else{
+    if(!isLogged){
+        return "User was not connected";
+
+    } else{
         if(TOKEN){
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             sessionStorage?.removeItem("token");
