@@ -18,7 +18,7 @@ async function loginRegisterUser(data, method) {
   const json = await res.json();
 
   if (!res.ok) {
-    showToast("Service Temporairement Indisponible (Serveur Down)", "error", true)    
+    showToast("Service Temporairement Indisponible", "error", true)    
   }
 
   showToast((method === "register" ? "Inscription Réussie" : "Connexion Réussie"), "success", true); // TOAST avec persist=true
@@ -54,7 +54,7 @@ async function getUserInfo() {
         return userInfo;
 
     } catch (err) {
-        showToast("Service Temporairement Indisponible (Serveur Down)", "error", true)
+        showToast("Service Temporairement Indisponible", "error", true)
         return false;
     }
 }
