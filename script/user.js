@@ -19,6 +19,7 @@ async function loginRegisterUser(data, method) {
 
   if (!res.ok) {
     showToast("Service Temporairement Indisponible", "error", true)    
+    return null
   }
 
   showToast((method === "register" ? "Inscription Réussie" : "Connexion Réussie"), "success", true); // TOAST avec persist=true
