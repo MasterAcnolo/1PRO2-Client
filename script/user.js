@@ -19,7 +19,7 @@ async function loginRegisterUser(data, method) {
 
   if (!res.ok) {
     showToast((json.error?.message || "Erreur inconnue"), "error");
-    return null
+    return
   }
 
   showToast((method === "register" ? "Inscription Réussie" : "Connexion Réussie"), "success", true); // TOAST avec persist=true
@@ -46,10 +46,6 @@ async function getUserInfo() {
                 "Authorization": `Bearer ${TOKEN}`
             }
         });
-
-        if (!res.ok) {
-            throw new Error(`Erreur: ${res.status}`);
-        }
 
         const userInfo = await res.json();
         return userInfo;
