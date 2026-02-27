@@ -4,6 +4,9 @@ import { useState } from 'react';
 // DND KIT
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { DndContext } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+
 
 // Components
 import TaskCard from '../card/card';
@@ -75,6 +78,31 @@ export default function Column({
         }
     }
 
+    function handleCardsDragEnd(event) {
+        const { active, over } = event;
+
+        if (!over || active.id === over.id) return;
+
+        // Trouver les indices des cartes déplacée et cible
+        const oldIndex = columnData.cards.findIndex(c => c.documentId === active.id);
+        const newIndex = columnData.cards.findIndex(c => c.documentId === over.id);
+
+        // Copier le tableau et déplacer la carte
+        const newCards = [...columnData.cards];
+        const [moved] = newCards.splice(oldIndex, 1); // retire
+        newCards.splice(newIndex, 0, moved); //insère
+
+        // Recalculer l'ordre pour le backend
+        const updatedCards = newCards.map((card, i) => ({ ...card, order: i }));
+
+        // Mettre à jour le state
+        onCardReorder(columnData.documentId, updatedCards);
+
+        updatedCards.forEach(card =>
+            updateElement("CARD", card.documentId, { data: { order: card.order } })
+        );
+    }
+
     return(
         <>
         <div ref={setNodeRef} style={style} className="column">
@@ -91,35 +119,35 @@ export default function Column({
                 />
             </div>
 
-            <div className='column-content'>
-                {/* Cards existantes */}
-                {columnData?.cards && columnData.cards.length > 0 ? (
-                    columnData.cards
-                        .slice()
-                        .sort((a, b) => {
-                            const orderA = a.order || 0;
-                            const orderB = b.order || 0;
-                            return orderA - orderB;
-                        })
-                        .map(card => (
-                            <TaskCard 
-                                key={card.id} 
-                                cardData={card}
-                                onDelete={onCardDelete}
-                                onRename={onCardRename}
-                                onEdit={onCardEdit}
-                                onDuplicate={onCardDuplicate}
-                            />
-                        ))
-                ) : null}
+            <DndContext onDragEnd={handleCardsDragEnd}>
+                <SortableContext
+                    items={columnData.cards.map(c => c.documentId)}
+                    strategy={verticalListSortingStrategy}
+                    >
 
-                {/* Bouton Add Card */}
-                <div className='newCard no-export' onClick={openCreateCardModal}>
-                    <h3>+ Nouvelle carte</h3>
-                </div>
-            </div>
-        </div>
-
+                    <div className='column-content'>
+                        {/* Cards existantes */}
+                        {columnData.cards
+                                .slice()
+                                .sort((a, b) => (a.order || 0) - (b.order || 0))
+                                .map(card => (
+                                    <TaskCard 
+                                        key={card.documentId} 
+                                        cardData={card}
+                                        onDelete={onCardDelete}
+                                        onRename={onCardRename}
+                                        onEdit={onCardEdit}
+                                        onDuplicate={onCardDuplicate}
+                                    />
+                                ))}
+                        {/* Bouton Add Card */}
+                        <div className='newCard no-export' onClick={openCreateCardModal}>
+                            <h3>+ Nouvelle carte</h3>
+                        </div>
+                    </div>
+        
+                </SortableContext>
+            </DndContext>
         {/* Modale de création de carte */}
         <CardModal
             isOpen={isCreateCardModalOpen}
@@ -127,6 +155,7 @@ export default function Column({
             onSubmit={handleCreateCard}
             mode="create"
         />
+        </div>
         </>
     );
 }
