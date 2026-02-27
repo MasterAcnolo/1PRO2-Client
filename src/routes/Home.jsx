@@ -54,7 +54,7 @@ export default function Home(){
 					<h4>Notre Philosophie</h4>
 					<p>
 						Vous proposer une <strong>solution simple, efficace et accessible</strong> pour gérer vos projets.  
-						<strong>Pas de publicité. Pas de traqueurs. Pas de frais cachés. </strong>  
+						<strong> Pas de publicité. Pas de traqueurs. Pas de frais cachés. </strong>  
 						Simplement vos projets, où vous voulez, quand vous voulez, gratuitement.  
 						Nous sommes également <strong>à l’écoute de toutes nouvelles fonctionnalités</strong> afin de faire évoluer l’outil selon vos besoins réels.
 					</p>
