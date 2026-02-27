@@ -138,7 +138,7 @@
 .homePresentationArticle{
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
     gap: 40px;
     padding: 0 40px;
     max-width: 1400px;
