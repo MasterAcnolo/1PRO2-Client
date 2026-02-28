@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // CSS
-import "./Error.css";
+import "../../../styles/pages/error.css";
 
 export default function Forbidden() {
     const navigate = useNavigate();
