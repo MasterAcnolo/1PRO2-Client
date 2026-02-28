@@ -116,11 +116,13 @@ export default function Home(){
 
 		<div className='homeDemonstration'>
 			<h3>Toujours pas convaincu ?</h3>
-			<button className='demo-btn hover-btn'>
-				<div className='demo-btn-content'>
-					<span>Demander une </span>Démo gratuite<img className='iconLink' src='../../../assets/icon/IconLink.png' alt="Icon Link" />
-				</div>
-			</button>
+			<Link to={"/register"}>
+				<button className='demo-btn hover-btn'>
+					<div className='demo-btn-content'>
+						<span>Accéder à la démo </span>gratuite<img className='iconLink' src='../../../assets/icon/IconLink.png' alt="Icon Link" />
+					</div>
+				</button>
+			</Link>
 		</div>
 
 	</section>                
