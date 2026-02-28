@@ -336,7 +336,7 @@
 .demo-btn-content{
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 3px;
     justify-content: center;
     align-items: center;
 }
@@ -355,10 +355,12 @@
 }
 
 .demo-btn:hover img {
-    transform: translateX(4px);
+    transform: translateX(1px);
 }
 
-
+.demo-btn:active {
+    transform: scale(0.95);
+}
 
 /* Mobile */
 @media (max-width: 865px){
