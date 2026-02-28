@@ -29,6 +29,7 @@ function Footer() {
                                 <Link to="/login">Connexion</Link>
                             </>
                         )}
+    					<Link to="/contact">Contact</Link>
                     </nav>
                     <nav>
                         <h3>Légal</h3>

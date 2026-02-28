@@ -18,13 +18,15 @@ import Account from './routes/Account.jsx';
 import Board from "./routes/Board.jsx";
 import BoardList from "./routes/BoardList.jsx";
 
+import Contact from "./routes/Contact.jsx";
+
 import Legal from './routes/Legal.jsx';
 import Data from './routes/Data.jsx';
 import Sitemap from './routes/Sitemap.jsx';
 
 import Forbidden from "./routes/error/403.jsx";
 import NotFound from "./routes/error/404.jsx";
-import UnknownError from "./routes/error/unknown.jsx";
+import UnknownError from "./routes/error/Unknown.jsx";
 
 // Wrapper qui va permettre de nous faire avoir l'animation, on envoie la page en props
 function PageWrapper({ children }) {
@@ -74,6 +76,8 @@ function App() {
             <Route path="/mentions-legales" element={<PageWrapper><Legal /></PageWrapper>} />
             <Route path="/vos-donnees" element={<PageWrapper><Data /></PageWrapper>} />
             <Route path="/plan-du-site" element={<PageWrapper><Sitemap /></PageWrapper>} />
+
+            <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
 
             <Route path="*" element={<Navigate to="/n" replace />} /> {/* Replace supprime la dernière entrée de l'historique (évite d'y retourner)*/}
           </Routes>

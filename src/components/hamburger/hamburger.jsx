@@ -79,14 +79,15 @@ function HamburgerMenu() {
               ) : (
                 <Link to="/account">Compte</Link>
               )}
+    					<Link to="/contact">Contact</Link>
             </div>
 
             <span className='horizontal-line'></span>
 
             <div className='hamburger-contentText'>
               <h4>Légal</h4>
-              <Link>Vos Données</Link>
-              <Link>Mentions Légales</Link>
+              <Link to="/vos-donnees">Vos Données</Link>
+              <Link to="/mentions-legales">Mentions Légales</Link>
             </div>
 
             {userData && 

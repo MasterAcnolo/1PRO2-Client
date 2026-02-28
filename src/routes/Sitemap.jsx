@@ -78,6 +78,7 @@ export default function Sitemap() {
 
 				<section>
 					<h2>Contact</h2>
+					<Link to="/contact">Contact</Link>
 					<p>Email : contact@taskloader.com</p>
 					<p>
 						Pour toute question, suggestion ou demande d'assistance, 
