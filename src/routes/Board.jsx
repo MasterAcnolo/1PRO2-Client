@@ -60,18 +60,22 @@ export default function Board() {
         async function fetchBoard() {
             try {
                 const res = await getElement("BOARD", id);
+
                 setBoard(res.data);
                 document.title = res.data.title ? `${res.data.title} - Task Loader` : "Board - Task Loader";
+
             } catch (err) {
-                // Gestion spécifique du 404
-                if (err.response && err.response.status === 404) {
-                    setError("Board introuvable.");
-                    showToast("Board introuvable", "error");
+
+                setError(err.message);
+
+                if (err.message === "Board Not Found.") {
+                    navigate("/n")
+                } else if (err.message === "You do not own this resource."){
+                    navigate("/f")
                 } else {
-                    setError(err.message);
-                    showToast("Erreur lors du chargement du board", "error");
-                    //TODO: Naviguer vers la page 404 et/ou 503
+                    navigate("/u")
                 }
+
             } finally {
                 setLoading(false);
             }

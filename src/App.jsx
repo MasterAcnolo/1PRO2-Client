@@ -1,5 +1,5 @@
 // React
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate  } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Components
@@ -10,14 +10,21 @@ import Toast from './components/toast/toast.jsx';
 
 // Pages
 import Home from "./routes/Home.jsx";
+
 import Login from './routes/Login.jsx';
 import Register from './routes/Register.jsx';
 import Account from './routes/Account.jsx';
+
 import Board from "./routes/Board.jsx";
 import BoardList from "./routes/BoardList.jsx";
+
 import Legal from './routes/Legal.jsx';
 import Data from './routes/Data.jsx';
 import Sitemap from './routes/Sitemap.jsx';
+
+import Forbidden from "./routes/error/403.jsx";
+import NotFound from "./routes/error/404.jsx";
+import UnknownError from "./routes/error/unknown.jsx";
 
 // Wrapper qui va permettre de nous faire avoir l'animation, on envoie la page en props
 function PageWrapper({ children }) {
@@ -60,9 +67,15 @@ function App() {
             <Route path="/board/:id" element={<PageWrapper><Board /></PageWrapper>} />
             <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />
 
+            <Route path="/f" element={<PageWrapper><Forbidden/></PageWrapper>} />
+            <Route path="/n" element={<PageWrapper><NotFound/></PageWrapper>} />
+            <Route path="/u" element={<PageWrapper><UnknownError/></PageWrapper>} />
+
             <Route path="/mentions-legales" element={<PageWrapper><Legal /></PageWrapper>} />
             <Route path="/vos-donnees" element={<PageWrapper><Data /></PageWrapper>} />
             <Route path="/plan-du-site" element={<PageWrapper><Sitemap /></PageWrapper>} />
+
+            <Route path="*" element={<Navigate to="/n" replace />} /> {/* Replace supprime la dernière entrée de l'historique (évite d'y retourner)*/}
           </Routes>
         </AnimatePresence>
       </main>
