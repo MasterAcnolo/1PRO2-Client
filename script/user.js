@@ -18,8 +18,19 @@ async function loginRegisterUser(data, method) {
   const json = await res.json();
 
   if (!res.ok) {
-    showToast((json.error?.message || "Erreur inconnue"), "error");
-    return
+    const errorMessageRaw = json.error?.message || "Erreur Inconnue"
+
+    if(errorMessageRaw === "Invalid identifier or password"){
+        showToast("Identifiant ou mot de passe invalide", "error")
+        return
+    } else if (errorMessageRaw === "Email or Username are already taken") {
+        showToast("Adresse e-mail déjà utilisée", "error")
+        return
+    } else {
+        showToast((json.error?.message || "Erreur inconnue"), "error");
+        return
+    }
+
   }
 
   showToast((method === "register" ? "Inscription Réussie" : "Connexion Réussie"), "success", true); // TOAST avec persist=true
