@@ -21,7 +21,7 @@ import '../../../../styles/overlay/createBoard.css';
 export default function Column({ 
     columnData, onDelete, onRename, 
     onCardDelete, onCardRename, onCardEdit, onCardDuplicate, 
-    onRefresh 
+    onRefresh, 
 }) {   
     const columnId = columnData?.documentId || columnData?.id;
     
