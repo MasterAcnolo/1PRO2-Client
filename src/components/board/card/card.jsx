@@ -101,7 +101,8 @@ export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDupli
                         <img src='/assets/icon/calendar.svg' alt='calendrier' style={{ width: '14px', height: '14px', marginRight: '4px', verticalAlign: 'middle' }} />
                         {new Date(cardData.deadline).toLocaleDateString('fr-FR', {
                             day: '2-digit', month: '2-digit', year: 'numeric',
-                            hour: '2-digit', minute: '2-digit'
+                            hour: '2-digit', minute: '2-digit',
+                            timeZone: 'UTC'
                         })}
                     </div>
                 </div>
