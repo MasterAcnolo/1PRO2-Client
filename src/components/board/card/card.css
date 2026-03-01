@@ -106,3 +106,40 @@
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.column_card.dragging {
+    opacity: 0.5;
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* carte flottante pendant le drag */
+.drag-overlay-card {
+    cursor: grabbing;
+}
+
+.drag-overlay-card .column_card {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    transform: rotate(3deg) scale(1.05);
+    opacity: 1;
+}
+
+/* Animation quand une carte est déplacée vers une autre colonne */
+@keyframes card-moved {
+    0% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 3px #4CAF50, 0 4px 12px rgba(76, 175, 80, 0.4);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 2px #4CAF50, 0 2px 8px rgba(76, 175, 80, 0.3);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.column_card.just-moved {
+    animation: card-moved 0.5s ease-out;
+}

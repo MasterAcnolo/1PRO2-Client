@@ -1,334 +1,92 @@
 // React
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 // DND Kit
-import { DndContext } from '@dnd-kit/core';
+import { DndContext, DragOverlay } from '@dnd-kit/core';
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 
 // CSS
 import "../../styles/pages/board.css";
 import "../../styles/overlay/createBoard.css";
 
-// Helpers
+// Hooks
 import { useUserIsLoggedRedirect } from "../../script/hooks/isLogged.hooks.js";
+import useBoard from "../../script/hooks/useBoard.hooks.js";
 
 // Utils
 import exportBoardAsImage from "../../script/utils/export.utils.js";
 
 // Components
-import { showToast } from "../components/toast/toast";
 import Column from "../components/board/column/column";
+import TaskCard from "../components/board/card/card";
 import RenameModal from "../components/modal/RenameModal";
 import CardModal from "../components/modal/CardModal.jsx";
 
-// Services
-import { getElement } from "../../script/services/getElement.services";
-import { deleteElement } from "../../script/services/deleteElement.services";
-import { updateElement } from "../../script/services/updateElement.services";
-import { createElement } from "../../script/services/createElement.services";
-
 export default function Board() {
-
     useUserIsLoggedRedirect('/login');
 
     const { id } = useParams();
-    const navigate = useNavigate();
-
-    const [board, setBoard] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
     
-    const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
-    const [renameType, setRenameType] = useState(null);
-    const [renamingId, setRenamingId] = useState(null);
-    const [renamingName, setRenamingName] = useState("");
-    
-    const [isCreateColumnModalOpen, setIsCreateColumnModalOpen] = useState(false);
-    const [newColumnName, setNewColumnName] = useState("");
-    
-    const [isEditCardModalOpen, setIsEditCardModalOpen] = useState(false);
-    const [editingCardId, setEditingCardId] = useState(null);
-    const [editingCardData, setEditingCardData] = useState(null);
+    const {
+        board, loading, error, activeCard,
+        createColumn, deleteColumn,
+        deleteCard, editCard, duplicateCard, findCard,
+        rename, refreshBoard,
+        customCollisionDetection, handleDragStart, handleDragEnd,
+    } = useBoard(id);
 
-    useEffect(() => {
-        if (!id) {
-            navigate("/board");
-            return;
-        }
+    // Modales state
+    const [renameModal, setRenameModal] = useState({ open: false, type: null, id: null, name: "" });
+    const [createColumnModal, setCreateColumnModal] = useState({ open: false, name: "" });
+    const [editCardModal, setEditCardModal] = useState({ open: false, id: null, data: null });
 
-        async function fetchBoard() {
-            try {
-                const res = await getElement("BOARD", id);
-
-                setBoard(res.data);
-                document.title = res.data.title ? `${res.data.title} - Task Loader` : "Board - Task Loader";
-
-            } catch (err) {
-
-                setError(err.message);
-
-                if (err.message === "Board Not Found.") {
-                    navigate("/n")
-                } else if (err.message === "You do not own this resource."){
-                    navigate("/f")
-                } else {
-                    navigate("/u")
-                }
-
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchBoard();
-    }, [id, navigate]);
-
-    async function refreshBoard() {
-        try {
-            const res = await getElement("BOARD", id);
-            setBoard(res.data);
-        } catch (err) {
-            console.error("Erreur lors du rafraîchissement:", err);
-        }
-    }
-
-    // Gestion des colonnes
-    async function handleDeleteColumn(columnId) {
-        try {
-            await deleteElement("COLUMN", columnId);
-            await refreshBoard();
-            showToast("Colonne supprimée", "success");
-        } catch (error) {
-            console.error("Erreur lors de la suppression:", error);
-            showToast("Erreur lors de la suppression de la colonne", "error");
-        }
-    }
-
-    function openRenameColumnModal(columnId, currentName) {
-        setRenameType("COLUMN");
-        setRenamingId(columnId);
-        setRenamingName(currentName);
-        setIsRenameModalOpen(true);
-    }
-
-    // Gestion des cards
-    async function handleDeleteCard(cardId) {
-        try {
-            await deleteElement("CARD", cardId);
-            await refreshBoard();
-            showToast("Carte supprimée", "success");
-        } catch (error) {
-            console.error("Erreur lors de la suppression:", error);
-            showToast("Erreur lors de la suppression de la carte", "error");
-        }
-    }
-
-    function openRenameCardModal(cardId, currentName) {
-        setRenameType("CARD");
-        setRenamingId(cardId);
-        setRenamingName(currentName);
-        setIsRenameModalOpen(true);
-    }
-
-    // Gestion de l'édition complète des cartes
-    function openEditCardModal(cardId) {
-        // Trouver les données de la carte dans le board
-        let cardData = null;
-        if (board.columns) {
-            for (const column of board.columns) {
-                if (column.cards) {
-                    cardData = column.cards.find(card => 
-                        (card.documentId || card.id) === cardId
-                    );
-                    if (cardData) break;
-                }
-            }
-        }
-        
-        if (cardData) {
-            setEditingCardId(cardId);
-            setEditingCardData(cardData);
-            setIsEditCardModalOpen(true);
-        }
-    }
-
-    function closeEditCardModal() {
-        setIsEditCardModalOpen(false);
-        setEditingCardId(null);
-        setEditingCardData(null);
-    }
-
-    async function handleEditCard(updatedData) {
-        if (!editingCardId) return;
-        
-        try {
-            const payload = { data: updatedData };
-            await updateElement("CARD", editingCardId, payload);
-            await refreshBoard();
-            showToast("Carte modifiée avec succès", "success");
-        } catch (error) {
-            console.error("Erreur lors de la modification:", error);
-            showToast("Erreur lors de la modification de la carte", "error");
-        }
-    }
-
-    // Gestion de la duplication de cartes
-    async function handleDuplicateCard(cardId) {
-        try {
-            // Trouver la carte et sa colonne
-            let cardData = null;
-            let columnId = null;
-            
-            if (board.columns) {
-                for (const column of board.columns) {
-                    if (column.cards) {
-                        cardData = column.cards.find(card => 
-                            (card.documentId || card.id) === cardId
-                        );
-                        if (cardData) {
-                            columnId = column.documentId || column.id;
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            if (cardData && columnId) {
-                // Calculer le nouvel ordre
-                const columnCards = board.columns
-                    .find(col => (col.documentId || col.id) === columnId)
-                    ?.cards || [];
-                const order = columnCards.length;
-                
-                const payload = {
-                    data: {
-                        name: cardData.name,
-                        description: cardData.description || null,
-                        deadline: cardData.deadline || null,
-                        color: cardData.color || null,
-                        order: order,
-                        column: columnId
-                    }
-                };
-                
-                await createElement("CARD", payload);
-                await refreshBoard();
-                showToast("Carte dupliquée avec succès", "success");
-            }
-        } catch (error) {
-            console.error("Erreur lors de la duplication:", error);
-            showToast("Erreur lors de la duplication de la carte", "error");
-        }
+    // Handlers modales
+    function openRenameModal(type, id, name) {
+        setRenameModal({ open: true, type, id, name });
     }
 
     function closeRenameModal() {
-        setIsRenameModalOpen(false);
-        setRenameType(null);
-        setRenamingId(null);
-        setRenamingName("");
+        setRenameModal({ open: false, type: null, id: null, name: "" });
     }
 
     async function handleRename(newName) {
-        if (!renamingId || newName.trim() === "") return;
-        
-        try {
-            const payload = { data: { name: newName } };
-                
-            await updateElement(renameType, renamingId, payload);
-            await refreshBoard();
-            closeRenameModal();
-            const itemType = renameType === "COLUMN" ? "Colonne" : "Carte";
-            showToast(`${itemType} renommée avec succès`, "success");
-        } catch (error) {
-            console.error("Erreur lors du renommage:", error);
-            showToast("Erreur lors du renommage", "error");
-        }
+        await rename(renameModal.type, renameModal.id, newName);
+        closeRenameModal();
     }
 
-    // Gestion de la création de colonnes
-    function openCreateColumnModal() {
-        setIsCreateColumnModalOpen(true);
+    function openEditCardModal(cardId) {
+        const card = findCard(cardId);
+        if (card) setEditCardModal({ open: true, id: cardId, data: card });
     }
 
-    function closeCreateColumnModal() {
-        setIsCreateColumnModalOpen(false);
-        setNewColumnName("");
+    function closeEditCardModal() {
+        setEditCardModal({ open: false, id: null, data: null });
+    }
+
+    async function handleEditCard(updatedData) {
+        await editCard(editCardModal.id, updatedData);
+        closeEditCardModal();
     }
 
     async function handleCreateColumn() {
-        if (newColumnName.trim() === "") return;
-        
-        try {
-            // Calculer l'ordre automatiquement (ordre = nombre de colonnes existantes)
-            const order = board.columns ? board.columns.length : 0;
-            
-            const payload = { 
-                data: { 
-                    name: newColumnName,
-                    order: order,
-                    board_id: id  // Association au board parent
-                } 
-            };
-            
-            await createElement("COLUMN", payload);
-            await refreshBoard();
-            closeCreateColumnModal();
-            showToast("Colonne créée avec succès", "success");
-        } catch (error) {
-            console.error("Erreur lors de la création:", error);
-            showToast("Erreur lors de la création de la colonne", "error");
-        }
-    }
-
-    function handleColumnsDragEnd(event) {
-        const { active, over } = event;
-
-        if (!over || active.id === over.id) return;
-
-        // Trouver les indices des colonnes déplacée et cible
-        const oldIndex = board.columns.findIndex(c => c.documentId === active.id);
-        const newIndex = board.columns.findIndex(c => c.documentId === over.id);
-
-        // Copier le tableau et déplacer la colonne
-        const newColumns = [...board.columns];
-        const [moved] = newColumns.splice(oldIndex, 1); // retire
-        newColumns.splice(newIndex, 0, moved); //insère
-
-        // Recalculer l'ordre pour le backend
-        const updatedColumns = newColumns.map((col, i) => ({ ...col, order: i }));
-
-        // Mettre à jour le state
-        setBoard({ ...board, columns: updatedColumns });
-
-        updatedColumns.forEach(col =>
-            updateElement("COLUMN", col.documentId, { data: { order: col.order } })
-        );
-    }
-
-    // Gestion de l'export du board
-    function handleExportBoard() {
-        exportBoardAsImage(board?.name || "board");
+        await createColumn(createColumnModal.name);
+        setCreateColumnModal({ open: false, name: "" });
     }
 
     if (loading) return <p>Chargement…</p>;
     if (error) return <p>Erreur : {error}</p>;
     if (!board) return <p>Board introuvable</p>;
 
-    document.title = `Task Loader | ${board.name}`
+    document.title = `Task Loader | ${board.name}`;
 
     return (
         <>
             <div className="board-header">
                 <h1>{board.name}</h1>
-
-                <button id="export-board" className="export-btn" onClick={handleExportBoard}>
+                <button id="export-board" className="export-btn" onClick={() => exportBoardAsImage(board?.name || "board")}>
                     <span className="icon-wrapper">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 384 512"
-                            className="export-icon"
-                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="export-icon">
                             <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
                         </svg>
                         <span className="export-tray"></span>
@@ -338,51 +96,61 @@ export default function Board() {
             </div>
 
             <div className="board-container">
-                
-                <DndContext onDragEnd={handleColumnsDragEnd}>
+                <DndContext 
+                    onDragStart={handleDragStart}
+                    onDragEnd={handleDragEnd} 
+                    collisionDetection={customCollisionDetection}
+                >
                     <SortableContext
                         items={board.columns.map(c => c.documentId)}
                         strategy={horizontalListSortingStrategy}
-                        >
+                    >
                         <div className="columns-container" id="columns-container">
                             {board.columns
-                            .slice()
-                            .sort((a, b) => (a.order || 0) - (b.order || 0))
-                            .map(column => (
-                                <Column
-                                key={column.documentId}
-                                columnData={column}
-                                onDelete={handleDeleteColumn}
-                                onRename={openRenameColumnModal}
-                                onCardDelete={handleDeleteCard}
-                                onCardRename={openRenameCardModal}
-                                onCardEdit={openEditCardModal}
-                                onCardDuplicate={handleDuplicateCard}
-                                onRefresh={refreshBoard}
-                                />
-                            ))}
-                            {/* Le bouton "Nouvelle Colonne" reste hors du SortableContext */}
-                            <div className="newColumn" onClick={openCreateColumnModal}>
-                            <h3>+ Nouvelle Colonne</h3>
+                                .slice()
+                                .sort((a, b) => (a.order || 0) - (b.order || 0))
+                                .map(column => (
+                                    <Column
+                                        key={column.documentId}
+                                        columnData={column}
+                                        onDelete={deleteColumn}
+                                        onRename={(id, name) => openRenameModal("COLUMN", id, name)}
+                                        onCardDelete={deleteCard}
+                                        onCardRename={(id, name) => openRenameModal("CARD", id, name)}
+                                        onCardEdit={openEditCardModal}
+                                        onCardDuplicate={duplicateCard}
+                                        onRefresh={refreshBoard}
+                                    />
+                                ))}
+                            <div className="newColumn" onClick={() => setCreateColumnModal({ open: true, name: "" })}>
+                                <h3>+ Nouvelle Colonne</h3>
                             </div>
                         </div>
                     </SortableContext>
+                    
+                    <DragOverlay>
+                        {activeCard ? (
+                            <div className="drag-overlay-card">
+                                <TaskCard cardData={activeCard} />
+                            </div>
+                        ) : null}
+                    </DragOverlay>
                 </DndContext>
 
-                {/* Modale de création de colonne */}
-                {isCreateColumnModalOpen && (
-                    <div className="createBoard-overlay" onClick={closeCreateColumnModal}>
+                {/* Modale création colonne */}
+                {createColumnModal.open && (
+                    <div className="createBoard-overlay" onClick={() => setCreateColumnModal({ open: false, name: "" })}>
                         <div className="createBoard" onClick={(e) => e.stopPropagation()}>
                             <h3>Création de Colonne</h3>
                             <input 
                                 type="text" 
                                 placeholder="Nom de la colonne" 
-                                value={newColumnName}
-                                onChange={(e) => setNewColumnName(e.target.value)}
+                                value={createColumnModal.name}
+                                onChange={(e) => setCreateColumnModal({ ...createColumnModal, name: e.target.value })}
                                 autoFocus
                             />
                             <div className="buttons">
-                                <button onClick={closeCreateColumnModal}>Annuler</button>
+                                <button onClick={() => setCreateColumnModal({ open: false, name: "" })}>Annuler</button>
                                 <button onClick={handleCreateColumn}>Créer</button>
                             </div>
                         </div>
@@ -390,18 +158,18 @@ export default function Board() {
                 )}
 
                 <RenameModal 
-                    isOpen={isRenameModalOpen}
+                    isOpen={renameModal.open}
                     onClose={closeRenameModal}
                     onRename={handleRename}
-                    currentName={renamingName}
-                    type={renameType}
+                    currentName={renameModal.name}
+                    type={renameModal.type}
                 />
 
                 <CardModal 
-                    isOpen={isEditCardModalOpen}
+                    isOpen={editCardModal.open}
                     onClose={closeEditCardModal}
                     onSubmit={handleEditCard}
-                    cardData={editingCardData}
+                    cardData={editCardModal.data}
                     mode="edit"
                 />
             </div>

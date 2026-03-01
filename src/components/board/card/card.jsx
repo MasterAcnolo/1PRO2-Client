@@ -1,3 +1,7 @@
+// DND KIT
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
 // Components
 import { DropDownCard } from '../../dropdown/dropdown';
 
@@ -7,70 +11,67 @@ import { CARD_LABELS } from '../../../../script/variables';
 // CSS
 import './card.css';
 
-export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDuplicate }){
-
-    function handleDelete(e) {
-        e.stopPropagation();
-        if (onDelete) onDelete(cardData?.documentId || cardData?.id);
+// Parse les labels de la carte
+function parseLabels(labels) {
+    if (!labels) return [];
+    
+    let parsed = labels;
+    if (typeof labels === 'string') {
+        try { parsed = JSON.parse(labels); } 
+        catch { return []; }
     }
+    return parsed.map(id => CARD_LABELS[id]).filter(Boolean);
+}
 
-    function handleRename(cardId) {
-        if (onRename) onRename(cardId, cardData?.name);
-    }
+export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDuplicate }) {
+    const cardId = cardData?.documentId || cardData?.id;
+    
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ 
+        id: `card-${cardId}`,
+        data: { type: 'card', card: cardData }
+    });
 
-    function handleEdit(cardId = cardData?.documentId || cardData?.id) {
-        if (onEdit) onEdit(cardId);
-    }
+    const labels = parseLabels(cardData?.labels);
+    const color = cardData?.color;
 
-    function handleDuplicate(cardId) {
-        if (onDuplicate) onDuplicate(cardId);
-    }
-
-	const getLabels = () => {
-        if (!cardData?.labels) {
-            return "";
-        }
-        
-        let labels = cardData.labels;
-        if (typeof labels === 'string') {
-            try {
-                labels = JSON.parse(labels);
-            } catch (e) {
-                console.error('Error parsing labels:', e);
-                return [];
-            }
-        }
-        
-        return labels.map(labelId => CARD_LABELS[labelId])
+    const style = {
+        boxShadow: color ? `inset 0 0 0 4px #${color}` : 'none',
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.5 : 1,
+        zIndex: isDragging ? 1000 : 'auto',
+        position: isDragging ? 'relative' : 'static',
     };
 
-	const labels = getLabels();
-
-	return(
-		<>
-		<div className='column_card' style={{
-			boxShadow: cardData?.color ? `inset 0 0 0 4px #${cardData.color}` : 'none'
-		}} onDoubleClick={() => handleEdit(cardData?.documentId || cardData?.id)}>
-
-			<div className='column_card-header'>
-				<div className='column_card-header-left'>
-                    <img id='column_card-grab' src='/assets/icon/6DotsIcon.png' alt='drag'></img>
-                   <h3 title={cardData?.name || ""}>{cardData?.name || 'Nouvelle carte'}</h3>
+    return (
+        <div 
+            ref={setNodeRef} 
+            className={`column_card ${isDragging ? 'dragging' : ''}`} 
+            style={style}
+            onDoubleClick={() => onEdit?.(cardId)}
+        >
+            {/* Header */}
+            <div className='column_card-header'>
+                <div className='column_card-header-left'>
+                    <img id='column_card-grab' src='/assets/icon/6DotsIcon.png' alt='drag' {...attributes} {...listeners} />
+                    <h3 title={cardData?.name || ""}>{cardData?.name || 'Nouvelle carte'}</h3>
                 </div>
-				<DropDownCard 
+                <DropDownCard 
                     type="CARD" 
-                    elementId={cardData?.documentId || cardData?.id}
-                    onDelete={handleDelete}
-                    onRename={handleRename}
-                    onEdit={handleEdit}
-                    onDuplicate={handleDuplicate}
+                    elementId={cardId}
+                    onDelete={(e) => { e.stopPropagation(); onDelete?.(cardId); }}
+                    onRename={() => onRename?.(cardId, cardData?.name)}
+                    onEdit={() => onEdit?.(cardId)}
+                    onDuplicate={() => onDuplicate?.(cardId)}
                 />
-			</div>
+            </div>
 
-			<div className='column_card-content'>
-			{cardData?.description && <div className='column_card-description'>{cardData.description}</div>}
+            {/* Content */}
+            <div className='column_card-content'>
+                {cardData?.description && (
+                    <div className='column_card-description'>{cardData.description}</div>
+                )}
 
-			{/* Affichage des labels */}
                 {labels.length > 0 && (
                     <div className='column_card-labels'>
                         {labels.map(label => (
@@ -88,26 +89,23 @@ export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDupli
                         ))}
                     </div>
                 )}
-		</div>
-		
-		{cardData?.deadline && (
-			<div className='column_card-content-footer'>
-				<div className='deadline' style={{
-					backgroundColor: cardData?.color ? `#${cardData.color}20` : '#e3f2fd',
-					color: cardData?.color ? `#${cardData.color}` : '#1976d2'
-				}}>
-					<img src='/assets/icon/calendar.svg' alt='calendrier' style={{ width: '14px', height: '14px', marginRight: '4px', verticalAlign: 'middle' }} />
-					{new Date(cardData.deadline).toLocaleDateString('fr-FR', {
-						day: '2-digit',
-						month: '2-digit',
-						year: 'numeric',
-						hour: '2-digit',
-						minute: '2-digit'
-					})}
-				</div>
-			</div>
-		)}
-		</div>
-		</>
-	);
+            </div>
+            
+            {/* Footer - Deadline */}
+            {cardData?.deadline && (
+                <div className='column_card-content-footer'>
+                    <div className='deadline' style={{
+                        backgroundColor: color ? `#${color}20` : '#e3f2fd',
+                        color: color ? `#${color}` : '#1976d2'
+                    }}>
+                        <img src='/assets/icon/calendar.svg' alt='calendrier' style={{ width: '14px', height: '14px', marginRight: '4px', verticalAlign: 'middle' }} />
+                        {new Date(cardData.deadline).toLocaleDateString('fr-FR', {
+                            day: '2-digit', month: '2-digit', year: 'numeric',
+                            hour: '2-digit', minute: '2-digit'
+                        })}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 }
