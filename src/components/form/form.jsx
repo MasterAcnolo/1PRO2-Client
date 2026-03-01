@@ -44,7 +44,7 @@ function Form({ type }) {
       setData(response);
 
       // Redirection après succès
-      if (isLogged()) {
+      if (await isLogged()) {
         window.location.href = "/board"
       }
 

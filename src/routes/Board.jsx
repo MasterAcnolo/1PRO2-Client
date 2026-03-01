@@ -60,18 +60,22 @@ export default function Board() {
         async function fetchBoard() {
             try {
                 const res = await getElement("BOARD", id);
+
                 setBoard(res.data);
                 document.title = res.data.title ? `${res.data.title} - Task Loader` : "Board - Task Loader";
+
             } catch (err) {
-                // Gestion spécifique du 404
-                if (err.response && err.response.status === 404) {
-                    setError("Board introuvable.");
-                    showToast("Board introuvable", "error");
+
+                setError(err.message);
+
+                if (err.message === "Board Not Found.") {
+                    navigate("/n")
+                } else if (err.message === "You do not own this resource."){
+                    navigate("/f")
                 } else {
-                    setError(err.message);
-                    showToast("Erreur lors du chargement du board", "error");
-                    //TODO: Naviguer vers la page 404 et/ou 503
+                    navigate("/u")
                 }
+
             } finally {
                 setLoading(false);
             }
@@ -318,15 +322,18 @@ export default function Board() {
             <div className="board-header">
                 <h1>{board.name}</h1>
 
-                <button onClick={handleExportBoard} id="export-board" className="exportBtn">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 384 512"
-                        className="exportIcon"
-                    >
-                        <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
-                    </svg>
-                    <span className="exportBase"></span>
+                <button id="export-board" className="export-btn" onClick={handleExportBoard}>
+                    <span className="icon-wrapper">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 384 512"
+                            className="export-icon"
+                        >
+                            <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+                        </svg>
+                        <span className="export-tray"></span>
+                    </span>
+                    <span className="export-text">Exporter</span>
                 </button>
             </div>
 

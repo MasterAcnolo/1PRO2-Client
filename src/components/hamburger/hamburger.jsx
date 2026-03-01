@@ -1,6 +1,6 @@
 // React
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 // Script
 import { getUserInfo, disconnectUser} from '../../../script/user';
@@ -15,6 +15,8 @@ import './hamburger.css';
 function HamburgerMenu() {
   const [isActive, setIsActive] = useState(false);
 
+  const location = useLocation();
+
   const toggleMenu = () => {
     setIsActive(valeur => !valeur);
     document.body.style.overflow = !isActive ? 'hidden' : 'auto';
@@ -22,13 +24,18 @@ function HamburgerMenu() {
 
   const [userData, setUserData] = useState(null);
 
-    useEffect(() => {
-        async function fetchUser() {
-            const data = await getUserInfo();
-            if (data) setUserData(data);
-        }
-        fetchUser();
-    }, []);
+  useEffect(() => {
+      async function fetchUser() {
+          const data = await getUserInfo();
+          if (data) setUserData(data);
+      }
+      fetchUser();
+  }, []);
+
+  useEffect(() => {
+    setIsActive(false);
+    document.body.style.overflow = 'auto';
+  }, [location]);
 
   return (
     <>
@@ -72,14 +79,15 @@ function HamburgerMenu() {
               ) : (
                 <Link to="/account">Compte</Link>
               )}
+    					<Link to="/contact">Contact</Link>
             </div>
 
             <span className='horizontal-line'></span>
 
             <div className='hamburger-contentText'>
               <h4>Légal</h4>
-              <Link>Vos Données</Link>
-              <Link>Mentions Légales</Link>
+              <Link to="/vos-donnees">Vos Données</Link>
+              <Link to="/mentions-legales">Mentions Légales</Link>
             </div>
 
             {userData && 

@@ -16,7 +16,7 @@
     background-position: center;
     background-attachment: fixed;
     filter: brightness(0.3);
-    z-index: -1;
+    z-index: 0;
     will-change: transform;
     transform: translateZ(0);
 }
@@ -31,6 +31,7 @@
     max-width: 1400px;
     margin: 0 auto;
     flex-wrap: wrap;
+    z-index: 5;
 }
 
 .accountContent h1 {
@@ -40,6 +41,7 @@
     margin-bottom: 5px;
     text-align: center;
     width: 100%;
+    z-index: 5;
 }
 
 .accountForm {
@@ -52,6 +54,7 @@
     padding: 24px 28px;
     width: 100%;
     max-width: 450px;
+    z-index: 5;
 }
 
 .accountForm h2 {
@@ -157,6 +160,7 @@
 }
 
 .dangerZone {
+    z-index: 5;
     display: flex;
     flex-direction: column;
     align-items: center;

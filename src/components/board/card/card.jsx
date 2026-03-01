@@ -55,7 +55,7 @@ export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDupli
 			<div className='column_card-header'>
 				<div className='column_card-header-left'>
                     <img id='column_card-grab' src='/assets/icon/6DotsIcon.png' alt='drag'></img>
-                   <h3>{cardData?.name || 'Nouvelle carte'}</h3>
+                   <h3 title={cardData?.name || ""}>{cardData?.name || 'Nouvelle carte'}</h3>
                 </div>
 				<DropDownCard 
                     type="CARD" 

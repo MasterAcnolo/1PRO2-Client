@@ -41,19 +41,23 @@ export default function Home(){
 			<div className='homePresentationArticle'>
 				<article>
 					<h4>Notre Objectif</h4>
-					<p>Vous permettre de suivre l’avancement de vos projets en suivant la méthode Kanban. 
-					Avec Task Loader vous pouvez organisez vos différentes tâches sous forme de liste verticale. 
-					Assignez des personnes, gérer les deadlines, et bien d’autres fonctionnalités ! 
-					Consultez la liste des fonctionnalités <Link>ici<img className='iconLink' src='../../../assets/icon/IconLink.png' alt="Icon Link" /></Link></p>
+					<p>
+						Vous permettre de <strong>suivre l’avancement de vos projets</strong> en appliquant la méthode <strong>Kanban</strong>. 
+						Avec <strong>Task Loader</strong>, vous pouvez organiser vos différentes tâches sous forme de <strong>listes verticales claires et structurées</strong>. 
+						Gérez les <strong>deadlines</strong>, les <strong>descriptions</strong>, et profitez de nombreuses autres fonctionnalités. 
+					</p>
 				</article>
 
 				<span className="vertical-line"></span>
 
 				<article>
 					<h4>Notre Philosophie</h4>
-						<p>Vous proposez une solution simple pour gérer au mieux vos projets.
-						Pas de pub. Pas de traqueurs. Pas de frais.
-						Simplement vos projets où vous voulez, quand vous voulez et gratuitement !</p>
+					<p>
+						Vous proposer une <strong>solution simple, efficace et accessible</strong> pour gérer vos projets.  
+						<strong> Pas de publicité. Pas de traqueurs. Pas de frais cachés. </strong>  
+						Simplement vos projets, où vous voulez, quand vous voulez, gratuitement.  
+						Nous sommes également <strong>à l’écoute de toutes nouvelles fonctionnalités</strong> afin de faire évoluer l’outil selon vos besoins réels.
+					</p>
 				</article>
 			</div>
 		</div>
@@ -112,11 +116,13 @@ export default function Home(){
 
 		<div className='homeDemonstration'>
 			<h3>Toujours pas convaincu ?</h3>
-			<button className='demo-btn hover-btn'>
-				<div className='demo-btn-content'>
-					<span>Demander une </span>Démo gratuite<img className='iconLink' src='../../../assets/icon/IconLink.png' alt="Icon Link" />
-				</div>
-			</button>
+			<Link to={"/register"}>
+				<button className='demo-btn hover-btn'>
+					<div className='demo-btn-content'>
+						<span>Tester</span>gratuitement<img className='iconLink' src='../../../assets/icon/IconLink.png' alt="Icon Link" />
+					</div>
+				</button>
+			</Link>
 		</div>
 
 	</section>                

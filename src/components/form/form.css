@@ -16,7 +16,7 @@
     background-position: center;
     background-attachment: fixed;
     filter: brightness(0.3);
-    z-index: -1;
+    z-index: 0;
     will-change: transform;
     transform: translateZ(0);
 }
@@ -25,6 +25,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 10;
 }
 
 form input {
@@ -44,6 +45,10 @@ form input {
     margin-bottom: 0;
 }
 
+.formContent h1, .formContent h2, .formContent p{
+    z-index: 10;
+}
+
 input::placeholder {
     color: rgba(255, 255, 255, 0.866);
 }
@@ -56,6 +61,7 @@ span {
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 10;
     margin-top: 10vh;
 }
 
