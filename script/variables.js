@@ -1,5 +1,5 @@
 // Variables de fonctionnement
-const API_BASE_URL = "http://192.168.1.53:1337/api"; // Actuellement mon IP chez moi. Remplacer par LocalHost quand on est en présentiel.
+const API_BASE_URL = "http://localhost:1337/api";
 
 // Variables de fonctionnalités
 const CARD_COLORS = [
