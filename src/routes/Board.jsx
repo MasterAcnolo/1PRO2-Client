@@ -42,6 +42,7 @@ export default function Board() {
     const [createColumnModal, setCreateColumnModal] = useState({ open: false, name: "", loading: false });
     const [editCardModal, setEditCardModal] = useState({ open: false, id: null, data: null });
     const [isRenaming, setIsRenaming] = useState(false);
+    const [isEditingCard, setIsEditingCard] = useState(false);
 
     // Handlers modales
     function openRenameModal(type, id, name) {
@@ -72,8 +73,13 @@ export default function Board() {
     }
 
     async function handleEditCard(updatedData) {
-        await editCard(editCardModal.id, updatedData);
-        closeEditCardModal();
+        setIsEditingCard(true);
+        try {
+            await editCard(editCardModal.id, updatedData);
+            closeEditCardModal();
+        } finally {
+            setIsEditingCard(false);
+        }
     }
 
     async function handleCreateColumn() {
@@ -186,6 +192,7 @@ export default function Board() {
                     onSubmit={handleEditCard}
                     cardData={editCardModal.data}
                     mode="edit"
+                    isLoading={isEditingCard}
                 />
             </div>
         </>

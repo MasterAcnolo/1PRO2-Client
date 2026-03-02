@@ -6,11 +6,12 @@ import { CARD_COLORS, CARD_LABELS } from '../../../script/variables';
 
 // Components
 import { showToast} from "../toast/toast"
+import { ButtonSpinner } from '../loader/Loader';
 
 // CSS
 import './Modal.css';
 
-export default function CardModal({ isOpen, onClose, onSubmit, cardData = null, mode = 'create' }) {
+export default function CardModal({ isOpen, onClose, onSubmit, cardData = null, mode = 'create', isLoading = false }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [deadlineDate, setDeadlineDate] = useState('');
@@ -83,8 +84,8 @@ export default function CardModal({ isOpen, onClose, onSubmit, cardData = null, 
     };
 
     const handleSubmit = () => {
-        if (name.trim() === ''){
-            showToast("Veuillez rentrer un nom de cartes", "info")    
+        if (name.trim() === '' || isLoading){
+            if (name.trim() === '') showToast("Veuillez rentrer un nom de cartes", "info")    
             return
         };
         
@@ -106,19 +107,12 @@ export default function CardModal({ isOpen, onClose, onSubmit, cardData = null, 
         };
         
         onSubmit(formData);
-        
-        // Reset uniquement en mode création
-        if (!isEditMode) {
-            resetForm();
-        }
-        
-        onClose();
     };
 
     if (!isOpen) return null;
 
     return (
-        <div className="createBoard-overlay" onClick={onClose}>
+        <div className="createBoard-overlay" onClick={isLoading ? undefined : onClose}>
             <div className={`createBoard ${isEditMode ? 'editCardModal' : ''}`} onClick={(e) => e.stopPropagation()}>
                 <h3>{isEditMode ? 'Modifier la Carte' : 'Création de Carte'}</h3>
                 
@@ -224,9 +218,13 @@ export default function CardModal({ isOpen, onClose, onSubmit, cardData = null, 
                 </div>
 
                 <div className="buttons">
-                    <button onClick={onClose}>Annuler</button>
-                    <button onClick={handleSubmit}>
-                        {isEditMode ? 'Enregistrer' : 'Créer'}
+                    <button onClick={onClose} disabled={isLoading}>Annuler</button>
+                    <button onClick={handleSubmit} disabled={isLoading} className={isLoading ? 'loading' : ''}>
+                        {isLoading && <ButtonSpinner />}
+                        {isLoading 
+                            ? (isEditMode ? 'Enregistrement...' : 'Création...') 
+                            : (isEditMode ? 'Enregistrer' : 'Créer')
+                        }
                     </button>
                 </div>
             </div>

@@ -31,6 +31,7 @@ export default function Column({
     });
 
     const [isCreateCardModalOpen, setIsCreateCardModalOpen] = useState(false);
+    const [isCreatingCard, setIsCreatingCard] = useState(false);
 
     const sortedCards = columnData?.cards 
         ? [...columnData.cards].sort((a, b) => (a.order || 0) - (b.order || 0))
@@ -39,6 +40,7 @@ export default function Column({
 
     async function handleCreateCard(cardData) {
         if (!cardData.name?.trim()) return;
+        setIsCreatingCard(true);
         try {
             await createElement("CARD", {
                 data: {
@@ -53,6 +55,8 @@ export default function Column({
         } catch (error) {
             console.error("Erreur lors de la création:", error);
             showToast("Erreur lors de la création de la carte", "error");
+        } finally {
+            setIsCreatingCard(false);
         }
     }
 
@@ -98,6 +102,7 @@ export default function Column({
             onClose={() => setIsCreateCardModalOpen(false)}
             onSubmit={handleCreateCard}
             mode="create"
+            isLoading={isCreatingCard}
         />
         </>
     );
