@@ -78,8 +78,6 @@ export default function Board() {
     if (error) return <p>Erreur : {error}</p>;
     if (!board) return <p>Board introuvable</p>;
 
-    document.title = `Task Loader | ${board.name}`;
-
     return (
         <>
             <div className="board-header">

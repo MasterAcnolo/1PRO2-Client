@@ -34,7 +34,7 @@ export default function useBoard(boardId) {
         getElement("BOARD", boardId)
             .then(res => {
                 setBoard(res.data);
-                document.title = `${res.data.title || "Board"} - Task Loader`;
+                document.title = `Task Loader | ${res.data.name || "Board"}`;
             })
             .catch(err => {
                 setError(err.message);
