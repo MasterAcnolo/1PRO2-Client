@@ -151,7 +151,9 @@ export default function BoardList(){
             <h1> Vos Boards </h1>
 
             <section className='board-list-container'>
-                {boards.map(board =>(
+                {[...boards]
+                    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+                    .map(board =>(
                     <CardPreview 
                         key={board.id}
                         data_id={board.documentId}
