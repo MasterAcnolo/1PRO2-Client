@@ -1,28 +1,28 @@
 .columns-container {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 16px;
 
     flex: 1;
     min-height: 0;
     width: 100%;
     overflow-x: scroll;
     overflow-y: visible;
-    padding: 0px 0px 20px 0px;
+    padding: 0px 0px 16px 0px;
 }
 
 .column{
     font-family: "Poppins", sans-serif;
     color: white;
     background-color: var(--column-bg-color);
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
-    width: 300px;
-    min-width: 300px;
-    min-height: 60vh;
+    width: 260px;
+    min-width: 260px;
+    min-height: 55vh;
     height: fit-content;
-    padding: 16px;
+    padding: 12px;
     flex-shrink: 0;
     overflow: visible;
     transition: opacity 0.2s ease, box-shadow 0.2s ease;
@@ -33,7 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .column-header-left {
@@ -46,6 +46,7 @@
 
 .column-header-left h3 {
     margin: 0;
+    font-size: 0.95rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -53,8 +54,8 @@
 
 .column .column-header img#column-grab {
     filter: invert();
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
     opacity: 0.6;
     cursor: grab;
@@ -74,8 +75,8 @@
 
 /* Style spécifique pour l'icône du dropdown dans les colonnes */
 .column-header .dropDown img {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     filter: invert();
 }
 
@@ -91,11 +92,11 @@
 .column-content{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     flex: 1;
-    padding: 8px 0;
+    padding: 6px 0;
     height: fit-content;
-    min-height: 100px;
+    min-height: 80px;
     transition: background-color 0.2s ease;
     overflow: visible;
 }
@@ -119,10 +120,10 @@
 
 /* Bouton Add Card */
 .newCard {
-    min-height: 80px;
-    padding: 12px;
+    min-height: 60px;
+    padding: 10px;
     border: 2px dashed rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -145,10 +146,10 @@
 
 /* Bouton Add Column */
 .newColumn {
-    width: 300px;
-    height: 60vh;
+    width: 260px;
+    height: 55vh;
     border: 2px dashed rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
