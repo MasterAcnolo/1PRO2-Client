@@ -1,5 +1,5 @@
 // React
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 // DND Kit
@@ -36,11 +36,6 @@ export default function Board() {
         rename, refreshBoard,
         collisionDetection, handleDragStart, handleDragEnd,
     } = useBoard(id);
-
-    // Titre de la page
-    useEffect(() => {
-        if (board?.name) document.title = `Task Loader | ${board.name}`;
-    }, [board?.name]);
 
     // Modales state
     const [renameModal, setRenameModal] = useState({ open: false, type: null, id: null, name: "" });
