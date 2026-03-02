@@ -1,22 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    /* COLORS - Text */
-    --default-text-color: white;
-    --default-dark-text-color: black;
+    --white: #ffffff;
+    --black: #000000;
 
-    /* COLORS - Background */
-    --default-background-color: white;
+    --default-text-color: #ffffff;
+    --default-dark-text-color: #000000;
+    --default-background-color: #ffffff;
+
     --blue-primary-color: #184AFF;
     --blue-secondary-color: #0E32B5;
     --blue-bg-color: linear-gradient(90deg, #0E32B5 0%, #184AFF 100%);
 
-    /* COLORS - Overlays */
-    --hamburger-overlay-bg: rgba(28, 28, 28, 0.821);
-    
-    /* COLORS - Components */
-    --card-bg-color: #9c9c9c;
+    --success-light: #d4edda;
+    --success: #4CAF50;
+    --success-dark: #27ae60;
+    --success-text: #155724;
+
+    --error-light: #f8d7da;
+    --error: #e74c3c;
+    --error-color: #dc3545;
+    --error-dark: #dc3545;
+    --error-darker: #c82333;
+    --error-text: #721c24;
+    --error-accent: #ff5252;
+    --error-bg-start: #d32f2f;
+    --error-bg-end: #f44336;
+
+    --info-light: #d1ecf1;
+    --info: #3498db;
+    --info-dark: #0c5460;
+
+    --btn-cancel-bg: #ccc;
+    --btn-cancel-hover: #b3b3b3;
+    --btn-cancel-text: #333;
+    --btn-primary-bg: #007bff;
+    --btn-primary-hover: #0063d1;
+    --btn-primary-text: #ffffff;
+
     --column-bg-color: #2c2c2c;
     --column-card-bg-color: #f5f5f5;
-    --error-color: #F00000;
+
+    --user-avatar-bg: #C4C4C4;
+    --user-avatar-hover: #e6e6e6;
+    --hamburger-overlay-bg: rgba(28, 28, 28, 0.821);
 }

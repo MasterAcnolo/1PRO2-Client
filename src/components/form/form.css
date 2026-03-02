@@ -30,7 +30,7 @@ form {
 
 form input {
     border-radius: 12px;
-    border: 3px solid #FFF;
+    border: 3px solid var(--white);
     background: rgba(217, 217, 217, 0);
     width: 330px;
     height: 34px;
@@ -38,7 +38,7 @@ form input {
     margin-top: 20px;
     font-weight: 400;
     font-size: 1rem;
-    color: var(--default-text-color);
+    color: var(--white);
 }
 
 .formContent h1 {
@@ -85,11 +85,11 @@ span {
 .formContent a:hover {
     text-decoration: underline;
     text-decoration-thickness: 1px;
-    text-decoration-color: #504aff;
+    text-decoration-color: var(--link-color);
 }
 
 .formContent a span {
-    color: #504aff;
+    color: var(--link-color);
 }
 
 input[type="checkbox"] {

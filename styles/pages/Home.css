@@ -80,12 +80,9 @@
 }
 
 
-
-/* ==================== SECTION MODERNISÉE ==================== */
-
 /* Content */
 .homeContent{
-    color: var(--default-dark-text-color);
+    color: black;
     background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
     padding: 60px 0;
 }
@@ -266,7 +263,7 @@
 .functionnalityGridContent p {
     font-size: 0.95rem;
     line-height: 1.5;
-    color: #393f50;
+    color: #475569;
     margin: 0;
 }
 

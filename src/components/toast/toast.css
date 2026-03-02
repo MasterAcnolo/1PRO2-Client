@@ -29,22 +29,22 @@ body {
 
 /* Gestion Succés/Erreur/Info */
 .toast.success {
-  border: 2px solid #27ae60;
-  background-color: #d4edda;
-  color: #155724;
+  border: 2px solid var(--success-dark);
+  background-color: var(--success-light);
+  color: var(--success-text);
 }
 
 .toast.fail,
 .toast.error {
-  border: 2px solid #e74c3c;
-  background-color: #f8d7da;
-  color: #721c24;
+  border: 2px solid var(--error);
+  background-color: var(--error-light);
+  color: var(--error-text);
 }
 
 .toast.info {
-  border: 2px solid #3498db;
-  background-color: #d1ecf1;
-  color: #0c5460;
+  border: 2px solid var(--info);
+  background-color: var(--info-light);
+  color: var(--info-dark);
 }
 
 .toast .icon {

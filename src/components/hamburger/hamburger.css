@@ -78,7 +78,7 @@
 }
 
 .horizontal-line {
-    border-bottom: 2px solid #e8e8e8;
+    border-bottom: 2px solid var(--neutral-200);
     display: inline-block;
     align-content: center;
     width: 280px;
@@ -89,13 +89,13 @@
     position: fixed;
     right: 15px;
     bottom: 20px;
-    color: #dc3545;
+    color: var(--error-dark);
     font-weight: 500;
 }
 
 .hamburger-contentText a {
     text-decoration: none;
-    color: #333;
+    color: var(--neutral-950);
     margin: 10px 0;
     transition: color 0.2s ease, padding-left 0.2s ease;
 }
@@ -107,10 +107,10 @@
 
 .hamburger-disconnect a {
     text-decoration: none;
-    color: #dc3545;
+    color: var(--error-dark);
     transition: color 0.2s ease;
 }
 
 .hamburger-disconnect a:hover {
-    color: #c82333;
+    color: var(--error-darker);
 }

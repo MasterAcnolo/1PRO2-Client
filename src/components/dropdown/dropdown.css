@@ -41,7 +41,7 @@
 }
 
 .delete {
-    color: var(--error-color);
+    color: #da041a;
 }
 
 .delete:hover {

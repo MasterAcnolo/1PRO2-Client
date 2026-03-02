@@ -60,8 +60,8 @@
     position: absolute;
     top: 60px;
     right: 0;
-    background: #C4C4C4;
-    color: var(--default-dark-text-color);
+    background: var(--user-avatar-bg);
+    color: var(--black);
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.10);
     display: flex;
@@ -82,7 +82,7 @@
 
 .userHeader .dropDown-content p:hover,
 .userHeader .dropDown-content a:hover {
-    background: #e6e6e6;
+    background: var(--user-avatar-hover);
     font-weight: 500;
     cursor: pointer;
     border-radius: 8px;

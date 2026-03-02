@@ -17,8 +17,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
     padding: 30px 40px;
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
@@ -49,7 +49,7 @@
 }
 
 .createBoard input:focus {
-    border-color: #007bff;
+    border-color: var(--btn-primary-bg);
 }
 
 /* Textarea */
@@ -69,7 +69,7 @@
 }
 
 .createBoard textarea:focus {
-    border-color: #007bff;
+    border-color: var(--btn-primary-bg);
 }
 
 /* Boutons */
@@ -91,21 +91,21 @@
 }
 
 .createBoard .buttons button:first-child {
-    background-color: #ccc;
-    color: #333;
+    background-color: var(--btn-cancel-bg);
+    color: var(--btn-cancel-text);
 }
 
 .createBoard .buttons button:first-child:hover {
-    background-color: #b3b3b3;
+    background-color: var(--btn-cancel-hover);
 }
 
 .createBoard .buttons button:last-child {
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
 }
 
 .createBoard .buttons button:last-child:hover {
-    background-color: #0063d1;
+    background-color: var(--btn-primary-hover);
 }
 
 /* Styles pour EditCardModal */
@@ -141,7 +141,7 @@
 .form-group input[type="datetime-local"]:focus,
 .form-group input[type="date"]:focus,
 .form-group input[type="time"]:focus {
-    border-color: #007bff;
+    border-color: var(--btn-primary-bg);
 }
 
 .color-picker {
@@ -159,7 +159,7 @@
     justify-content: center;
     font-size: 24px;
     color: #999;
-    border: 2px solid #cccccc
+    border: 2px solid #ccc
 }
 
 .color-option:hover {
