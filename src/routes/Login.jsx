@@ -9,7 +9,7 @@ import Form from '../components/form/form.jsx';
 
 export default function Login(){
 
-    useUserIsLoggedRedirect('/', true)
+    useUserIsLoggedRedirect('/board', true)
 
     useEffect(() => {
         document.title = "Task Loader | Connexion";
