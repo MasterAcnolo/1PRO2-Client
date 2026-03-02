@@ -19,6 +19,11 @@ function RenameModal({ isOpen, onClose, onRename, currentName, type, isLoading =
 
     function handleSubmit() {
         if (newName.trim() === '' || isLoading) return;
+        // Si le nom n'a pas changé, fermer sans appeler l'API
+        if (newName.trim() === currentName) {
+            onClose();
+            return;
+        }
         onRename(newName);
     }
 
