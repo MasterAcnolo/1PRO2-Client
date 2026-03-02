@@ -10,6 +10,7 @@ import { getUserInfo, disconnectUser } from '../../../script/user';
 
 // Helpers
 import { useClickOutside } from '../../../script/hooks/clickOutside.hooks';
+import { showToast } from '../toast/toast';
 
 function UserStateHeader() {
     const [userData, setUserData] = useState(null);
@@ -55,7 +56,7 @@ function UserStateHeader() {
                                 if (status) {
                                     setUserData(null);
                                 } else {
-                                    console.log("Erreur pendant la déconnexion");
+                                    showToast("Erreur pendant la déconnexion", "error");
                                 }
                             }}>Déconnexion</p>
                         </div>
