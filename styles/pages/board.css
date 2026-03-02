@@ -29,91 +29,37 @@ main{
 .export-btn {
     display: flex;
     align-items: center;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border-radius: 20px;
-    border: 1px solid #e5e7eb;
-    background: white;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    box-shadow: 0 4px 10px rgba(17, 24, 39, 0.05);
-}
-
-.icon-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 100%;
-}
-
-.export-icon {
-    width: 18px;
-    height: 18px;
-    fill: #374151;
-    transition: all 0.3s ease;
-    transform: translateY(-2px);
-}
-
-.export-tray {
-    width: 16px;
-    height: 2px;
-    background-color: #374151;
-    border-radius: 2px;
-    margin-top: 3px;
-    transition: all 0.3s ease;
-}
-
-.export-text {
+    gap: 8px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #2762e0;
     color: white;
     font-weight: 600;
-    font-size: 15px;
-    font-family: system-ui, -apple-system, sans-serif;
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateX(10px);
-    transition: all 0.3s ease;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .export-btn:hover {
-    width: fit-content;
-    background: #2762e0;
-    border-color: #2762e0;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(39, 98, 224, 0.3);
-    padding-right: 20px;
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(39, 98, 224, 0.3);
 }
 
 .export-btn:active {
     transform: translateY(0);
-    box-shadow: 0 4px 8px rgba(39, 98, 224, 0.2);
-    transition: all 0.1s ease;
+    box-shadow: none;
 }
 
-.export-btn:hover .export-icon {
+.export-btn .export-icon {
+    width: 16px;
+    height: 16px;
     fill: white;
-    animation: exportSlide 0.8s ease infinite alternate;
 }
 
-.export-btn:hover .export-tray {
-    background-color: white;
-}
-
-.export-btn:hover .export-text {
-    opacity: 1;
-    transform: translateX(0);
-    transition-delay: 0.1s;
-}
-
-@keyframes exportSlide {
-    0% {
-        transform: translateY(-4px);
-    }
-    100% {
-        transform: translateY(2px);
-    }
+.export-btn .icon-wrapper,
+.export-btn .export-tray {
+    display: none;
 }
