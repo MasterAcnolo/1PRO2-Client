@@ -23,12 +23,12 @@ function parseLabels(labels) {
     return parsed.map(id => CARD_LABELS[id]).filter(Boolean);
 }
 
-export default function TaskCard({ cardData, onDelete, onRename, onEdit, onDuplicate }) {
+export default function TaskCard({ cardData, columnId, onDelete, onRename, onEdit, onDuplicate }) {
     const cardId = cardData?.documentId || cardData?.id;
     
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ 
         id: `card-${cardId}`,
-        data: { type: 'card', card: cardData }
+        data: { type: 'card', card: cardData, columnId }
     });
 
     const labels = parseLabels(cardData?.labels);

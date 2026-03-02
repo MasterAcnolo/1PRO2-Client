@@ -17,16 +17,6 @@ export function findColumnById(board, columnId) {
     return board.columns.find(col => getId(col) === columnId);
 }
 
-// Extrait l'ID sans le préfixe "card-"
-export function removeCardPrefix(dndId) {
-    return dndId.startsWith('card-') ? dndId.slice(5) : dndId;
-}
-
-// Détermine si c'est une carte ou une colonne
-export function getDraggedElementType(dndId) {
-    return dndId.startsWith('card-') ? 'card' : 'column';
-}
-
 // Réordonne les colonnes
 export function reorderColumns(columns, draggedId, targetId) {
     const from = columns.findIndex(c => c.documentId === draggedId);

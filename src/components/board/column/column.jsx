@@ -78,6 +78,7 @@ export default function Column({
                         <TaskCard 
                             key={card.documentId || card.id} 
                             cardData={card}
+                            columnId={columnId}
                             onDelete={onCardDelete}
                             onRename={onCardRename}
                             onEdit={onCardEdit}
