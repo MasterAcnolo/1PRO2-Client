@@ -33,7 +33,7 @@ export default function Board() {
         createColumn, deleteColumn,
         deleteCard, editCard, duplicateCard, findCard,
         rename, refreshBoard,
-        customCollisionDetection, handleDragStart, handleDragEnd,
+        collisionDetection, handleDragStart, handleDragEnd,
     } = useBoard(id);
 
     // Modales state
@@ -99,7 +99,7 @@ export default function Board() {
                 <DndContext 
                     onDragStart={handleDragStart}
                     onDragEnd={handleDragEnd} 
-                    collisionDetection={customCollisionDetection}
+                    collisionDetection={collisionDetection}
                 >
                     <SortableContext
                         items={board.columns.map(c => c.documentId)}

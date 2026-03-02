@@ -3,15 +3,11 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 // DND Kit
-import { pointerWithin, closestCorners, getFirstCollision } from '@dnd-kit/core';
+import { closestCenter } from '@dnd-kit/core';
+import { arrayMove } from '@dnd-kit/sortable';
 
 // Helpers
-import { 
-    findCardWithParentColumn,
-    reorderColumns,
-    reorderCardsInSameColumn,
-    moveCardBetweenColumns 
-} from "../helpers/dnd.helpers.js";
+import { findCardWithParentColumn } from "../helpers/dnd.helpers.js";
 
 // Services
 import { getElement } from "../services/getElement.services";
@@ -107,85 +103,112 @@ export default function useBoard(boardId) {
         showToast(`${type === "COLUMN" ? "Colonne" : "Carte"} renommée`, "success");
     }
 
-    // DnD - Collision detection hybride (pointerWithin + closestCorners fallback)
-    const customCollisionDetection = useCallback((args) => {
-        const isColumn = args.active.data.current?.type === 'column';
-        
-        if (isColumn) {
-            // Pour les colonnes : closestCorners sur les colonnes uniquement
-            const cols = args.droppableContainers.filter(c => c.data.current?.type === 'column');
-            return closestCorners({ ...args, droppableContainers: cols });
-        }
-        
-        // Pour les cartes : pointerWithin (là où est le curseur) avec fallback closestCorners
-        const pointerCollisions = pointerWithin(args);
-        const collision = getFirstCollision(pointerCollisions, 'id');
-        
-        if (collision) return pointerCollisions;
-        return closestCorners(args);
-    }, []);
 
+
+
+
+
+
+
+    // Collision : si on drag une colonne, ignorer les cartes
+    const collisionDetection = useCallback((args) => {
+        if (args.active.data.current?.type === 'column') {
+            const columnContainers = args.droppableContainers.filter(container => container.data.current?.type === 'column');
+            return closestCenter({ ...args, droppableContainers: columnContainers });
+        }
+        return closestCenter(args);
+    }, []);
+    
     function handleDragStart({ active }) {
         if (active.data.current?.type === 'card') {
             setActiveCard(active.data.current.card);
         }
     }
 
-    function handleDragEnd({ active, over }) {
+    async function handleDragEnd({ active, over }) {
         setActiveCard(null);
-        if (!over) return;
+        if (!over || active.id === over.id) return;
 
-        const { type: draggedType } = active.data.current || {};
-        const { type: targetType } = over.data.current || {};
+        const draggedItem = active.data.current;
+        const targetItem = over.data.current;
 
-        // Colonnes
-        if (draggedType === 'column') {
-            const cols = reorderColumns(board.columns, String(active.id), String(over.id));
-            if (cols) {
-                setBoard({ ...board, columns: cols });
-                cols.forEach(c => updateElement("COLUMN", c.documentId, { data: { order: c.order } }));
+        // DRAG DE COLONNE 
+        if (draggedItem?.type === 'column') {
+            const fromIndex = board.columns.findIndex(col => getId(col) === active.id);
+            const toIndex = board.columns.findIndex(col => getId(col) === over.id);
+            
+            if (fromIndex !== -1 && toIndex !== -1) {
+                const reorderedColumns = arrayMove(board.columns, fromIndex, toIndex)
+                    .map((col, index) => ({ ...col, order: index }));
+                
+                setBoard({ ...board, columns: reorderedColumns });
+                reorderedColumns.forEach(col => updateElement("COLUMN", getId(col), { data: { order: col.order } }));
             }
             return;
         }
 
-        // Cartes - récupère les IDs directement depuis les data DND
-        const { card, columnId: srcColId } = active.data.current || {};
-        const cardId = getId(card);
-        if (!cardId || !srcColId) return;
+        // DRAG DE CARTE
+        const draggedCardId = getId(draggedItem?.card);
+        const sourceColumnId = draggedItem?.columnId;
+        const destinationColumnId = targetItem?.columnId || String(over.id);
+        
+        if (!draggedCardId || !sourceColumnId) return;
 
-        // Destination : colonne de la carte cible ou colonne droppée
-        const destColId = over.data.current?.columnId || String(over.id);
-        const targetCardId = targetType === 'card' ? getId(over.data.current?.card) : null;
+        const sourceColumn = board.columns.find(col => getId(col) === sourceColumnId);
+        const destinationColumn = board.columns.find(col => getId(col) === destinationColumnId);
+        if (!sourceColumn || !destinationColumn) return;
 
-        // Calcul de insertAt
-        const destCol = board.columns.find(c => getId(c) === destColId);
-        if (!destCol) return;
-        const insertAt = targetCardId 
-            ? destCol.cards.findIndex(c => getId(c) === targetCardId)
-            : destCol.cards?.length || 0;
-
-        // Même colonne
-        if (srcColId === destColId && targetCardId) {
-            const cols = reorderCardsInSameColumn(board.columns, srcColId, cardId, targetCardId);
-            if (cols) {
-                setBoard({ ...board, columns: cols });
-                cols.find(c => getId(c) === srcColId).cards.forEach(c => 
-                    updateElement("CARD", getId(c), { data: { order: c.order } })
+        // Même colonne = réordonner
+        if (sourceColumnId === destinationColumnId) {
+            const fromIndex = sourceColumn.cards.findIndex(card => getId(card) === draggedCardId);
+            const toIndex = targetItem?.type === 'card' 
+                ? sourceColumn.cards.findIndex(card => getId(card) === getId(targetItem.card))
+                : sourceColumn.cards.length;
+            
+            if (fromIndex !== -1 && toIndex !== -1 && fromIndex !== toIndex) {
+                const reorderedCards = arrayMove(sourceColumn.cards, fromIndex, toIndex)
+                    .map((card, index) => ({ ...card, order: index }));
+                
+                const updatedColumns = board.columns.map(col => 
+                    getId(col) === sourceColumnId ? { ...col, cards: reorderedCards } : col
                 );
+                
+                setBoard({ ...board, columns: updatedColumns });
+                reorderedCards.forEach(card => updateElement("CARD", getId(card), { data: { order: card.order } }));
             }
             return;
         }
 
-        // Colonnes différentes
-        const result = moveCardBetweenColumns(board.columns, srcColId, destColId, cardId, insertAt);
-        if (result) {
-            setBoard({ ...board, columns: result.columns });
-            updateElement("CARD", getId(result.movedCard), { data: { order: result.movedCard.order, column: destColId } });
-            result.sourceColumnCards.forEach(c => updateElement("CARD", getId(c), { data: { order: c.order } }));
-            result.destinationColumnCards.forEach(c => {
-                if (getId(c) !== getId(result.movedCard)) updateElement("CARD", getId(c), { data: { order: c.order } });
-            });
-        }
+        // Colonnes différentes = déplacer
+        const cardToMove = sourceColumn.cards.find(card => getId(card) === draggedCardId);
+        const insertAtIndex = targetItem?.type === 'card'
+            ? destinationColumn.cards.findIndex(card => getId(card) === getId(targetItem.card))
+            : destinationColumn.cards.length;
+
+        // Retirer de la source
+        const updatedSourceCards = sourceColumn.cards
+            .filter(card => getId(card) !== draggedCardId)
+            .map((card, index) => ({ ...card, order: index }));
+
+        // Ajouter à la destination
+        const destinationCards = [...destinationColumn.cards];
+        destinationCards.splice(insertAtIndex, 0, { ...cardToMove, order: insertAtIndex });
+        const updatedDestinationCards = destinationCards.map((card, index) => ({ ...card, order: index }));
+
+        const updatedColumns = board.columns.map(col => {
+            if (getId(col) === sourceColumnId) return { ...col, cards: updatedSourceCards };
+            if (getId(col) === destinationColumnId) return { ...col, cards: updatedDestinationCards };
+            return col;
+        });
+
+        setBoard({ ...board, columns: updatedColumns });
+        
+        // Sync API
+        await updateElement("CARD", draggedCardId, { data: { order: insertAtIndex, column: destinationColumnId } });
+        updatedSourceCards.forEach(card => updateElement("CARD", getId(card), { data: { order: card.order } }));
+        updatedDestinationCards.forEach(card => {
+            if (getId(card) !== draggedCardId) updateElement("CARD", getId(card), { data: { order: card.order } });
+        });
     }
 
     function findCard(cardId) {
@@ -197,6 +220,6 @@ export default function useBoard(boardId) {
         createColumn, deleteColumn,
         deleteCard, editCard, duplicateCard, findCard,
         rename, refreshBoard,
-        customCollisionDetection, handleDragStart, handleDragEnd,
+        collisionDetection, handleDragStart, handleDragEnd,
     };
 }
