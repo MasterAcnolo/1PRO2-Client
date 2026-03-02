@@ -1,11 +1,16 @@
 // React
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // CSS
 import './Modal.css';
 
 function RenameModal({ isOpen, onClose, onRename, currentName, type }) {
     const [newName, setNewName] = useState(currentName || '');
+
+    // Sync avec la prop quand elle change
+    useEffect(() => {
+        setNewName(currentName || '');
+    }, [currentName]);
 
     if (!isOpen) return null;
 
