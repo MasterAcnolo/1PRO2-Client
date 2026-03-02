@@ -17,7 +17,6 @@ async function deleteElement(type,ID){
             ENDPOINT = "/cards"
             break;
         default:
-            console.log("Invalid Type")
             return null
     }
     

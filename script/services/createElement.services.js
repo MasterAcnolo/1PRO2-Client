@@ -17,7 +17,7 @@ async function createElement(type,payload){
             ENDPOINT = "/cards"
             break;
         default:
-            console.log("Invalid Type")
+            return null;
     }
     
     const res = await fetch(`${API_BASE_URL}${ENDPOINT}`, {

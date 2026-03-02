@@ -17,7 +17,6 @@ async function getElement(type, ID) {
             ENDPOINT = `/cards/${ID}`;
             break;
         default:
-            console.log("Invalid Type");
             return null;
     }
 
@@ -33,7 +32,6 @@ async function getElement(type, ID) {
 
     if (res.headers.get("content-type")?.includes("application/json")) {
         json = await res.json();
-        console.log(json)
     }
 
     if (!res.ok) {
