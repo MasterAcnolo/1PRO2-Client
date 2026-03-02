@@ -87,6 +87,7 @@ export default function useBoard(boardId) {
                 description: card.description || null,
                 deadline: card.deadline || null,
                 color: card.color || null,
+                labels: card.labels || null,
                 order: column.cards?.length || 0,
                 column: getId(column)
             }
