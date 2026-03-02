@@ -1,6 +1,5 @@
 @import url(animation.css);
 @import url(variables.css);
-@import url(components/loader.css);
 
 html {
     scroll-behavior: smooth;

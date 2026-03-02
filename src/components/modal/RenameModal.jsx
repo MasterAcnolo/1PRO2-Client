@@ -4,7 +4,10 @@ import { useState, useEffect } from 'react';
 // CSS
 import './Modal.css';
 
-function RenameModal({ isOpen, onClose, onRename, currentName, type }) {
+// Components
+import { ButtonSpinner } from '../loader/Loader';
+
+function RenameModal({ isOpen, onClose, onRename, currentName, type, isLoading = false }) {
     const [newName, setNewName] = useState(currentName || '');
 
     // Sync avec la prop quand elle change
@@ -15,9 +18,8 @@ function RenameModal({ isOpen, onClose, onRename, currentName, type }) {
     if (!isOpen) return null;
 
     function handleSubmit() {
-        if (newName.trim() === '') return;
+        if (newName.trim() === '' || isLoading) return;
         onRename(newName);
-        onClose();
     }
 
     function getTitle() {
@@ -34,7 +36,7 @@ function RenameModal({ isOpen, onClose, onRename, currentName, type }) {
     }
 
     return (
-        <div className="renameModal-overlay" onClick={onClose}>
+        <div className="renameModal-overlay" onClick={isLoading ? undefined : onClose}>
             <div className="renameModal" onClick={(e) => e.stopPropagation()}>
                 <h3>Renommer {getTitle()}</h3>
                 <input 
@@ -42,12 +44,16 @@ function RenameModal({ isOpen, onClose, onRename, currentName, type }) {
                     placeholder="Nouveau nom" 
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
+                    disabled={isLoading}
                     autoFocus
                 />
 
                 <div className="buttons">
-                    <button onClick={onClose}>Annuler</button>
-                    <button onClick={handleSubmit}>Renommer</button>
+                    <button onClick={onClose} disabled={isLoading}>Annuler</button>
+                    <button onClick={handleSubmit} disabled={isLoading} className={isLoading ? 'loading' : ''}>
+                        {isLoading && <ButtonSpinner />}
+                        {isLoading ? 'Renommage...' : 'Renommer'}
+                    </button>
                 </div>
             </div>
         </div>

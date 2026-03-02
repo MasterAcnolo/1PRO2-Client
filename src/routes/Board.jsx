@@ -1,5 +1,5 @@
 // React
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 // DND Kit
@@ -22,6 +22,7 @@ import Column from "../components/board/column/column";
 import TaskCard from "../components/board/card/card";
 import RenameModal from "../components/modal/RenameModal";
 import CardModal from "../components/modal/CardModal.jsx";
+import Loader, { ButtonSpinner } from "../components/loader/Loader";
 
 export default function Board() {
     useUserIsLoggedRedirect('/login');
@@ -36,10 +37,16 @@ export default function Board() {
         collisionDetection, handleDragStart, handleDragEnd,
     } = useBoard(id);
 
+    // Titre de la page
+    useEffect(() => {
+        if (board?.name) document.title = `Task Loader | ${board.name}`;
+    }, [board?.name]);
+
     // Modales state
     const [renameModal, setRenameModal] = useState({ open: false, type: null, id: null, name: "" });
-    const [createColumnModal, setCreateColumnModal] = useState({ open: false, name: "" });
+    const [createColumnModal, setCreateColumnModal] = useState({ open: false, name: "", loading: false });
     const [editCardModal, setEditCardModal] = useState({ open: false, id: null, data: null });
+    const [isRenaming, setIsRenaming] = useState(false);
 
     // Handlers modales
     function openRenameModal(type, id, name) {
@@ -51,8 +58,13 @@ export default function Board() {
     }
 
     async function handleRename(newName) {
-        await rename(renameModal.type, renameModal.id, newName);
-        closeRenameModal();
+        setIsRenaming(true);
+        try {
+            await rename(renameModal.type, renameModal.id, newName);
+            closeRenameModal();
+        } finally {
+            setIsRenaming(false);
+        }
     }
 
     function openEditCardModal(cardId) {
@@ -70,11 +82,16 @@ export default function Board() {
     }
 
     async function handleCreateColumn() {
-        await createColumn(createColumnModal.name);
-        setCreateColumnModal({ open: false, name: "" });
+        setCreateColumnModal(prev => ({ ...prev, loading: true }));
+        try {
+            await createColumn(createColumnModal.name);
+            setCreateColumnModal({ open: false, name: "", loading: false });
+        } catch {
+            setCreateColumnModal(prev => ({ ...prev, loading: false }));
+        }
     }
 
-    if (loading) return <p>Chargement…</p>;
+    if (loading) return <Loader fullPage text="Chargement du board..." />;
     if (error) return <p>Erreur : {error}</p>;
     if (!board) return <p>Board introuvable</p>;
 
@@ -137,7 +154,7 @@ export default function Board() {
 
                 {/* Modale création colonne */}
                 {createColumnModal.open && (
-                    <div className="createBoard-overlay" onClick={() => setCreateColumnModal({ open: false, name: "" })}>
+                    <div className="createBoard-overlay" onClick={() => !createColumnModal.loading && setCreateColumnModal({ open: false, name: "", loading: false })}>
                         <div className="createBoard" onClick={(e) => e.stopPropagation()}>
                             <h3>Création de Colonne</h3>
                             <input 
@@ -145,11 +162,15 @@ export default function Board() {
                                 placeholder="Nom de la colonne" 
                                 value={createColumnModal.name}
                                 onChange={(e) => setCreateColumnModal({ ...createColumnModal, name: e.target.value })}
+                                disabled={createColumnModal.loading}
                                 autoFocus
                             />
                             <div className="buttons">
-                                <button onClick={() => setCreateColumnModal({ open: false, name: "" })}>Annuler</button>
-                                <button onClick={handleCreateColumn}>Créer</button>
+                                <button onClick={() => setCreateColumnModal({ open: false, name: "", loading: false })} disabled={createColumnModal.loading}>Annuler</button>
+                                <button onClick={handleCreateColumn} disabled={createColumnModal.loading} className={createColumnModal.loading ? 'loading' : ''}>
+                                    {createColumnModal.loading && <ButtonSpinner />}
+                                    {createColumnModal.loading ? 'Création...' : 'Créer'}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -161,6 +182,7 @@ export default function Board() {
                     onRename={handleRename}
                     currentName={renameModal.name}
                     type={renameModal.type}
+                    isLoading={isRenaming}
                 />
 
                 <CardModal 

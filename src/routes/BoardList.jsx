@@ -16,6 +16,7 @@ import { useUserIsLoggedRedirect } from '../../script/hooks/isLogged.hooks.js';
 // Components
 import RenameModal from '../components/modal/RenameModal';
 import { showToast } from '../components/toast/toast';
+import Loader, { ButtonSpinner } from '../components/loader/Loader';
 
 // Services
 import { createElement } from '../../script/services/createElement.services.js';
@@ -67,16 +68,24 @@ export default function BoardList(){
     }, []);
 
     const [boards, setBoards] = useState([]);
+    const [loadingBoards, setLoadingBoards] = useState(true);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [title, setTitle] = useState("");
+    const [isCreating, setIsCreating] = useState(false);
     
     const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
     const [renamingBoardId, setRenamingBoardId] = useState(null);
     const [renamingBoardName, setRenamingBoardName] = useState("");
+    const [isRenaming, setIsRenaming] = useState(false);
 
     async function refreshBoards() {
-        const res = await fetchElement();
-        setBoards(res.boards);
+        setLoadingBoards(true);
+        try {
+            const res = await fetchElement();
+            setBoards(res.boards);
+        } finally {
+            setLoadingBoards(false);
+        }
     }
 
     useEffect(() => {
@@ -95,6 +104,7 @@ export default function BoardList(){
 
     async function handleCreateBoard() {
         if(title === "") return;
+        setIsCreating(true);
         try {
             await createElement("BOARD", payload(title));
             setIsPanelOpen(false);
@@ -104,6 +114,8 @@ export default function BoardList(){
         } catch (error) {
             console.error("Erreur lors de la création:", error);
             showToast("Erreur lors de la création du board", "error");
+        } finally {
+            setIsCreating(false);
         }
     }
 
@@ -132,7 +144,7 @@ export default function BoardList(){
 
     async function handleRenameBoard(newName) {
         if (!renamingBoardId || newName.trim() === "") return;
-        
+        setIsRenaming(true);
         try {
             const payload = { data: { name: newName } };
             await updateElement("BOARD", renamingBoardId, payload);
@@ -143,6 +155,8 @@ export default function BoardList(){
         } catch (error) {
             console.error("Erreur lors du renommage:", error);
             showToast("Erreur lors du renommage du board", "error");
+        } finally {
+            setIsRenaming(false);
         }
     }
 
@@ -151,20 +165,26 @@ export default function BoardList(){
             <h1> Vos Boards </h1>
 
             <section className='board-list-container'>
-                {[...boards]
-                    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-                    .map(board =>(
-                    <CardPreview 
-                        key={board.id}
-                        data_id={board.documentId}
-                        title={board.name}
-                        date={board.updatedAt}
-                        onDelete={handleDeleteBoard}
-                        onRename={openRenameModal}
-                    />
-                ))}
+                {loadingBoards ? (
+                    <Loader text="Chargement des boards..." />
+                ) : (
+                    <>
+                        {[...boards]
+                            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+                            .map(board =>(
+                            <CardPreview 
+                                key={board.id}
+                                data_id={board.documentId}
+                                title={board.name}
+                                date={board.updatedAt}
+                                onDelete={handleDeleteBoard}
+                                onRename={openRenameModal}
+                            />
+                        ))}
 
-                <AddBoard onClick={togglePanel}/>
+                        <AddBoard onClick={togglePanel}/>
+                    </>
+                )}
             </section>
 
             {isPanelOpen && (
@@ -174,8 +194,11 @@ export default function BoardList(){
                         <input type="text" placeholder="Titre" onChange={(e)=>{setTitle(e.target.value)}}/>
 
                         <div className="buttons">
-                            <button onClick={togglePanel}>Annuler</button>
-                            <button onClick={handleCreateBoard}>Sauvegarder</button>
+                            <button onClick={togglePanel} disabled={isCreating}>Annuler</button>
+                            <button onClick={handleCreateBoard} disabled={isCreating} className={isCreating ? 'loading' : ''}>
+                                {isCreating && <ButtonSpinner />}
+                                {isCreating ? 'Création...' : 'Sauvegarder'}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -187,6 +210,7 @@ export default function BoardList(){
                 onRename={handleRenameBoard}
                 currentName={renamingBoardName}
                 type="BOARD"
+                isLoading={isRenaming}
             />
         </section>
     )
