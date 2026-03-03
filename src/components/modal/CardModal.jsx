@@ -85,7 +85,7 @@ export default function CardModal({ isOpen, onClose, onSubmit, cardData = null, 
 
     const handleSubmit = () => {
         if (name.trim() === '' || isLoading){
-            if (name.trim() === '') showToast("Veuillez rentrer un nom de cartes", "info")    
+            if (name.trim() === '') showToast("Veuillez rentrer un nom de carte", "info")    
             return
         };
         
