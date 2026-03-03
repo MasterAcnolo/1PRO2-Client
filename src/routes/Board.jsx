@@ -135,7 +135,7 @@ export default function Board() {
                                         onRefresh={refreshBoard}
                                     />
                                 ))}
-                            <div className="newColumn" onClick={() => setCreateColumnModal({ open: true, name: "" })}>
+                            <div className="newColumn no-export" onClick={() => setCreateColumnModal({ open: true, name: "" })}>
                                 <h3>+ Nouvelle Colonne</h3>
                             </div>
                         </div>
