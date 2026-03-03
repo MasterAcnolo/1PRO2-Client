@@ -22,7 +22,7 @@ export default function exportBoardAsImage(boardName = "board") {
     html2canvas(board, {
         backgroundColor: "#f7f7f7", scale: 2,
         width: board.scrollWidth, height: board.scrollHeight,
-        ignoreElements: el => el.classList?.contains("no-export")
+        ignoreElements: el => el.classList?.contains("no-export") || el.classList?.contains("dropDown") || el.id === "column-grab" || el.id === "column_card-grab"
     })
     .then(canvas => {
         const a = document.createElement("a");
