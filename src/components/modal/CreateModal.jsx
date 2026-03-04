@@ -48,7 +48,7 @@ export default function CreateModal({
                     placeholder={placeholder} 
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
-                    onKeyPress={handleKeyPress}
+                    onKeyUp ={handleKeyPress}
                     disabled={isLoading}
                     autoFocus
                 />
