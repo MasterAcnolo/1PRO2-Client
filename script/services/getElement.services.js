@@ -16,6 +16,9 @@ async function getElement(type, ID) {
         case "CARD":
             ENDPOINT = `/cards/${ID}`;
             break;
+        case "BOARDLIST":
+            ENDPOINT = `/users/me?populate=boards`;
+            break;
         default:
             return null;
     }

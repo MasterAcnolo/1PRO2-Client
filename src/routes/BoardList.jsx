@@ -6,9 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import "../../styles/pages/boardList.css";
 import "../../styles/overlay/createBoard.css";
 
-// Script
-import fetchElement from '../../script/fetch';
-
 // Helpers
 import { DropDownCard } from '../components/dropdown/dropdown';
 import { useUserIsLoggedRedirect } from '../../script/hooks/isLogged.hooks.js';
@@ -22,6 +19,7 @@ import Loader, { ButtonSpinner } from '../components/loader/Loader';
 import { createElement } from '../../script/services/createElement.services.js';
 import { deleteElement } from '../../script/services/deleteElement.services.js';
 import { updateElement } from '../../script/services/updateElement.services.js';
+import { getElement } from '../../script/services/getElement.services.js';
 
 function CardPreview({title, date, data_id, onDelete, onRename}){
     const date_ISO = new Date(date).toLocaleString();
@@ -81,7 +79,7 @@ export default function BoardList(){
     async function refreshBoards() {
         setLoadingBoards(true);
         try {
-            const res = await fetchElement();
+            const res = await getElement("BOARDLIST");
             setBoards(res.boards);
         } finally {
             setLoadingBoards(false);
