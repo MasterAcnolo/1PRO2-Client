@@ -108,18 +108,36 @@ export default function useBoard(boardId) {
 
 
 
+    // DRAG & DROP - Fonctions utilitaires
 
+    // Réordonne une liste et met à jour les index "order"
+    function reorder(list, fromIndex, toIndex) {
+        return arrayMove(list, fromIndex, toIndex).map((item, i) => ({ ...item, order: i }));
+    }
 
+    // Met à jour une colonne spécifique dans le board
+    function updateColumnInBoard(columnId, newCards) {
+        return board.columns.map(col => 
+            getId(col) === columnId ? { ...col, cards: newCards } : col
+        );
+    }
 
-    // Collision : si on drag une colonne, ignorer les cartes
+    // Sauvegarde les ordres en base de données
+    function saveOrders(type, items) {
+        items.forEach(item => updateElement(type, getId(item), { data: { order: item.order } }));
+    }
+
+    // DRAG & DROP - Handlers principaux
+
+    // Ignore les cartes quand on drag une colonne
     const collisionDetection = useCallback((args) => {
         if (args.active.data.current?.type === 'column') {
-            const columnContainers = args.droppableContainers.filter(container => container.data.current?.type === 'column');
-            return closestCenter({ ...args, droppableContainers: columnContainers });
+            const onlyColumns = args.droppableContainers.filter(c => c.data.current?.type === 'column');
+            return closestCenter({ ...args, droppableContainers: onlyColumns });
         }
         return closestCenter(args);
     }, []);
-    
+
     function handleDragStart({ active }) {
         if (active.data.current?.type === 'card') {
             setActiveCard(active.data.current.card);
@@ -130,86 +148,99 @@ export default function useBoard(boardId) {
         setActiveCard(null);
         if (!over || active.id === over.id) return;
 
-        const draggedItem = active.data.current;
-        const targetItem = over.data.current;
+        const dragged = active.data.current;
+        const target = over.data.current;
 
-        // DRAG DE COLONNE 
-        if (draggedItem?.type === 'column') {
-            const fromIndex = board.columns.findIndex(col => getId(col) === active.id);
-            const toIndex = board.columns.findIndex(col => getId(col) === over.id);
-            
-            if (fromIndex !== -1 && toIndex !== -1) {
-                const reorderedColumns = arrayMove(board.columns, fromIndex, toIndex)
-                    .map((col, index) => ({ ...col, order: index }));
-                
-                setBoard({ ...board, columns: reorderedColumns });
-                reorderedColumns.forEach(col => updateElement("COLUMN", getId(col), { data: { order: col.order } }));
-            }
+        // Drag de colonne
+        if (dragged?.type === 'column') {
+            await handleColumnDrag(active.id, over.id);
             return;
         }
 
-        // DRAG DE CARTE
-        const draggedCardId = getId(draggedItem?.card);
-        const sourceColumnId = draggedItem?.columnId;
-        const destinationColumnId = targetItem?.columnId || String(over.id);
+        // Drag de carte
+        await handleCardDrag(dragged, target, over.id);
+    }
+
+    // DRAG & DROP
+
+    async function handleColumnDrag(fromId, toId) {
+        // Trier par order d'abord pour que les index correspondent à l'affichage
+        const sortedColumns = [...board.columns].sort((a, b) => a.order - b.order);
         
-        if (!draggedCardId || !sourceColumnId) return;
+        const fromIndex = sortedColumns.findIndex(col => getId(col) === fromId);
+        const toIndex = sortedColumns.findIndex(col => getId(col) === toId);
 
-        const sourceColumn = board.columns.find(col => getId(col) === sourceColumnId);
-        const destinationColumn = board.columns.find(col => getId(col) === destinationColumnId);
-        if (!sourceColumn || !destinationColumn) return;
+        if (fromIndex === -1 || toIndex === -1) return;
 
-        // Même colonne = réordonner
-        if (sourceColumnId === destinationColumnId) {
-            const fromIndex = sourceColumn.cards.findIndex(card => getId(card) === draggedCardId);
-            const toIndex = targetItem?.type === 'card' 
-                ? sourceColumn.cards.findIndex(card => getId(card) === getId(targetItem.card))
-                : sourceColumn.cards.length;
-            
-            if (fromIndex !== -1 && toIndex !== -1 && fromIndex !== toIndex) {
-                const reorderedCards = arrayMove(sourceColumn.cards, fromIndex, toIndex)
-                    .map((card, index) => ({ ...card, order: index }));
-                
-                const updatedColumns = board.columns.map(col => 
-                    getId(col) === sourceColumnId ? { ...col, cards: reorderedCards } : col
-                );
-                
-                setBoard({ ...board, columns: updatedColumns });
-                reorderedCards.forEach(card => updateElement("CARD", getId(card), { data: { order: card.order } }));
-            }
-            return;
+        const newColumns = reorder(sortedColumns, fromIndex, toIndex);
+        setBoard({ ...board, columns: newColumns });
+        saveOrders("COLUMN", newColumns);
+    }
+
+    async function handleCardDrag(dragged, target, overId) {
+        const cardId = getId(dragged?.card);
+        const fromColId = dragged?.columnId;
+        const toColId = target?.columnId || String(overId);
+
+        if (!cardId || !fromColId) return;
+
+        const fromCol = board.columns.find(col => getId(col) === fromColId);
+        const toCol = board.columns.find(col => getId(col) === toColId);
+        if (!fromCol || !toCol) return;
+
+        // Même colonne -> réordonner
+        if (fromColId === toColId) {
+            await reorderCardInColumn(fromCol, cardId, target);
+        } 
+        // Colonnes différentes -> déplacer
+        else {
+            await moveCardToColumn(fromCol, toCol, cardId, target);
         }
+    }
 
-        // Colonnes différentes = déplacer
-        const cardToMove = sourceColumn.cards.find(card => getId(card) === draggedCardId);
-        const insertAtIndex = targetItem?.type === 'card'
-            ? destinationColumn.cards.findIndex(card => getId(card) === getId(targetItem.card))
-            : destinationColumn.cards.length;
+    async function reorderCardInColumn(column, cardId, target) {
+        const fromIndex = column.cards.findIndex(c => getId(c) === cardId);
+        const toIndex = target?.type === 'card'
+            ? column.cards.findIndex(c => getId(c) === getId(target.card))
+            : column.cards.length;
+
+        if (fromIndex === -1 || toIndex === -1 || fromIndex === toIndex) return;
+
+        const newCards = reorder(column.cards, fromIndex, toIndex);
+        setBoard({ ...board, columns: updateColumnInBoard(getId(column), newCards) });
+        saveOrders("CARD", newCards);
+    }
+
+    async function moveCardToColumn(fromCol, toCol, cardId, target) {
+        const card = fromCol.cards.find(c => getId(c) === cardId);
+        const insertAt = target?.type === 'card'
+            ? toCol.cards.findIndex(c => getId(c) === getId(target.card))
+            : toCol.cards.length;
 
         // Retirer de la source
-        const updatedSourceCards = sourceColumn.cards
-            .filter(card => getId(card) !== draggedCardId)
-            .map((card, index) => ({ ...card, order: index }));
+        const newFromCards = fromCol.cards
+            .filter(c => getId(c) !== cardId)
+            .map((c, i) => ({ ...c, order: i }));
 
         // Ajouter à la destination
-        const destinationCards = [...destinationColumn.cards];
-        destinationCards.splice(insertAtIndex, 0, { ...cardToMove, order: insertAtIndex });
-        const updatedDestinationCards = destinationCards.map((card, index) => ({ ...card, order: index }));
+        const newToCards = [...toCol.cards];
+        newToCards.splice(insertAt, 0, { ...card, order: insertAt });
+        const orderedToCards = newToCards.map((c, i) => ({ ...c, order: i }));
 
-        const updatedColumns = board.columns.map(col => {
-            if (getId(col) === sourceColumnId) return { ...col, cards: updatedSourceCards };
-            if (getId(col) === destinationColumnId) return { ...col, cards: updatedDestinationCards };
+        // Mise à jour locale
+        const newColumns = board.columns.map(col => {
+            if (getId(col) === getId(fromCol)) return { ...col, cards: newFromCards };
+            if (getId(col) === getId(toCol)) return { ...col, cards: orderedToCards };
             return col;
         });
+        setBoard({ ...board, columns: newColumns });
 
-        setBoard({ ...board, columns: updatedColumns });
-        
         // Sync API
-        await updateElement("CARD", draggedCardId, { data: { order: insertAtIndex, column: destinationColumnId } });
-        updatedSourceCards.forEach(card => updateElement("CARD", getId(card), { data: { order: card.order } }));
-        updatedDestinationCards.forEach(card => {
-            if (getId(card) !== draggedCardId) updateElement("CARD", getId(card), { data: { order: card.order } });
-        });
+        await updateElement("CARD", cardId, { data: { order: insertAt, column: getId(toCol) } });
+        saveOrders("CARD", newFromCards);
+        orderedToCards.filter(c => getId(c) !== cardId).forEach(c => 
+            updateElement("CARD", getId(c), { data: { order: c.order } })
+        );
     }
 
     function findCard(cardId) {
