@@ -45,3 +45,22 @@ header nav a {
 header nav a:hover {
     text-decoration: underline;
 }
+
+/* Responsive */
+.desktop-only {
+    display: none;
+}
+
+.mobile-only {
+    display: block;
+}
+
+@media (min-width: 1025px) {
+    .desktop-only {
+        display: block;
+    }
+    
+    .mobile-only {
+        display: none;
+    }
+}

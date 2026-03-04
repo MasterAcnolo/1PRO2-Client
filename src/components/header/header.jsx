@@ -9,13 +9,17 @@ import { UserStateHeader } from '../userStateHeader/userStateHeader.jsx';
 import HamburgerMenu from '../hamburger/hamburger.jsx';
 
 function Header() {
-
     return(
         <>
         <header>
             <Link to="/" className="title">TASKLOADER.</Link>
 
-            {window.innerWidth > 1024 ? <UserStateHeader/> : <HamburgerMenu /> } {/* Si on est en mobile, on affiche le menu hamburger*/}
+            <div className="desktop-only">
+                <UserStateHeader/>
+            </div>
+            <div className="mobile-only">
+                <HamburgerMenu />
+            </div>
 
         </header>
         </>
