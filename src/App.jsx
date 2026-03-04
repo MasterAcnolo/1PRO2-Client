@@ -69,9 +69,9 @@ function App() {
             <Route path="/board/:id" element={<PageWrapper><Board /></PageWrapper>} />
             <Route path="/board" element={<PageWrapper><BoardList /></PageWrapper>} />
 
-            <Route path="/f" element={<PageWrapper><Forbidden/></PageWrapper>} />
-            <Route path="/n" element={<PageWrapper><NotFound/></PageWrapper>} />
-            <Route path="/u" element={<PageWrapper><UnknownError/></PageWrapper>} />
+            <Route path="/403" element={<PageWrapper><Forbidden/></PageWrapper>} />
+            <Route path="/404" element={<PageWrapper><NotFound/></PageWrapper>} />
+            <Route path="/unknown" element={<PageWrapper><UnknownError/></PageWrapper>} />
 
             <Route path="/mentions-legales" element={<PageWrapper><Legal /></PageWrapper>} />
             <Route path="/vos-donnees" element={<PageWrapper><Data /></PageWrapper>} />
@@ -79,7 +79,7 @@ function App() {
 
             <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
 
-            <Route path="*" element={<Navigate to="/n" replace />} /> {/* Replace supprime la dernière entrée de l'historique (évite d'y retourner)*/}
+            <Route path="*" element={<Navigate to="/404" replace />} /> {/* Replace supprime la dernière entrée de l'historique (évite d'y retourner)*/}
           </Routes>
         </AnimatePresence>
       </main>

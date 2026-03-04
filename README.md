@@ -155,6 +155,6 @@ npm run preview  # Preview du build
 | `/mentions-legales` | Mentions legales |
 | `/vos-donnees` | Vos donnees |
 | `/plan-du-site` | Plan du site |
-| `/f` | 403 - Acces refuse |
-| `/n` | 404 - Page introuvable |
-| `/u` | Erreur inconnue |
+| `/403` | 403 - Acces refuse |
+| `/404` | 404 - Page introuvable |
+| `/unknown` | Erreur inconnue |

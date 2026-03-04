@@ -38,9 +38,9 @@ export default function useBoard(boardId) {
             })
             .catch(err => {
                 setError(err.message);
-                if (err.message === "Board Not Found.") navigate("/n");
-                else if (err.message === "You do not own this resource.") navigate("/f");
-                else navigate("/u");
+                if (err.message === "Board Not Found.") navigate("/404", { replace: true });
+                else if (err.message === "You do not own this resource.") navigate("/403", { replace: true });
+                else navigate("/unknown", { replace: true });
             })
             .finally(() => setLoading(false));
     }, [boardId, navigate]);
