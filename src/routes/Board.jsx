@@ -115,7 +115,10 @@ export default function Board() {
                     collisionDetection={collisionDetection}
                 >
                     <SortableContext
-                        items={board.columns.map(c => c.documentId)}
+                        items={board.columns
+                            .slice()
+                            .sort((a, b) => (a.order || 0) - (b.order || 0))
+                            .map(c => c.documentId)}
                         strategy={horizontalListSortingStrategy}
                     >
                         <div className="columns-container" id="columns-container">
