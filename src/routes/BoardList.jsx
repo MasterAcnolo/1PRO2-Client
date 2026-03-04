@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 // CSS
 import "../../styles/pages/boardList.css";
-import "../../styles/overlay/createBoard.css";
 
 // Helpers
 import { DropDownCard } from '../components/dropdown/dropdown';
@@ -12,8 +11,9 @@ import { useUserIsLoggedRedirect } from '../../script/hooks/isLogged.hooks.js';
 
 // Components
 import RenameModal from '../components/modal/RenameModal';
+import CreateModal from '../components/modal/CreateModal';
 import { showToast } from '../components/toast/toast';
-import Loader, { ButtonSpinner } from '../components/loader/Loader';
+import Loader from '../components/loader/Loader';
 
 // Services
 import { createElement } from '../../script/services/createElement.services.js';
@@ -67,8 +67,7 @@ export default function BoardList(){
 
     const [boards, setBoards] = useState([]);
     const [loadingBoards, setLoadingBoards] = useState(true);
-    const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const [title, setTitle] = useState("");
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
     
     const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
@@ -90,23 +89,11 @@ export default function BoardList(){
         refreshBoards();
     }, []);
 
-    function togglePanel() {
-        setIsPanelOpen(prev => !prev);
-    }
-
-    function payload(title){
-        return {
-             data: { "name": title }
-        }
-    }
-
-    async function handleCreateBoard() {
-        if(title === "") return;
+    async function handleCreateBoard(title) {
         setIsCreating(true);
         try {
-            await createElement("BOARD", payload(title));
-            setIsPanelOpen(false);
-            setTitle("");
+            await createElement("BOARD", { data: { name: title } });
+            setIsCreateModalOpen(false);
             await refreshBoards();
             showToast("Board créé avec succès", "success");
         } catch (error) {
@@ -180,27 +167,20 @@ export default function BoardList(){
                             />
                         ))}
 
-                        <AddBoard onClick={togglePanel}/>
+                        <AddBoard onClick={() => setIsCreateModalOpen(true)}/>
                     </>
                 )}
             </section>
 
-            {isPanelOpen && (
-                <div className="createBoard-overlay">
-                    <div className="createBoard">
-                        <h3>Création de Board</h3>
-                        <input type="text" placeholder="Titre" onChange={(e)=>{setTitle(e.target.value)}}/>
-
-                        <div className="buttons">
-                            <button onClick={togglePanel} disabled={isCreating}>Annuler</button>
-                            <button onClick={handleCreateBoard} disabled={isCreating} className={isCreating ? 'loading' : ''}>
-                                {isCreating && <ButtonSpinner />}
-                                {isCreating ? 'Création...' : 'Sauvegarder'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <CreateModal
+                isOpen={isCreateModalOpen}
+                onClose={() => setIsCreateModalOpen(false)}
+                onSubmit={handleCreateBoard}
+                title="Création de Board"
+                placeholder="Titre du board"
+                submitLabel="Créer"
+                isLoading={isCreating}
+            />
 
             <RenameModal 
                 isOpen={isRenameModalOpen}

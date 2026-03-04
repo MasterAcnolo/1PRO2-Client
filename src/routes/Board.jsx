@@ -8,7 +8,6 @@ import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortabl
 
 // CSS
 import "../../styles/pages/board.css";
-import "../../styles/overlay/createBoard.css";
 
 // Hooks
 import { useUserIsLoggedRedirect } from "../../script/hooks/isLogged.hooks.js";
@@ -21,8 +20,9 @@ import exportBoardAsImage from "../../script/utils/export.utils.js";
 import Column from "../components/board/column/column";
 import TaskCard from "../components/board/card/card";
 import RenameModal from "../components/modal/RenameModal";
+import CreateModal from "../components/modal/CreateModal";
 import CardModal from "../components/modal/CardModal.jsx";
-import Loader, { ButtonSpinner } from "../components/loader/Loader";
+import Loader from "../components/loader/Loader";
 
 export default function Board() {
     useUserIsLoggedRedirect('/login');
@@ -39,7 +39,8 @@ export default function Board() {
 
     // Modales state
     const [renameModal, setRenameModal] = useState({ open: false, type: null, id: null, name: "" });
-    const [createColumnModal, setCreateColumnModal] = useState({ open: false, name: "", loading: false });
+    const [isCreateColumnOpen, setIsCreateColumnOpen] = useState(false);
+    const [isCreatingColumn, setIsCreatingColumn] = useState(false);
     const [editCardModal, setEditCardModal] = useState({ open: false, id: null, data: null });
     const [isRenaming, setIsRenaming] = useState(false);
     const [isEditingCard, setIsEditingCard] = useState(false);
@@ -82,13 +83,13 @@ export default function Board() {
         }
     }
 
-    async function handleCreateColumn() {
-        setCreateColumnModal(prev => ({ ...prev, loading: true }));
+    async function handleCreateColumn(name) {
+        setIsCreatingColumn(true);
         try {
-            await createColumn(createColumnModal.name);
-            setCreateColumnModal({ open: false, name: "", loading: false });
-        } catch {
-            setCreateColumnModal(prev => ({ ...prev, loading: false }));
+            await createColumn(name);
+            setIsCreateColumnOpen(false);
+        } finally {
+            setIsCreatingColumn(false);
         }
     }
 
@@ -138,7 +139,7 @@ export default function Board() {
                                         onRefresh={refreshBoard}
                                     />
                                 ))}
-                            <div className="newColumn no-export" onClick={() => setCreateColumnModal({ open: true, name: "" })}>
+                            <div className="newColumn no-export" onClick={() => setIsCreateColumnOpen(true)}>
                                 <h3>+ Nouvelle Colonne</h3>
                             </div>
                         </div>
@@ -153,29 +154,15 @@ export default function Board() {
                     </DragOverlay>
                 </DndContext>
 
-                {/* Modale création colonne */}
-                {createColumnModal.open && (
-                    <div className="createBoard-overlay" onClick={() => !createColumnModal.loading && setCreateColumnModal({ open: false, name: "", loading: false })}>
-                        <div className="createBoard" onClick={(e) => e.stopPropagation()}>
-                            <h3>Création de Colonne</h3>
-                            <input 
-                                type="text" 
-                                placeholder="Nom de la colonne" 
-                                value={createColumnModal.name}
-                                onChange={(e) => setCreateColumnModal({ ...createColumnModal, name: e.target.value })}
-                                disabled={createColumnModal.loading}
-                                autoFocus
-                            />
-                            <div className="buttons">
-                                <button onClick={() => setCreateColumnModal({ open: false, name: "", loading: false })} disabled={createColumnModal.loading}>Annuler</button>
-                                <button onClick={handleCreateColumn} disabled={createColumnModal.loading} className={createColumnModal.loading ? 'loading' : ''}>
-                                    {createColumnModal.loading && <ButtonSpinner />}
-                                    {createColumnModal.loading ? 'Création...' : 'Créer'}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                <CreateModal
+                    isOpen={isCreateColumnOpen}
+                    onClose={() => setIsCreateColumnOpen(false)}
+                    onSubmit={handleCreateColumn}
+                    title="Création de Colonne"
+                    placeholder="Nom de la colonne"
+                    submitLabel="Créer"
+                    isLoading={isCreatingColumn}
+                />
 
                 <RenameModal 
                     isOpen={renameModal.open}
