@@ -26,7 +26,7 @@ import Sitemap from './routes/Sitemap.jsx';
 
 import Forbidden from "./routes/error/403.jsx";
 import NotFound from "./routes/error/404.jsx";
-import UnknownError from "./routes/error/Unknown.jsx";
+import UnknownError from "./routes/error/unknown.jsx";
 
 // Wrapper qui va permettre de nous faire avoir l'animation, on envoie la page en props
 function PageWrapper({ children }) {
