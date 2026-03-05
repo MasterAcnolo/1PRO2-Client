@@ -154,7 +154,7 @@ export default function BoardList(){
                     <Loader text="Chargement des boards..." />
                 ) : (
                     <>
-                        {[...boards]
+                        {(Array.isArray(boards) ? [...boards] : [])
                             .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
                             .map(board =>(
                             <CardPreview 
