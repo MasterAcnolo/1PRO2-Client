@@ -21,8 +21,7 @@ export const showToast = (message, type = "info", persist = false) => {
     sessionStorage.setItem('pendingToast', JSON.stringify({ message, type }));
     return; // Ne pas afficher immédiatement si persistance
   }
-  
-  if (toastListener) {
+  if (typeof toastListener === 'function') {
     toastListener(message, type);
   }
 };
