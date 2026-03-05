@@ -156,3 +156,7 @@ input[type="checkbox"]:checked {
 .togglePassword:hover {
     opacity: 0.7;
 }
+
+.formContent a span {
+    color: #5480ee !important;
+}
