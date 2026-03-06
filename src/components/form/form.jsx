@@ -95,6 +95,7 @@ function Form({ type }) {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                minLength={10}
                 required
               />
               <button
