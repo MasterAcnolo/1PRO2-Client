@@ -1,6 +1,6 @@
 // React
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // CSS
 import "./form.css";
@@ -13,8 +13,6 @@ import eyeClosed from '../../../assets/icon/eyeClosed.png';
 import { loginRegisterUser, isLogged } from "../../../script/user.js";
 
 function Form({ type }) {
-
-  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
