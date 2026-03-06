@@ -74,7 +74,11 @@ export default function Account() {
             const json = await res.json();
 
             if (!res.ok) {
-                showToast(json.error?.message || "Erreur lors du changement de mot de passe", 'error');
+                if (json.error?.message === "The provided current password is invalid") {
+                    showToast("Le mot de passe actuel est invalide", 'error');
+                } else {
+                    showToast(json.error?.message || "Erreur lors du changement de mot de passe", 'error');
+                }
                 throw new Error(json.error?.message || "Erreur");
             }
 
