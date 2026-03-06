@@ -1,5 +1,6 @@
 // React
-import { Routes, Route, useLocation, Navigate  } from "react-router-dom";
+import { createRoot } from "react-dom/client";
+import { Routes, Route, useLocation, Navigate, BrowserRouter  } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Components
@@ -90,4 +91,8 @@ function App() {
   );
 }
 
-export default App;
+createRoot(document.getElementById("root")).render(
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+);
