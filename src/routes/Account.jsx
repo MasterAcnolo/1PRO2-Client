@@ -138,6 +138,7 @@ export default function Account() {
                             placeholder="Mot de passe actuel"
                             value={currentPassword}
                             onChange={(e) => setCurrentPassword(e.target.value)}
+                            minLength={10}
                             required
                         />
                         <button 
@@ -155,6 +156,7 @@ export default function Account() {
                             placeholder="Nouveau mot de passe"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
+                            minLength={10}
                             className={passwordsMatch ? 'input-success' : passwordsDontMatch ? 'input-error' : ''}
                             required
                         />
@@ -170,9 +172,10 @@ export default function Account() {
                     <div className="emailInput">
                         <input 
                             type={showConfirmPassword ? "text" : "password"}
-                            placeholder="Confirmer"
+                            placeholder="Confirmer le mot de passe"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
+                            minLength={10}
                             className={passwordsMatch ? 'input-success' : passwordsDontMatch ? 'input-error' : ''}
                             required
                         />
