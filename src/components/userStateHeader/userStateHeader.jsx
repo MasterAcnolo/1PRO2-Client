@@ -39,7 +39,7 @@ function UserStateHeader() {
         return (
             <div className='userHeader'>
                 <Link className='username' to="/">
-                    <p>{userData.username}</p>
+                    <p>{userData?.username}</p>
                 </Link>
                 
                 <div ref={dropdownRef} className='avatar-container'>
