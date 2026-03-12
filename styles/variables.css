@@ -44,4 +44,8 @@
     --user-avatar-bg: #C4C4C4;
     --user-avatar-hover: #e6e6e6;
     --hamburger-overlay-bg: rgba(28, 28, 28, 0.821);
+
+    --loader-track: #222831;
+    --loader-spinner: #184AFF;
+    --loader-text: #fff;
 }
